@@ -1,7 +1,6 @@
 # Reslife-2
-<<<<<<< Updated upstream
+
 Reslife 2 project school year 2021-2022
-=======
 
 ## THE WEBSITE FROM THIS REPOSITORY CANNOT BE USED FOR ANYTHING OTHER THAN ITS INTENDED PURPOSE UNTIL THE END OF THE CURRENT SEMESTER. PLEASE ASK ANY OF THE CURRENT CONTRIBUTORS TO THIS REPOSITORY FOR CONSENT OF APPROVAL TO USE FOR INQUIRIES ABOUT USING THE WEBSITE
 
@@ -77,4 +76,4 @@ Truthfulness, different academic views and patience.
 4. You can now view the website on a php localhost server via: `http://localhost:8170`
 
 > You can modify the `start.py` file if you already have a php server set up.
->>>>>>> Stashed changes
+Stashed changes
