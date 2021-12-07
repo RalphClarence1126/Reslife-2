@@ -76,4 +76,3 @@ Truthfulness, different academic views and patience.
 4. You can now view the website on a php localhost server via: `http://localhost:8170`
 
 > You can modify the `start.py` file if you already have a php server set up.
-Stashed changes
