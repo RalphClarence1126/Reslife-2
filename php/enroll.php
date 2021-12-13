@@ -33,7 +33,7 @@
 
 
 			<h3>
-				NOTE: All input textboxes underlined in <span style="text-decoration: underline; color: rgb(255, 55, 55);">RED</span> as well as those marked with a red asterisk<span style="color: rgb(255, 55, 55);">*</span> is required and should be answered.
+				NOTE: All those marked with a red asterisk<span style="color: rgb(255, 55, 55);">*</span> is required and should be answered.
 			</h3>
 
 			<div>

@@ -59,7 +59,6 @@
 				<fieldset style="width: 100%;">
 					<legend>Place of Birth</legend>
 					<input type="text" name="student_birthplace" id="student-birthplace" required>
-					<br>
 					<label for="student-birthplace">Address</label>
 				</fieldset>
 			</section>
@@ -147,7 +146,7 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<label for="student-application-grade">Application Grade<span style="color: rgb(255, 55, 55);">*</span></label>
+						<label for="student-application-grade">Application Grade</label>
 						<br>
 						<select name="student_application_grade" id="student-application-grade" required>
 							<option value="Grade 11">Grade 11</option>
@@ -155,20 +154,8 @@
 						</select>
 					</div>
 
-					<!-- <div style="display: flex; flex-direction: column;">
-						<section style="flex: auto;">
-							<input type="radio" name="student_application_grade_11" id="student-application-grade-11">
-							<label for="student-application-grade-11">Grade 11</label>
-						</section>
-
-						<section style="flex: auto;">
-							<input type="radio" name="student_application_grade_12" id="student-application-grade-12">
-							<label for="student-application-grade-12">Grade 12</label>
-						</section>
-					</div> -->
-
 					<div>
-						<label for="student-enrollment-status">Enrollment Status<span style="color: rgb(255, 55, 55);">*</span></label>
+						<label for="student-enrollment-status">Enrollment Status</label>
 						<br>
 						<select name="student_application_grade" id="student-application-grade" required>
 							<option value="New Student">New Student</option>
@@ -184,7 +171,7 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>Strand Preference<span style="color: rgb(255, 55, 55);">*</span></legend>
+				<legend>Strand Preference</legend>
 				<select name="student_student_number" id="student-number" required>
 					<option value="Science, Technology, Engineering, and Mathematics (STEM)">Science, Technology, Engineering, and Mathematics (STEM)</option>
 					<option value="Accountancy, Business, and Management (ABM)">Accountancy, Business, and Management (ABM)</option>
@@ -194,7 +181,6 @@
 			</fieldset>
 
 			<fieldset>
-				<!-- <legend>Additional Files</legend> -->
 				<ul>
 					<label for="student-additional-files">Please upload a soft copy of the following:</label>
 					<li>

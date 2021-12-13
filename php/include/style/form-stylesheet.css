@@ -18,8 +18,16 @@ fieldset legend.form-title {
 	text-align: center;
 	font-size: 24px;
 }
+fieldset legend::after {
+	content: '*';
+	color: rgb(255, 55, 55);
+}
 fieldset label {
 	color: rgb(110, 110, 110);
+}
+fieldset label:after {
+	content: '*';
+	color: rgb(255, 55, 55);
 }
 fieldset input {
 	background-color: rgb(255, 255, 255);
@@ -70,12 +78,6 @@ form select {
 }
 form select:focus {
 	border: 4px solid rgb(42, 151, 255);
-}
-:required {
-	border-bottom: 4px solid rgb(255, 55, 55);
-}
-form :valid {
-	border-bottom: 4px solid rgb(210, 210, 210);
 }
 
 .enrollment-form {
