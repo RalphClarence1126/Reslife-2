@@ -71,7 +71,7 @@ nav section div.topnav.responsive button {
 
 .white-container {
 	background-color: rgb(235, 235, 235);
-	padding: 64px;
+	padding: 32px;
 }
 .white-container h1 {
 	color: rgb(42, 151, 255);
@@ -97,7 +97,7 @@ nav section div.topnav.responsive button {
 
 .yellow-container {
 	background-color: rgb(251, 178, 0);
-	padding: 64px;
+	padding: 32px;
 }
 .yellow-container h1 {
 	color: rgb(42, 151, 255);
@@ -134,7 +134,7 @@ footer {
 	display: block;
 }
 footer .upper-footer {
-	padding: 64px;
+	padding: 32px;
 	background-color: rgb(26, 26, 26);
 	color: rgb(235, 235, 235);
 }
@@ -144,7 +144,7 @@ footer .upper-footer {
 	}
 }
 footer .lower-footer {
-	padding: 64px;
+	padding: 32px;
 	background-color: rgb(21, 21, 21);
 	color: rgb(226, 173, 0);
 	text-align: center;

@@ -173,10 +173,10 @@
 			<fieldset>
 				<legend>Strand Preference</legend>
 				<select name="student_student_number" id="student-number" required>
-					<option value="Science, Technology, Engineering, and Mathematics (STEM)">Science, Technology, Engineering, and Mathematics (STEM)</option>
-					<option value="Accountancy, Business, and Management (ABM)">Accountancy, Business, and Management (ABM)</option>
-					<option value="Huanities and Social Sciences (HUMSS)">Huanities and Social Sciences (HUMSS)</option>
-					<option value="TVL - Information and Communication Technology (ICT)">TVL - Information and Communication Technology (ICT)</option>
+					<option value="STEM">STEM</option>
+					<option value="ABM">ABM</option>
+					<option value="HUMSS">HUMSS</option>
+					<option value="TVL - ICT">TVL - ICT</option>
 				</select>
 			</fieldset>
 
