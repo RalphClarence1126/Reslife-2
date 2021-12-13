@@ -1,0 +1,117 @@
+form {
+	padding: 16px;
+	background-color: rgb(255, 255, 255);
+	font-family: sans-serif;
+}
+hr {
+	border: 4px solid rgb(42, 151, 255);
+	border-radius: 4px;
+	margin: 16px 0px;
+}
+
+fieldset legend.form-title {
+	font-weight: bolder;
+	width: 100%;
+	border-radius: 8px;
+	background-color: rgb(210, 210, 210);
+	padding: 8px 16px;
+	text-align: center;
+	font-size: 24px;
+}
+fieldset label {
+	color: rgb(110, 110, 110);
+}
+fieldset input {
+	background-color: rgb(255, 255, 255);
+	border: none;
+	border: 4px solid rgb(210, 210, 210);
+	border-radius: 8px;
+	font-size: larger;
+	font-family: monospace;
+	padding: 4px 8px;
+}
+fieldset input:focus {
+	border: 4px solid rgb(42, 151, 255);
+}
+form input[type='button']#reset {
+	border: none;
+	border-radius: 8px;
+	background-color: rgb(255, 135, 135);
+	color: rgb(21, 21, 21);
+	font-size: larger;
+	font-weight: bolder;
+	padding: 8px 16px;
+}
+form input[type='button']#reset:hover {
+	background-color: rgb(255, 55, 55);
+	color: rgb(255, 255, 255);
+}
+form button[type='submit'] {
+	border: none;
+	border-radius: 8px;
+	background-color: rgb(42, 151, 255);
+	color: rgb(21, 21, 21);
+	font-size: larger;
+	font-weight: bolder;
+	padding: 8px 16px;
+}
+form button[type='submit']:hover {
+	background-color: rgb(210, 210, 210);
+	color: rgb(42, 151, 255);
+}
+form select {
+	background-color: rgb(255, 255, 255);
+	border: none;
+	border: 4px solid rgb(210, 210, 210);
+	border-radius: 8px;
+	font-size: larger;
+	font-family: monospace;
+	padding: 4px 8px;
+}
+
+.enrollment-form {
+	padding: 16px;
+	font-size: larger;
+}
+
+.enrollment-form > fieldset,
+.enrollment-form > fieldset > fieldset,
+.enrollment-form > fieldset > section > fieldset,
+.enrollment-form > fieldset > section > div > fieldset {
+	border: none;
+	/* border-radius: 8px; */
+	margin: 8px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+}
+
+.horizontal-form {
+	display: flex;
+}
+.horizontal-form#horizontal-items > div {
+	flex-grow: 1;
+}
+.horizontal-form #horizontal-items {
+	display: flex;
+}
+.horizontal-form #horizontal-items > div {
+	flex-grow: 1;
+	padding: 0px 8px;
+}
+
+.horizontal-form-items {
+	display: flex;
+	justify-content: space-between;
+}
+
+.horizontal-form-items#horizontal-items > div {
+	flex-grow: 1;
+	padding: 0px 8px;
+}
+.horizontal-form-items#horizontal-items > div > input {
+	width: 100%;
+}
+.horizontal-form-items#horizontal-items > div > input[type='radio'] {
+	width: auto !important;
+}
