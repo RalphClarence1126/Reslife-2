@@ -68,6 +68,15 @@ form select {
 	font-family: monospace;
 	padding: 4px 8px;
 }
+form select:focus {
+	border: 4px solid rgb(42, 151, 255);
+}
+:required {
+	border-bottom: 4px solid rgb(255, 55, 55);
+}
+form :valid {
+	border-bottom: 4px solid rgb(210, 210, 210);
+}
 
 .enrollment-form {
 	padding: 16px;
