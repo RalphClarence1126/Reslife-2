@@ -1,4 +1,4 @@
-<?php require('../include/templates/header.php'); ?>
+<?php require_once('../include/templates/header.php'); ?>
 
 <div>
 	<section>
@@ -17,9 +17,9 @@
 			}
 
 			if (isMobileDevice()) {
-				include_once('../include/notifications/is-mobile.php');
+				include_once('../include/notifications/is-mobile.html');
 			} else {
-				include_once('../include/notifications/is-not-mobile.php');
+				include_once('../include/notifications/is-not-mobile.html');
 			}
 			?>
 		</div>
@@ -37,10 +37,10 @@
 			</h3>
 
 			<div>
-				<?php require_once('include/enrollment-form.php'); ?>
+				<?php require_once('include/enrollment-form.html'); ?>
 			</div>
 		</div>
 	</section>
 </div>
 
-<?php require('../include/templates/footer.php'); ?>
+<?php require_once('../include/templates/footer.php'); ?>

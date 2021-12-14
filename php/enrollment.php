@@ -17,15 +17,14 @@
 
 			<?php
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-				include_once('include/notifications/is-enrolled.php');
+				include_once('include/notifications/is-enrolled.html');
+				include_once('include/notifications/enrollment-form-copy.html');
 			} else {
-				include_once('include/notifications/is-not-enrolled.php');
+				include_once('include/notifications/is-not-enrolled.html');
 			}
 			?>
 		</div>
 	</section>
 </div>
-
 
 <?php require_once('../include/templates/footer.php'); ?>
