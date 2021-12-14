@@ -1,3 +1,5 @@
+<?php echo '<h3>NOTE: Please review your submitted enrollment form before leaving this page.</h3>'; ?>
+
 <link rel="stylesheet" href="include/style/form-stylesheet.css">
 
 <form method="post" action="enrollment.php" name="enrollment-form" enctype="multipart/form-data" id="student-enrollment-form">
@@ -25,6 +27,14 @@
 						<input type="text" name="student_middle_name" id="student-middle-name" value="<?php echo $_POST['student_middle_name']; ?>" disabled>
 						<br>
 						<label for=" middle-name">Middle Name</label>
+					</div>
+				</section>
+
+				<section class="horizontal-form-items" id="horizontal-items">
+					<div>
+						<input type="text" name="student_suffix_name" id="student-suffix-name" value="<?php echo $_POST['student_suffix_name']; ?>" disabled>
+						<br>
+						<label for=" student-suffix-name">Suffix</label>
 					</div>
 				</section>
 			</fieldset>

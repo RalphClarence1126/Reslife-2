@@ -1,7 +1,8 @@
+<?php echo '<h3>NOTE: All those marked with a red asterisk<span style="color: rgb(255, 55, 55);">*</span> is required and should be answered.</h3>'; ?>
+
 <link rel="stylesheet" href="include/style/form-stylesheet.css">
 
-<form method="post" action="enrollment.php" name="enrollment-form" enctype="multipart/form-data"
-	id="student-enrollment-form" autocomplete="off">
+<form method="post" action="enrollment.php" name="enrollment-form" enctype="multipart/form-data" id="student-enrollment-form" autocomplete="off">
 	<!-- LEARNER INFORMATION -->
 	<div class="enrollment-form">
 		<fieldset>
@@ -11,21 +12,30 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_last_name" id="student-last-name" required>
+						<input type="text" name="student_last_name" id="student-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
-						<label for="last-name">Last Name</label>
+						<label for="student-last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_first_name" id="student-first-name" required>
+						<input type="text" name="student_first_name" id="student-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
-						<label for="first-name">First Name</label>
+						<label for="student-first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_middle_name" id="student-middle-name" required>
+						<input type="text" name="student_middle_name" id="student-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
-						<label for=" middle-name">Middle Name</label>
+						<label for=" student-middle-name">Middle Name</label>
+					</div>
+
+				</section>
+
+				<section class="horizontal-form-items" id="horizontal-items">
+					<div>
+						<input type="text" name="student_suffix_name" id="student-suffix-name" placeholder="[OPTIONAL]" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');">
+						<br>
+						<label for=" student-suffix-name">Suffix</label>
 					</div>
 				</section>
 			</fieldset>
@@ -36,22 +46,19 @@
 
 					<section id="horizontal-items">
 						<div>
-							<input type="text" name="student_birthdate_month" id="student-birthdate-month"
-								placeholder="MM" pattern="[0-9]{2}" required>
+							<input type="text" name="student_birthdate_month" id="student-birthdate-month" placeholder="MM" pattern="[0-9]{2}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 							<br>
 							<label for="student-birthdate-month">Month</label>
 						</div>
 
 						<div>
-							<input type="text" name="student_birthdate_day" id="student-birthdate-day" placeholder="DD"
-								pattern="[0-9]{2}" required>
+							<input type="text" name="student_birthdate_day" id="student-birthdate-day" placeholder="DD" pattern="[0-9]{2}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 							<br>
 							<label for="student-birthdate-month">Day</label>
 						</div>
 
 						<div>
-							<input type="text" name="student_birthdate_year" id="student-birthdate-year"
-								placeholder="YYYY" pattern="[0-9]{4}" required>
+							<input type="text" name="student_birthdate_year" id="student-birthdate-year" placeholder="YYYY" pattern="[0-9]{4}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 							<br>
 							<label for="student-birthdate-month">Year</label>
 						</div>
@@ -69,21 +76,21 @@
 				<div>
 					<fieldset>
 						<legend>Age</legend>
-						<input type="number" name="student_age" id="student-age" min="1" max="100" required>
+						<input type="number" name="student_age" id="student-age" min="1" max="100" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 
 				<div>
 					<fieldset>
 						<legend>Gender</legend>
-						<input type="text" name="student_gender" id="student-gender" required>
+						<input type="text" name="student_gender" id="student-gender" pattern="[a-zA-Z|\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 
 				<div>
 					<fieldset>
 						<legend>Religion</legend>
-						<input type="text" name="student_religion" id="student-religion" required>
+						<input type="text" name="student_religion" id="student-religion" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 			</section>
@@ -92,26 +99,21 @@
 				<div style="flex-grow: 4;">
 					<fieldset>
 						<legend>Email Address</legend>
-						<input type="email" name="student_email" id="student-email" placeholder="example@email.com"
-							pattern="\S+@\S+\.com" required>
+						<input type="email" name="student_email" id="student-email" placeholder="example@email.com" pattern="\S+@\S+\.com" required>
 					</fieldset>
 				</div>
 
 				<div>
 					<fieldset>
 						<legend>Contact Number</legend>
-						<input type="tel" name="student_contact_number" id="student-contact-number"
-							placeholder="09XX-XXX-XXXX"
-							pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))"
-							required>
+						<input type="tel" name="student_contact_number" id="student-contact-number" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 
 				<div>
 					<fieldset>
 						<legend>Telephone Number</legend>
-						<input type="tel" name="student_telephone_number" id="student-telephone-number"
-							placeholder="[OPTIONAL]">
+						<input type="tel" name="student_telephone_number" id="student-telephone-number" placeholder="[OPTIONAL]" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');">
 					</fieldset>
 				</div>
 			</section>
@@ -127,14 +129,13 @@
 					</div>
 
 					<div style="flex-grow: 1;">
-						<input type="text" name="student_address_municipality" id="student-address-municipality"
-							required>
+						<input type="text" name="student_address_municipality" id="student-address-municipality" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="student-address-municipality">Municipality</label>
 					</div>
 
 					<div style="flex-grow: 1;">
-						<input type="text" name="student_address_province" id="student-address-province" required>
+						<input type="text" name="student_address_province" id="student-address-province" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="student-address-province">Province</label>
 					</div>
@@ -156,8 +157,7 @@
 					<div>
 						<label for="student-application-grade">Application Grade</label>
 						<br>
-						<select name="student_application_grade" id="student-application-grade" style="width: 100%"
-							required>
+						<select name="student_application_grade" id="student-application-grade" style="width: 100%" required>
 							<option value="Default" hidden>Select Grade Level</option>
 							<option value="Grade 11">Grade 11</option>
 							<option value="Grade 12">Grade 12</option>
@@ -167,8 +167,7 @@
 					<div>
 						<label for="student-enrollment-status">Enrollment Status</label>
 						<br>
-						<select name="student_enrollment_status" id="student-enrollment-status" style="width: 100%"
-							disabled>
+						<select name="student_enrollment_status" id="student-enrollment-status" style="width: 100%" disabled>
 							<option value="Default" hidden>Select Enrollment Status</option>
 							<option value="New Student">New Student</option>
 							<option value="Old Student">Old Student</option>
@@ -177,8 +176,7 @@
 
 					<div>
 						<label for="student-number">Student Number</label>
-						<input type="text" name="student_number" id="student-number" pattern="[0-9]{4}-[0-9]{6}"
-							disabled>
+						<input type="text" name="student_number" id="student-number" pattern="[0-9]{4}-[0-9]{6}" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" disabled>
 					</div>
 				</section>
 			</fieldset>
@@ -246,8 +244,7 @@
 			<legend class="form-title">EDUCATIONAL BACKGROUND</legend>
 			<fieldset>
 				<legend>Learner Reference Number (LRN)</legend>
-				<input type="text" name="student_lrn" id="student-lrn" placeholder="123456123456"
-					pattern="[0-9]{6}[0-9]{6}" required>
+				<input type="text" name="student_lrn" id="student-lrn" placeholder="123456123456" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{6}[0-9]{6}" required>
 			</fieldset>
 
 			<fieldset>
@@ -266,15 +263,13 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_former_school_graduate_year"
-							id="student-former-school-graduate-year" placeholder="YYYY" pattern="[0-9]{4}" required>
+						<input type="text" name="student_former_school_graduate_year" id="student-former-school-graduate-year" placeholder="YYYY" pattern="[0-9]{4}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="student_former_school-graduate-year">Year Graduated</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_former_school_schoolyear" id="student-former-school-schoolyear"
-							placeholder="YYYY-YYYY" pattern="[0-9]{4}-[0-9]{4}" required>
+						<input type="text" name="student_former_school_schoolyear" id="student-former-school-schoolyear" placeholder="YYYY-YYYY" pattern="[0-9]{4}-[0-9]{4}" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="student-former-school-schoolyear">School Year</label>
 					</div>
@@ -294,19 +289,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_mother_last_name" id="student-mother-last-name" required>
+						<input type="text" name="student_mother_last_name" id="student-mother-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_mother_first_name" id="student-mother-first-name" required>
+						<input type="text" name="student_mother_first_name" id="student-mother-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_mother_middle_name" id="student-mother-middle-name" required>
+						<input type="text" name="student_mother_middle_name" id="student-mother-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for=" middle-name">Middle Name</label>
 					</div>
@@ -318,17 +313,14 @@
 				<div style="flex-grow: 5;">
 					<fieldset>
 						<legend>Occupation</legend>
-						<input type="text" name="student_mother_occupation" id="student-mother-occupation" required>
+						<input type="text" name="student_mother_occupation" id="student-mother-occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 
 				<div>
 					<fieldset>
 						<legend>Contact Number</legend>
-						<input type="tel" name="student_mother_contact_number" id="student-mother-contact-number"
-							placeholder="09XX-XXX-XXXX"
-							pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))"
-							required>
+						<input type="tel" name="student_mother_contact_number" id="student-mother-contact-number" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 			</section>
@@ -340,19 +332,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_father_last_name" id="student-father-last-name" required>
+						<input type="text" name="student_father_last_name" id="student-father-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_father_first_name" id="student-father-first-name" required>
+						<input type="text" name="student_father_first_name" id="student-father-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_father_middle_name" id="student-father-middle-name" required>
+						<input type="text" name="student_father_middle_name" id="student-father-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for=" middle-name">Middle Name</label>
 					</div>
@@ -364,17 +356,14 @@
 				<div style="flex-grow: 5;">
 					<fieldset>
 						<legend>Occupation</legend>
-						<input type="text" name="student_father_occupation" id="student-father-occupation" required>
+						<input type="text" name="student_father_occupation" id="student-father-occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 
 				<div>
 					<fieldset>
 						<legend>Contact Number</legend>
-						<input type="tel" name="student_father_contact_number" id="student-father-contact-number"
-							placeholder="09XX-XXX-XXXX"
-							pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))"
-							required>
+						<input type="tel" name="student_father_contact_number" id="student-father-contact-number" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 			</section>
@@ -392,22 +381,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_emergency_contact_last_name"
-							id="student-emergency-contact-last-name" required>
+						<input type="text" name="student_emergency_contact_last_name" id="student-emergency-contact-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_emergency_contact_first_name"
-							id="student-emergency-contact-first-name" required>
+						<input type="text" name="student_emergency_contact_first_name" id="student-emergency-contact-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for="first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_emergency_contact_middle_name"
-							id="student-emergency-contact-middle-name" required>
+						<input type="text" name="student_emergency_contact_middle_name" id="student-emergency-contact-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						<br>
 						<label for=" middle-name">Middle Name</label>
 					</div>
@@ -419,10 +405,7 @@
 				<div>
 					<fieldset>
 						<legend>Contact Number</legend>
-						<input type="tel" name="student_emergency_contact_contact_number"
-							id="student-emergency-contact-contact-number" placeholder="09XX-XXX-XXXX"
-							pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))"
-							required>
+						<input type="tel" name="student_emergency_contact_contact_number" id="student-emergency-contact-contact-number" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
 					</fieldset>
 				</div>
 			</section>
@@ -466,5 +449,6 @@
 	}
 </script>
 
+<script src="include/scripts/age-validation.js"></script>
 <script src="include/scripts/select-reset.js"></script>
 <script src="include/scripts/student-application-details-script.js"></script>

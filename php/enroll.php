@@ -31,13 +31,8 @@
 				Online Enrollment Form
 			</h2>
 
-
-			<h3>
-				NOTE: All those marked with a red asterisk<span style="color: rgb(255, 55, 55);">*</span> is required and should be answered.
-			</h3>
-
 			<div>
-				<?php require_once('include/enrollment-form.html'); ?>
+				<?php require_once('include/enrollment-form.php'); ?>
 			</div>
 		</div>
 	</section>
