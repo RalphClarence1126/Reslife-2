@@ -138,6 +138,13 @@ form :disabled {
 }
 
 @media screen and (max-width: 1130px) {
+	form {
+		font-size: small !important;
+	}
+	fieldset legend.form-title {
+		font-size: inherit;
+	}
+
 	form select {
 		width: 100%;
 	}
