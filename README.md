@@ -9,7 +9,7 @@ Reslife 2 project school year 2021-2022
 ## WEBSITE TODO
 
 - [x] Design
-- [ ] Prototype
+- [x] Prototype
 - [ ] Deployment
 
 - - -
@@ -20,8 +20,6 @@ Reslife 2 project school year 2021-2022
 
 A software development project that benefits both students and teachers in performing online school registration through an online registration
 
-<br>
-
 ### Key questions
 
 - Do students have sufficient credentials to complete the school registration?
@@ -29,19 +27,13 @@ A software development project that benefits both students and teachers in perfo
 - What will be the developers’ response to the concerns and issues?
 - Can this also be accessible not only for the student, but also for the school officials?
 
-<br>
-
 ### Proposed research title
 
 Student Information System: Implementation of A Web-Based Registration Platform for Senior High School Students to Attain Their Academic Enrollment
 
-<br>
-
 ### Contribution of the Research to the discipline
 
 It will become easier for students and teachers to manage their enrollment records. This study will also be available to future researchers who are studying relevant lessons about this kind of topic.
-
-<br>
 
 ### Design/Methodology
 
@@ -49,13 +41,9 @@ It will become easier for students and teachers to manage their enrollment recor
 **Research Method**: `Survey Approach`\
 **Sampling Method**: `Stratified Sampling`
 
-<br>
-
 ### Potential theoretical/methodological issues/challenges/requirements
 
 Inconsistent data collection standard, lack of detail, poor time management and concentration.
-
-<br>
 
 ### Potential ethical issues/challenges /requirements
 
