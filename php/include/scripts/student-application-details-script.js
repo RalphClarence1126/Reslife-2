@@ -18,6 +18,9 @@ applicationStudentGrade.addEventListener('change', function () {
 		applicationEnrollmentStatus.disabled = true;
 		applicationEnrollmentStatus.value = 'New Student';
 		applicationStudentNumber.disabled = true;
+		applicationStudentNumber.value = '';
+		applicationStudentNumber.removeAttribute('required');
+		applicationStudentNumber.removeAttribute('placeholder');
 	}
 });
 

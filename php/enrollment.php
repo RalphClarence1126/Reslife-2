@@ -18,7 +18,6 @@
 			<?php
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				include_once('include/notifications/is-enrolled.html');
-				include_once('include/notifications/enrollment-form-copy.php');
 			} else {
 				include_once('include/notifications/is-not-enrolled.html');
 			}
