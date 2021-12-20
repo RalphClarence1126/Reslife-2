@@ -12,19 +12,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_last_name" id="student-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_last_name" id="student-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="student-last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_first_name" id="student-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_first_name" id="student-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="student-first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_middle_name" id="student-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_middle_name" id="student-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for=" student-middle-name">Middle Name</label>
 					</div>
@@ -33,7 +33,7 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_suffix_name" id="student-suffix-name" placeholder="[OPTIONAL]" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');">
+						<input type="text" name="student_suffix_name" id="student-suffix-name" placeholder="[OPTIONAL]" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();">
 						<br>
 						<label for=" student-suffix-name">Suffix</label>
 					</div>
@@ -67,7 +67,7 @@
 
 				<fieldset style="width: 100%;">
 					<legend>Place of Birth</legend>
-					<input type="text" name="student_birthplace" id="student-birthplace" required>
+					<input type="text" name="student_birthplace" id="student-birthplace" oninput="this.value = this.value.toUpperCase();" required>
 					<label for="student-birthplace">Address</label>
 				</fieldset>
 			</section>
@@ -83,14 +83,14 @@
 				<div>
 					<fieldset>
 						<legend>Gender</legend>
-						<input type="text" name="student_gender" id="student-gender" pattern="[a-zA-Z|\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_gender" id="student-gender" pattern="[a-zA-Z|\-]+" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 					</fieldset>
 				</div>
 
 				<div>
 					<fieldset>
 						<legend>Religion</legend>
-						<input type="text" name="student_religion" id="student-religion" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_religion" id="student-religion" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 					</fieldset>
 				</div>
 			</section>
@@ -99,7 +99,7 @@
 				<div style="flex-grow: 4;">
 					<fieldset>
 						<legend>Email Address</legend>
-						<input type="email" name="student_email" id="student-email" placeholder="example@email.com" pattern="\S+@\S+\.com" required>
+						<input type="email" name="student_email" id="student-email" placeholder="example@email.com" pattern="\S+@\S+\.com" oninput="this.value = this.value.toLowerCase();" required>
 					</fieldset>
 				</div>
 
@@ -123,19 +123,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div style="flex-grow: 7;">
-						<input type="text" name="student_address_street" id="student-address-street" required>
+						<input type="text" name="student_address_street" id="student-address-street" oninput="this.value = this.value.toUpperCase();" required>
 						<br>
 						<label for="student-address-street">Street Address</label>
 					</div>
 
 					<div style="flex-grow: 1;">
-						<input type="text" name="student_address_municipality" id="student-address-municipality" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_address_municipality" id="student-address-municipality" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="student-address-municipality">Municipality</label>
 					</div>
 
 					<div style="flex-grow: 1;">
-						<input type="text" name="student_address_province" id="student-address-province" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_address_province" id="student-address-province" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="student-address-province">Province</label>
 					</div>
@@ -157,7 +157,7 @@
 					<div>
 						<label for="student-application-grade">Application Grade</label>
 						<br>
-						<select name="student_application_grade" id="student-application-grade" style="width: 100%" required>
+						<select name="student_application_grade" id="student-application-grade" style="width: 100%" onload="this.value = 'Default';" required>
 							<option value="Default" hidden>Select Grade Level</option>
 							<option value="Grade 11">Grade 11</option>
 							<option value="Grade 12">Grade 12</option>
@@ -167,7 +167,7 @@
 					<div>
 						<label for="student-enrollment-status">Enrollment Status</label>
 						<br>
-						<select name="student_enrollment_status" id="student-enrollment-status" style="width: 100%" disabled>
+						<select name="student_enrollment_status" id="student-enrollment-status" style="width: 100%" onload="this.value = '';" disabled>
 							<option value="Default" hidden>Select Enrollment Status</option>
 							<option value="New Student">New Student</option>
 							<option value="Old Student">Old Student</option>
@@ -183,7 +183,7 @@
 
 			<fieldset>
 				<legend>Strand Preference</legend>
-				<select name="student_strand_preference" id="student-strand-preference" required>
+				<select name="student_strand_preference" id="student-strand-preference" onload="this.value = 'Default';" required>
 					<option value="Default" hidden>Select Strand Preference</option>
 					<option value="STEM">STEM</option>
 					<option value="ABM">ABM</option>
@@ -252,7 +252,7 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div style="flex-grow: 4;">
-						<input type="text" name="student_former_school" id="student-former-school" required>
+						<input type="text" name="student_former_school" id="student-former-school" oninput="this.value = this.value.toUpperCase();" required>
 						<br>
 						<label for="student-former-school">Complete School Name</label>
 					</div>
@@ -289,19 +289,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_mother_last_name" id="student-mother-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_mother_last_name" id="student-mother-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_mother_first_name" id="student-mother-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_mother_first_name" id="student-mother-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_mother_middle_name" id="student-mother-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_mother_middle_name" id="student-mother-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for=" middle-name">Middle Name</label>
 					</div>
@@ -313,7 +313,7 @@
 				<div style="flex-grow: 5;">
 					<fieldset>
 						<legend>Occupation</legend>
-						<input type="text" name="student_mother_occupation" id="student-mother-occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_mother_occupation" id="student-mother-occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 					</fieldset>
 				</div>
 
@@ -332,19 +332,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_father_last_name" id="student-father-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_father_last_name" id="student-father-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_father_first_name" id="student-father-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_father_first_name" id="student-father-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_father_middle_name" id="student-father-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_father_middle_name" id="student-father-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for=" middle-name">Middle Name</label>
 					</div>
@@ -356,7 +356,7 @@
 				<div style="flex-grow: 5;">
 					<fieldset>
 						<legend>Occupation</legend>
-						<input type="text" name="student_father_occupation" id="student-father-occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_father_occupation" id="student-father-occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 					</fieldset>
 				</div>
 
@@ -381,19 +381,19 @@
 
 				<section class="horizontal-form-items" id="horizontal-items">
 					<div>
-						<input type="text" name="student_emergency_contact_last_name" id="student-emergency-contact-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_emergency_contact_last_name" id="student-emergency-contact-last-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="last-name">Last Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_emergency_contact_first_name" id="student-emergency-contact-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_emergency_contact_first_name" id="student-emergency-contact-first-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for="first-name">First Name</label>
 					</div>
 
 					<div>
-						<input type="text" name="student_emergency_contact_middle_name" id="student-emergency-contact-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1');" required>
+						<input type="text" name="student_emergency_contact_middle_name" id="student-emergency-contact-middle-name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
 						<br>
 						<label for=" middle-name">Middle Name</label>
 					</div>
@@ -421,34 +421,5 @@
 	</div>
 </form>
 
-<script>
-	function verifyReset() {
-		if (confirm("Are you sure to reset your enrollment form?")) {
-			let inputArray = document.getElementsByTagName("input");
-			for (let i = 0; i < inputArray.length; i++) {
-				inputArray[i].value = '';
-			}
-
-			let selectArray = document.getElementsByTagName("select");
-			for (let i = 0; i < selectArray.length; i++) {
-				selectArray[i].value = '';
-			}
-
-			document.getElementById('student-application-grade').value = 'Default';
-
-			document.getElementById('student-enrollment-status').value = '';
-			document.getElementById('student-enrollment-status').disabled = true;
-
-			document.getElementById('student-number').removeAttribute('placeholder');
-			document.getElementById('student-number').disabled = true;
-
-			document.getElementById('student-strand-preference').value = 'Default';
-
-			document.getElementById("reset").value = "Reset Form";
-		}
-	}
-</script>
-
-<script src="include/scripts/age-validation.js"></script>
-<script src="include/scripts/select-reset.js"></script>
+<script src="include/scripts/validations.js"></script>
 <script src="include/scripts/student-application-details-script.js"></script>
