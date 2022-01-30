@@ -1,0 +1,305 @@
+/* Color Palette Themes */
+.blue {
+	background-color: #0096ff;
+}
+.gold {
+	background-color: #ffc001;
+}
+.white {
+	background-color: #ffffff;
+}
+.light-gray {
+	background-color: #dbdbdb;
+}
+.gray {
+	background-color: #b9b9b9;
+}
+.dark-gray {
+	background-color: #222222;
+}
+.darker-gray {
+	background-color: #1b1b1b;
+}
+/* End Color Palette Themes */
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	font-family: sans-serif;
+	font-size: large;
+	height: 100%;
+}
+
+body {
+	background-color: #b9b9b9;
+	margin: 0px;
+	height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #0096ff;
+	margin: 12px 0px;
+}
+.blue h1,
+.blue h2,
+.blue h3,
+.blue h4,
+.blue h5,
+.blue h6 {
+	color: #ffffff;
+	margin: 12px 0px;
+}
+
+a {
+	color: #ff3737;
+	text-decoration: none;
+	transition: all 0.1s linear;
+}
+
+p {
+	margin: 12px 0px;
+}
+
+/* Padding */
+.padded {
+	padding: 20px !important;
+}
+.padded-none {
+	padding: 0 !important;
+}
+.padded-top-bottom {
+	padding: 20px 0px !important;
+}
+.padded-top {
+	padding-top: 20px !important;
+}
+.padded-bottom {
+	padding-bottom: 20px !important;
+}
+.padded-left-right {
+	padding: 0px 20px !important;
+}
+.padded-left {
+	padding-left: 20px !important;
+}
+.padded-right {
+	padding-right: 20px !important;
+}
+/* End Padding */
+
+/* Margin */
+.margin {
+	margin: 20px !important;
+}
+.margin-none {
+	margin: 0px !important;
+}
+.margin-top-bottom {
+	margin: 20px 0px !important;
+}
+.margin-top {
+	margin-top: 20px !important;
+}
+.margin-bottom {
+	margin-bottom: 20px !important;
+}
+.margin-left-right {
+	margin: 0px 20px !important;
+}
+.margin-left {
+	margin-left: 20px !important;
+}
+.margin-right {
+	margin-right: 20px !important;
+}
+/* End Margin */
+
+/* Container */
+.center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.full-height {
+	height: 100% !important;
+}
+
+.full-width {
+	width: 100% !important;
+}
+.three-quarter-width {
+	width: 75% !important;
+}
+.half-width {
+	width: 50% !important;
+}
+.quarter-width {
+	width: 25% !important;
+}
+.fit-width {
+	width: fit-content !important;
+}
+
+.equal-container {
+	display: flex;
+	width: 100%;
+}
+.equal-content {
+	flex: 1;
+}
+.equal-container-spaced {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+.equal-content-spaced {
+	display: block;
+}
+
+.rounded {
+	border-radius: 20px;
+}
+.rounded-top {
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+.rounded-bottom {
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+.rounded-left {
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+}
+.rounded-right {
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+/* End Container */
+
+/* Text */
+.no-wrap {
+	white-space: nowrap;
+}
+/* End Text */
+
+/* Form */
+fieldset {
+	border: none;
+}
+input {
+	outline: none;
+	border: none;
+	border-bottom: 2px solid #b9b9b9;
+	font-family: monospace;
+	font-size: inherit;
+	padding: 4px;
+	transition: all 0.1s linear;
+}
+input:hover {
+	border-bottom: 2px solid #ffc001;
+	transition: all 0.1s linear;
+}
+input:focus {
+	border-bottom: 2px solid #0096ff;
+	transition: all 0.1s linear;
+}
+input[type='checkbox'],
+input[type='checkbox'] + label {
+	cursor: pointer;
+}
+button {
+	border: none;
+	background-color: #0096ff;
+	padding: 8px;
+	color: #ffffff;
+	font-size: larger;
+	cursor: pointer;
+	transition: all 0.1s linear;
+}
+button:hover {
+	background-color: #0095ff40;
+	color: #0096ff;
+	transition: all 0.1s linear;
+}
+/* button:focus {
+	border: 2px solid transparent;
+	background-color: transparent;
+	color: #0096ff;
+	transition: all 0.1s linear;
+} */
+button.red {
+	border: none;
+	background-color: #ff3737;
+	padding: 8px;
+	color: #ffffff;
+	font-size: larger;
+	cursor: pointer;
+	transition: all 0.1s linear;
+}
+button.red:hover {
+	background-color: #ff373740;
+	color: #ff3737;
+	transition: all 0.1s linear;
+}
+/* button.red:focus {
+	border: 2px solid transparent;
+	background-color: transparent;
+	color: #ff3737;
+	transition: all 0.1s linear;
+} */
+/* End Form */
+
+/* Animation */
+.fade-in {
+	animation-name: FadeIn;
+	animation-duration: 1s;
+	transition-timing-function: cubic-bezier(1, 0, 0, 1);
+}
+
+@keyframes FadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+/* End Animation */
+
+/* Menu Bar */
+.sticky {
+	position: sticky;
+	top: 0;
+}
+.menu-bar {
+	display: flex;
+	justify-content: space-between;
+	background-color: #0096ff;
+}
+.menu-bar .group {
+	display: block;
+}
+.menu-bar .item {
+	padding: 10px 20px;
+	background-color: transparent;
+	display: inline-block;
+	color: #ffffff;
+}
+.menu-bar .item:hover {
+	background-color: #ffffff;
+	color: #0096ff;
+}
+.menu-bar .item.title {
+	font-weight: 600;
+}
+/* End Menu Bar */
