@@ -11,20 +11,20 @@ if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
 }
 
 $login_message = 'Login to your account';
-$cookie_name = 'remember_username';
+$cookie_name = 'remember_email';
 
-// Check if login username and password is not empty
-if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
+// Check if login email and password is not empty
+if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
-	// Validate login username and password
-	if ($_POST['username'] == 'user' && $_POST['password'] == 'user') {
+	// Validate login email and password
+	if ($_POST['email'] == 'user@email.com' && $_POST['password'] == 'user') {
 		$_SESSION['valid'] = true;
 		$_SESSION['timeout'] = time();
-		$_SESSION['username'] = $_POST['username'];
+		$_SESSION['username'] = 'User';
 
 		// Check if user wants to remember login
 		if ($_POST['remember_login'] == 'on') {
-			setcookie($cookie_name, $_SESSION['username'], time() + (86400 * 30), '/');
+			setcookie($cookie_name, $_SESSION['email'], time() + (86400 * 30), '/');
 		} else {
 			setcookie($cookie_name, '', time() - 3600, '/');
 		}
@@ -36,7 +36,7 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
 		header('location: /index.php');
 		exit;
 	} else {
-		$login_message = 'Wrong username or password';
+		$login_message = 'Wrong email or password';
 	}
 }
 ?>
@@ -64,11 +64,6 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
 					Login
 				</h1>
 
-				<small>
-					<p>
-						Don't have an account? <a href="/website/register.php">Sign in</a> here
-					</p>
-				</small>
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
 					<fieldset class="padded-top-bottom margin-none">
 						<legend>
@@ -77,7 +72,7 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
 							</span>
 						</legend>
 
-						<input class="full-width" type="text" name="username" placeholder="username" value="<?php echo (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : ''; ?>" oninput="this.value = this.value.toLowerCase();" required autofocus>
+						<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required autofocus>
 						<br>
 						<br>
 						<input class="full-width" type="password" name="password" placeholder="password" required>
@@ -106,7 +101,9 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
 			</div>
 			<div class="padded light-gray equal-content rounded-right">
 				<div class="full-height center">
-					<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy">
+					<a href="/index.php">
+						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy">
+					</a>
 				</div>
 			</div>
 		</div>

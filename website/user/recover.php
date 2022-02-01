@@ -10,31 +10,14 @@ if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
 	exit;
 }
 
-$signin_message = 'Please fill the form below';
-$cookie_name = 'remember_username';
+$signin_message = 'Please input account email';
 
-// Check if login username and password is not empty
-if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
+// Check if email is not empty
+if (isset($_POST['login']) && !empty($_POST['email'])) {
 
-	// Validate login username and password
-	if ($_POST['username'] == 'user') {
-		$_SESSION['valid'] = true;
-		$_SESSION['timeout'] = time();
-		$_SESSION['username'] = $_POST['username'];
-
-		// Check if user wants to remember login
-		if ($_POST['remember_login'] == 'on') {
-			setcookie($cookie_name, $_SESSION['username'], time() + (86400 * 30), '/');
-		} else {
-			setcookie($cookie_name, '', time() - 3600, '/');
-		}
-
-		$signin_message = 'Logged in';
-
-		// Redirect to profile page
-		// header('location: /website/user/profile/student.php');
-		header('location: /index.php');
-		exit;
+	// Validate email
+	if ($_POST['email'] == 'user@email.com') {
+		$signin_message = 'An email to reset account password has been sent to ' . $_POST['email'];
 	} else {
 		$signin_message = 'User does not exist';
 	}
@@ -70,39 +53,23 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
 					</p>
 				</small>
 
-				<small>
-					<p>
-						Don't have an account? <a href="/website/register.php">Sign in</a> here
-					</p>
-				</small>
-
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
 					<fieldset class="padded-top-bottom margin-none">
 						<legend>
-							<span class="no-wrap">
-								<?php echo $signin_message; ?>
-							</span>
+							<?php echo $signin_message; ?>
 						</legend>
 
-						<input class="full-width" type="text" name="username" placeholder="username" value="<?php echo (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : ''; ?>" pattern="\S+" oninput="this.value = this.value.toLowerCase();" required autofocus>
-						<br>
-						<br>
-						<input class="full-width" type="password" name="password" placeholder="new password" pattern="\S{4,}" required>
+						<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required>
 
-						<div class="equal-container-spaced margin-top">
-							<div class="equal-content-spaced half-width">
-								<button type="submit" name="login" class="rounded full-width">Login</button>
-							</div>
-							<div class="equal-content-spaced">
-								<button type="reset" class="red rounded">Reset</button>
-							</div>
-						</div>
+						<button type="submit" name="login" class="rounded full-width margin-top">Reset Password</button>
 					</fieldset>
 				</form>
 			</div>
 			<div class="padded light-gray equal-content rounded-right">
 				<div class="full-height center">
-					<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy">
+					<a href="/index.php">
+						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy">
+					</a>
 				</div>
 			</div>
 		</div>
