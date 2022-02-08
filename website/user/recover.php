@@ -53,6 +53,12 @@ if (isset($_POST['login']) && !empty($_POST['email'])) {
 					</p>
 				</small>
 
+				<small>
+					<p>
+						Don't have an account? <a href="/website/register.php">Sign in</a> here
+					</p>
+				</small>
+
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
 					<fieldset class="padded-top-bottom margin-none">
 						<legend>

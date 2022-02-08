@@ -46,7 +46,7 @@ h4,
 h5,
 h6 {
 	color: #0096ff;
-	margin: 12px 0px;
+	margin: 10px 0px;
 }
 .blue h1,
 .blue h2,
@@ -55,7 +55,7 @@ h6 {
 .blue h5,
 .blue h6 {
 	color: #ffffff;
-	margin: 12px 0px;
+	margin: 10px 0px;
 }
 .gold h1,
 .gold h2,
@@ -64,7 +64,7 @@ h6 {
 .gold h5,
 .gold h6 {
 	color: #0096ff;
-	margin: 12px 0px;
+	margin: 10px 0px;
 }
 
 a {
@@ -74,7 +74,7 @@ a {
 }
 
 p {
-	margin: 12px 0px;
+	margin: 10px 0px;
 }
 
 ul {

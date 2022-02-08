@@ -1,4 +1,7 @@
 <?php
+// Require database config
+require('database/config.php');
+
 session_start();
 
 // Check if user is already logged in
@@ -16,28 +19,34 @@ $cookie_name = 'remember_email';
 // Check if login email and password is not empty
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
-	// Validate login email and password
-	if ($_POST['email'] == 'user@email.com' && $_POST['password'] == 'user') {
-		$_SESSION['valid'] = true;
-		$_SESSION['timeout'] = time();
-		$_SESSION['username'] = 'User';
+	// Validate login email and password credentials
+	$email = $_POST['email'];
+	$password = $_POST['password'];
 
-		// Check if user wants to remember login
-		if ($_POST['remember_login'] == 'on') {
-			setcookie($cookie_name, $_SESSION['email'], time() + (86400 * 30), '/');
-		} else {
-			setcookie($cookie_name, '', time() - 3600, '/');
+	$query = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+	$result = mysqli_query($mysqli, $query);
+	if ($result) {
+		if (mysqli_num_rows($result) > 0) {
+			$_SESSION['valid'] = true;
+			$_SESSION['timeout'] = time();
+			$_SESSION['username'] = $email;
+
+			// Check if user wants to remember login
+			if ($_POST['remember_login'] == 'on') {
+				setcookie($cookie_name, $_SESSION['email'], time() + (86400 * 30), '/');
+			} else {
+				setcookie($cookie_name, '', time() - 3600, '/');
+			}
+
+			// Redirect to profile page
+			// header('location: /website/user/profile/student.php');
+			header('location: /index.php');
+			exit;
 		}
-
-		$login_message = 'Logged in';
-
-		// Redirect to profile page
-		// header('location: /website/user/profile/student.php');
-		header('location: /index.php');
-		exit;
-	} else {
-		$login_message = 'Wrong email or password';
 	}
+
+	// Invalid login credentials
+	$login_message = 'Invalid email or password';
 }
 ?>
 
@@ -64,6 +73,12 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 					Login
 				</h1>
 
+				<small>
+					<p>
+						Don't have an account? <a href="/website/register.php">Sign in</a> here
+					</p>
+				</small>
+
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
 					<fieldset class="padded-top-bottom margin-none">
 						<legend>
@@ -87,7 +102,8 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 								</span>
 							</div>
 							<div class="equal-content padded-left-right center">
-								<a href="/website/user/recover.php">
+								<!-- <a href="/website/user/recover.php"> -->
+								<a>
 									<span class="no-wrap">
 										Forgot Password?
 									</span>
