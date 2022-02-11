@@ -4,7 +4,13 @@
 session_start();
 
 // Check if user is already logged in
-if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
+if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
+
+	// Redirect to profile page
+	// header('location: /website/user/profile/admin.php');
+	// exit;
+	header('refresh: 2; url = /website/user/profile/admin.php');
+} else if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
 
 	// Redirect to profile page
 	// header('location: /website/user/profile/student.php');

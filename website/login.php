@@ -23,17 +23,45 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 
-	$query = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
-	$result = mysqli_query($mysqli, $query);
-	if ($result) {
-		if (mysqli_num_rows($result) > 0) {
-			$_SESSION['valid'] = true;
+	// Admin login query
+	$query_admin = "SELECT * FROM ad WHERE ad_email = '$email' AND ad_pass = '$password'";
+	$result_admin = mysqli_query($mysqli, $query_admin);
+
+	// Check for admin login
+	if ($result_admin) {
+		if (mysqli_num_rows($result_admin) > 0) {
+			$_SESSION['valid_admin'] = true;
 			$_SESSION['timeout'] = time();
 			$_SESSION['username'] = $email;
 
 			// Check if user wants to remember login
 			if ($_POST['remember_login'] == 'on') {
-				setcookie($cookie_name, $_SESSION['email'], time() + (86400 * 30), '/');
+				setcookie($cookie_name, $email, time() + (86400 * 30), '/');
+			} else {
+				setcookie($cookie_name, '', time() - 3600, '/');
+			}
+
+			// Redirect to profile page
+			// header('location: /website/user/profile/student.php');
+			header('location: /index.php');
+			exit;
+		}
+	}
+
+	// Student login query
+	$query_student = "SELECT * FROM stds WHERE stds_email = '$email' AND stds_pass = '$password'";
+	$result_student = mysqli_query($mysqli, $query_student);
+
+	// Check for student login
+	if ($result_student) {
+		if (mysqli_num_rows($result_student) > 0) {
+			$_SESSION['valid_student'] = true;
+			$_SESSION['timeout'] = time();
+			$_SESSION['username'] = $email;
+
+			// Check if user wants to remember login
+			if ($_POST['remember_login'] == 'on') {
+				setcookie($cookie_name, $email, time() + (86400 * 30), '/');
 			} else {
 				setcookie($cookie_name, '', time() - 3600, '/');
 			}
@@ -87,7 +115,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 							</span>
 						</legend>
 
-						<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required autofocus>
+						<input class="full-width" type="email" name="email" placeholder="email" value="<?php echo (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : ''; ?>" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+" required autofocus>
 						<br>
 						<br>
 						<input class="full-width" type="password" name="password" placeholder="password" required>

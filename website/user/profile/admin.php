@@ -2,7 +2,7 @@
 session_start();
 
 // To prevent invalid tampering with an account
-if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
+if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 	$get_username_profile = $_SESSION['username'];
 
 	$email_regex = '/(\S+)@\S+/';

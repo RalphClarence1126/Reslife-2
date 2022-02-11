@@ -5,7 +5,15 @@ require('database/config.php');
 session_start();
 
 // Check if user is already logged in
-if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
+if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
+
+	// Redirect to profile page
+	header('location: /website/user/profile/admin.php');
+	exit;
+}
+
+// Check if user is already logged in
+if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
 
 	// Redirect to profile page
 	header('location: /website/user/profile/student.php');
@@ -18,7 +26,7 @@ $signin_message = 'Please fill the form below';
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
 	// Database
-	$sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
+	$sql = 'INSERT INTO stds (stds_email, stds_pass) VALUES (?, ?)';
 
 	if ($stmt = $mysqli->prepare($sql)) {
 		if (!$stmt) {
@@ -28,7 +36,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 			$password = $_POST['password'];
 
 			// Check if account  email already exists in database
-			$query = "SELECT * FROM users WHERE email = '$email'";
+			$query = "SELECT * FROM stds WHERE stds_email = '$email'";
 			$result = mysqli_query($mysqli, $query);
 			if ($result) {
 				if (mysqli_num_rows($result) > 0) {
@@ -49,7 +57,6 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 						$signin_message = 'Something went wrong in creating your account';
 					}
 
-					$stmt->execute();
 					$stmt->close();
 					$mysqli->close();
 				}
