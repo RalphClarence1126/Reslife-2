@@ -40,3 +40,7 @@ DB_NAME: prototype
 > Then run the database table configuration in [`config_table.sql`](website/database/config_table.sql)\
 > \
 > You can also run both the [`config_account_admin.sql`](website/database/config_account_admin.sql) and [`config_account_student.sql`](website/database/config_account_student.sql) to test as dummy accounts
+
+## Image Attributions
+
+- [kmg design](https://www.flaticon.com/free-icons/user)

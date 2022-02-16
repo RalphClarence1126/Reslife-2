@@ -3,10 +3,7 @@ require('../../database/config.php');
 
 
 session_start();
-
-
-$new_student_announcements = $mysqli->query("SELECT UPDATE_TIME FROM information_schema.tables WHERE TABLE_SCHEMA = 'prototype' AND TABLE_NAME = 'ad_stdAnn'")->fetch_object()->UPDATE_TIME;
-
+ob_start();
 
 
 if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
@@ -63,7 +60,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Portal</title>
+	<title>Admission</title>
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
@@ -74,17 +71,19 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<div class="fade-in padded-left-right">
 		<div class="padded-bottom">
 			<div class="padded white rounded-bottom margin-bottom">
-				<div class="equal-content center">
+				<div class="equal-container">
+					<div class="equal-content center">
 
-				</div>
+					</div>
 
-				<div class="equal-content center">
-					<a href="/index.php">
-						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="60" width="60" loading="lazy">
-					</a>
-				</div>
-				<div class="equal-content center">
-
+					<div class="equal-content center">
+						<a href="/index.php">
+							<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="60" width="60" loading="lazy">
+						</a>
+					</div>
+					<div class="equal-content center">
+						<h2>Admission</h2>
+					</div>
 				</div>
 			</div>
 
@@ -132,7 +131,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 					</div>
 				</div>
 
-				<div class="rounded padded-top-bottom gray">
+				<div class="rounded-top padded-top-bottom gray">
 					<div class="equal-container-spaced">
 						<div class="equal-content padded-left-right">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
@@ -160,6 +159,18 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 							</form>
 						</div>
 					</div>
+				</div>
+				<div class="rounded-bottom light-gray padded">
+					<?php
+					$get_admission_form_boolean = $mysqli->query('SELECT g_frm_admn_bool FROM g_frm_admn')->fetch_object()->g_frm_admn_bool;
+					$mysqli->close();
+
+					if (!$get_admission_form_boolean) {
+						include('../notification/form_closed_admission.html');
+					} else {
+						include('../forms/student/admission.php');
+					}
+					?>
 				</div>
 			</div>
 		</div>

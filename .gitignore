@@ -1,2 +1,7 @@
 private
 test
+website/backup/*
+website/user/profile/uploads/admin/forms/*
+website/user/profile/uploads/admin/profile/*
+website/user/profile/uploads/student/forms/*
+website/user/profile/uploads/student/profile/*

@@ -1,555 +1,656 @@
 <?php
+require('../../database/config.php');
+
+
 session_start();
 
-// To prevent invalid tampering with an account
-if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
-	$get_username_profile = $_SESSION['username'];
-} else {
 
-	// Redirect to default page
-	header('location: /index.php');
-	exit;
-}
+$email = $_SESSION['username'];
+$std_acc_id = $mysqli->query("SELECT * FROM stds WHERE stds_email = '$email'")->fetch_object()->stds_acc_id;
+$sql = '';
 
-// Check if user wants to check profile
-if (!empty($_POST) && isset($_POST['profile'])) {
 
-	// Redirect to profile
-	header('location: /website/user/profile/student.php');
-	exit;
-}
+if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
+	$mysqli->query("INSERT INTO stds_frm_addm (stds_acc_id) VALUES ('$std_acc_id')");
 
-// Check if user wants to logout of the account
-if (!empty($_POST) && isset($_POST['logout'])) {
+	$std_birth_address = $_POST['std_birth_address'];
+	$std_tel_number = $_POST['std_tel_number'];
 
-	// Redirect to logout
-	// header('location: /website/user/logout.php');
-	// exit;
+	$mysqli->query("UPDATE stds_frm_addm SET stds_birth_address = '$std_birth_address', stds_tel_number = '$std_tel_number' WHERE stds_acc_id = '$std_acc_id'");
 
-	// Unset session variables
-	$_SESSION = array();
 
-	session_destroy();
+	$std_grade_level = $_POST['std_grade_level'];
+	$std_student_status = $_POST['std_student_status'];
+	$std_std_number = $_POST['std_std_number'];
 
-	// Redirect to main page
-	header('location: /index.php');
+	$mysqli->query("UPDATE stds_frm_addm SET stds_grade_level = '$std_grade_level', stds_student_status = '$std_student_status', stds_std_number = '$std_std_number' WHERE stds_acc_id = '$std_acc_id'");
+
+	$target_dir = "uploads/student/forms/";
+
+	if (is_dir($target_dir . $email)) {
+		$target_dir = "uploads/student/forms/" . $email . "/";
+	} else {
+		mkdir("uploads/student/forms/" . $email);
+		$target_dir = "uploads/student/forms/" . $email . "/";
+	}
+
+	$target_file = $target_dir . basename($_FILES["std_2x2_pic"]["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+	if ($check !== false) {
+		$uploadOk = 1;
+	} else {
+		$uploadOk = 0;
+	}
+	if (file_exists($target_file)) {
+		$uploadOk = 0;
+	}
+	if ($uploadOk == 1) {
+		if (move_uploaded_file($_FILES["std_2x2_pic"]["tmp_name"], $target_file)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	} else {
+		if ($target_file != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	}
+
+	$target_file = $target_dir . basename($_FILES["std_psa"]["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+	if ($check !== false) {
+		$uploadOk = 1;
+	} else {
+		$uploadOk = 0;
+	}
+	if (file_exists($target_file)) {
+		$uploadOk = 0;
+	}
+	if ($uploadOk == 1) {
+		if (move_uploaded_file($_FILES["std_psa"]["tmp_name"], $target_file)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_psa = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	} else {
+		if ($target_file != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_psa = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	}
+
+	$target_file = $target_dir . basename($_FILES["std_good_moral"]["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+	if ($check !== false) {
+		$uploadOk = 1;
+	} else {
+		$uploadOk = 0;
+	}
+	if (file_exists($target_file)) {
+		$uploadOk = 0;
+	}
+	if ($uploadOk == 1) {
+		if (move_uploaded_file($_FILES["std_good_moral"]["tmp_name"], $target_file)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_good_moral = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	} else {
+		if ($target_file != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_good_moral = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	}
+
+	$target_file = $target_dir . basename($_FILES["std_form_137"]["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+	if ($check !== false) {
+		$uploadOk = 1;
+	} else {
+		$uploadOk = 0;
+	}
+	if (file_exists($target_file)) {
+		$uploadOk = 0;
+	}
+	if ($uploadOk == 1) {
+		if (move_uploaded_file($_FILES["std_form_137"]["tmp_name"], $target_file)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_form_137 = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	} else {
+		if ($target_file != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	}
+
+
+	$std_std_lrn = $_POST['std_std_lrn'];
+	$std_former_school = $_POST['std_former_school'];
+	$std_former_graduate_year = $_POST['std_former_graduate_year'];
+	$std_former_school_year = $_POST['std_former_school_year'];
+
+	$mysqli->query("UPDATE stds_frm_addm SET stds_std_lrn = '$std_std_lrn', stds_former_school = '$std_former_school', stds_former_graduate_year = '$std_former_graduate_year', stds_former_school_year = '$std_former_school_year' WHERE stds_acc_id = '$std_acc_id'");
+
+
+	$std_mother_lname = $_POST['std_mother_lname'];
+	$std_mother_fname = $_POST['std_mother_fname'];
+	$std_mother_mname = $_POST['std_mother_mname'];
+	$std_mother_occupation = $_POST['std_mother_occupation'];
+	$std_mother_contact = $_POST['std_mother_contact'];
+
+	$mysqli->query("UPDATE stds_frm_addm SET stds_mother_lname = '$std_mother_lname', stds_mother_fname = '$std_mother_fname', stds_mother_mname = '$std_mother_mname', stds_mother_occupation = '$std_mother_occupation', stds_mother_contact = '$std_mother_contact' WHERE stds_acc_id = '$std_acc_id'");
+
+
+	$std_father_lname = $_POST['std_father_lname'];
+	$std_father_fname = $_POST['std_father_fname'];
+	$std_father_mname = $_POST['std_father_mname'];
+	$std_father_occupation = $_POST['std_father_occupation'];
+	$std_father_contact = $_POST['std_father_contact'];
+
+	$mysqli->query("UPDATE stds_frm_addm SET stds_father_lname = '$std_father_lname', stds_father_fname = '$std_father_fname', stds_father_mname = '$std_father_mname', stds_father_occupation = '$std_father_occupation', stds_father_contact = '$std_father_contact' WHERE stds_acc_id = '$std_acc_id'");
+
+
+	$std_emergency_contact_lname = $_POST['std_emergency_contact_lname'];
+	$std_emergency_contact_fname = $_POST['std_emergency_contact_fname'];
+	$std_emergency_contact_mname = $_POST['std_emergency_contact_mname'];
+	$std_emergency_contact_contact = $_POST['std_emergency_contact_contact'];
+
+	$mysqli->query("UPDATE stds_frm_addm SET stds_emergency_contact_lname = '$std_emergency_contact_lname', stds_emergency_contact_fname = '$std_emergency_contact_fname', stds_emergency_contact_mname = '$std_emergency_contact_mname', stds_emergency_contact_contact = '$std_emergency_contact_contact' WHERE stds_acc_id = '$std_acc_id'");
+
+
+	header('location: /website/user/profile/student.admission.php');
 	exit;
 }
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
+<div class="blue padded rounded-top">
+	<h4>
+		Admission Form
+	</h4>
+</div>
+<div class="white padded rounded-bottom">
+	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" autocomplete="off">
+		<fieldset class="padded-none margin-none margin-bottom">
+			<legend class="rounded gold padded-left-right full-width center">
+				<h5>
+					Learner Information
+				</h5>
+			</legend>
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Profile | <?php echo ucfirst($get_username_profile); ?> | Admission Form</title>
+			<div class="notification margin-top">
+				Information saved in your user profile will be directly shown here as well. Any changes you make here will show up in your profile as well.
+			</div>
 
-	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Student's Name
+				</legend>
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<input class="full-width" type="text" name="std_lname" id="std_lname" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																						$retval = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
+																																						echo $retval;
+																																						?>" required>
+						<br>
+						<label for="std_lname">Last Name</label>
+					</div>
+					<div class="equal-content padded-left-right">
+						<input class="full-width" type="text" name="std_fname" id="std_fname" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																						$retval = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
+																																						echo $retval;
+																																						?>" required>
+						<br>
+						<label for="std_fname">First Name</label>
+					</div>
+					<div class="equal-content padded-left-right">
+						<input class="full-width" type="text" name="std_mname" id="std_mname" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																						$retval = $mysqli->query("SELECT stds_mname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_mname;
+																																						echo $retval;
+																																						?>" required>
+						<br>
+						<label for="std_mname">Middle Name</label>
+					</div>
+					<div class="equal-content padded-left">
+						<input class="full-width" type="text" name="std_suffix" id="std_suffix" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																						$retval = $mysqli->query("SELECT stds_suffix FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_suffix;
+																																						echo $retval;
+																																						?>" placeholder="[OPTIONAL]">
+						<br>
+						<label for="std_suffix">Suffix</label>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Student's Date of Birth
+				</legend>
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<input class="full-width" type="text" name="std_birth_moth" id="std_birth_moth" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="MM" value="<?php
+																																																											$retval = $mysqli->query("SELECT stds_birth_month FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_month;
+																																																											echo $retval;
+																																																											?>" required>
+						<br>
+						<label for="std_birth_moth">Month</label>
+					</div>
+					<div class="equal-content padded-left-right">
+						<input class="full-width" type="text" name="std_birth_day" id="std_birth_day" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="DD" value="<?php
+																																																										$retval = $mysqli->query("SELECT stds_birth_day FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_day;
+																																																										echo $retval;
+																																																										?>" required>
+						<br>
+						<label for="std_birth_day">Day</label>
+					</div>
+					<div class="equal-content padded-left">
+						<input class="full-width" type="text" name="std_birth_year" id="std_birth_year" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{4}" placeholder="YYYY" value="<?php
+																																																											$retval = $mysqli->query("SELECT stds_birth_year FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_year;
+																																																											echo $retval;
+																																																											?>" required>
+						<br>
+						<label for="std_birth_year">Year</label>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Place of Birth
+				</legend>
+				<input class="full-width" type="text" name="std_birth_address" id="std_birth_address" oninput="this.value = this.value.toUpperCase();" required>
+				<label for="std_birth_address">Address</label>
+			</fieldset>
+			<div class="equal-container margin-top">
+				<div class="equal-content padded-right">
+					<fieldset class="padded-none margin-none">
+						<legend>
+							Age
+						</legend>
+						<input class="full-width" type="number" name="std_age" id="std_age" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" min="1" max="100" value="<?php
+																																																			$retval = $mysqli->query("SELECT stds_age FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_age;
+																																																			echo $retval;
+																																																			?>" required>
+					</fieldset>
+				</div>
+				<div class="equal-content padded-left-right">
+					<fieldset class="padded-none margin-none">
+						<legend>
+							Gender
+						</legend>
+						<input class="full-width" type="text" name="std_gender" id="std_gender" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" pattern="[a-zA-Z|\-]+" value="<?php
+																																																										$retval = $mysqli->query("SELECT stds_gender FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_gender;
+																																																										echo $retval;
+																																																										?>" required>
+					</fieldset>
+				</div>
+				<div class="equal-content padded-left">
+					<fieldset class="padded-none margin-none">
+						<legend>
+							Religion
+						</legend>
+						<input class="full-width" type="text" name="std_religion" id="std_religion" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" value="<?php
+																																																						$retval = $mysqli->query("SELECT stds_regligion FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_regligion;
+																																																						echo $retval;
+																																																						?>" required>
+					</fieldset>
+				</div>
+			</div>
+			<div class="equal-container margin-top">
+				<div class="equal-content padded-right">
+					<fieldset class="padded-none margin-none">
+						<legend>
+							Email Address
+						</legend>
+						<input class="full-width" type="email" name="std_email" id="std_email" oninput="this.value = this.value.toLowerCase();" placeholder="example@email.com" pattern="\S+@\S+\.com" value="<?php
+																																																				$retval = $mysqli->query("SELECT stds_email FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_email;
+																																																				echo $retval;
+																																																				?>" required>
+					</fieldset>
+				</div>
+				<div class="equal-content padded-left-right">
+					<fieldset class="padded-none margin-none">
+						<legend>
+							Contact Number
+						</legend>
+						<input class="full-width" type="tel" name="std_contact" id="std_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" value="<?php
+																																																																																																$retval = $mysqli->query("SELECT stds_contact FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_contact;
+																																																																																																echo $retval;
+																																																																																																?>" required>
+					</fieldset>
+				</div>
+				<div class="equal-content padded-left">
+					<fieldset class="padded-none margin-none">
+						<legend>
+							Telephone Number
+						</legend>
+						<input class="full-width" type="tel" name="std_tel_number" id="std_tel_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="[OPTIONAL]">
+					</fieldset>
+				</div>
+			</div>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Current Address
+				</legend>
+				<input class="full-width" type="text" name="std_birthplace" id="std_birthplace" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																						$retval = $mysqli->query("SELECT stds_address FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_address;
+																																						echo $retval;
+																																						?>">
+			</fieldset>
+		</fieldset>
 
-	<link rel="stylesheet" href="/website/include/css/style.css">
-</head>
+		<br>
 
-<body>
-	<div class="fade-in padded-left-right">
-		<div class="padded white rounded-bottom">
+		<fieldset class="padded-none margin-none margin-top-bottom">
+			<legend class="rounded gold padded-left-right full-width center">
+				<h5>
+					Application Details
+				</h5>
+			</legend>
+			<div class="margin-top">
+				<fieldset class="padded-none margin-none">
+					<legend>
+						Application Grade
+					</legend>
+					<select class="full-width white" name="std_grade_level" id="std_grade_level" onload="this.value = 'Default';" required>
+						<option value="Default" hidden>
+							Select Grade Level
+						</option>
+						<option value="Grade 11">
+							Grade 11
+						</option>
+						<option value="Grade 12">
+							Grade 12
+						</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="margin-top">
+				<fieldset class="padded-none margin-none">
+					<legend>
+						Student Status
+					</legend>
+					<select class="full-width white" name="std_student_status" id="std_student_status" onload="this.value = '';">
+						<option value="Default" hidden>
+							Select Student Status
+						</option>
+						<option value="New Student">
+							New Student
+						</option>
+						<option value="Old Student">
+							Old Student
+						</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="margin-top">
+				<fieldset class="padded-none margin-none">
+					<input class="full-width" type="text" name="std_std_number" id="std_std_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="XXXX-XXXXXX" pattern="[0-9]{4}-[0-9]{6}">
+					<br>
+					<label for="std_std_number">Student Number</label>
+				</fieldset>
+			</div>
+			<div class="margin-top">
+				<ul>
+					Please upload a copy of the following:
+					<li>
+						2x2 Picture
+					</li>
+					<li>
+						PSA
+					</li>
+					<li>
+						Good Moral
+					</li>
+					<li>
+						Form 137
+					</li>
+				</ul>
+
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Upload your 2x2 picture here
+							</legend>
+							<input class="full-width white" type="file" name="std_2x2_pic" id="std_2x2_pic" accept="image/*" required>
+							<label>
+								<small>
+									<em>
+										[Image Only]
+									</em>
+								</small>
+							</label>
+						</fieldset>
+					</div>
+					<div class="equal-content padded-left">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Upload your PSA here
+							</legend>
+							<input class="full-width white" type="file" name="std_psa" id="std_psa" accept=".pdf" required>
+							<label>
+								<small>
+									<em>
+										[PDF Only]
+									</em>
+								</small>
+							</label>
+						</fieldset>
+					</div>
+				</div>
+				<div class="equal-container margin-top">
+					<div class="equal-content padded-right">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Upload your Good Moral here
+							</legend>
+							<input class="full-width white" type="file" name="std_good_moral" id="std_good_moral" accept=".pdf" required>
+							<label>
+								<small>
+									<em>
+										[PDF Only]
+									</em>
+								</small>
+							</label>
+						</fieldset>
+					</div>
+					<div class="equal-content padded-left">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Upload your Form 137 here
+							</legend>
+							<input class="full-width white" type="file" name="std_form_137" id="std_form_137" accept=".pdf" required>
+							<label>
+								<small>
+									<em>
+										[PDF Only]
+									</em>
+								</small>
+							</label>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<br>
+
+		<fieldset class="padded-none margin-none margin-top-bottom">
+			<legend class="rounded gold padded-left-right full-width center">
+				<h5>
+					Educational Background
+				</h5>
+			</legend>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Learner Reference Number (LRN)
+				</legend>
+				<input class="full-width" type="text" name="std_std_lrn" id="std_std_lrn" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="123456123456" pattern="[0-9]{6}[0-9]{6}" required>
+			</fieldset>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Name of Former School
+				</legend>
+				<input class="full-width" type="text" name="std_former_school" id="std_former_school" oninput="this.value = this.value.toUpperCase();" required>
+				<br>
+				<label for="std_former_school">Complete School Name</label>
+
+				<div class="equal-container margin-top">
+					<div class="equal-content padded-right">
+						<input class="full-width" type="text" name="std_former_graduate_year" id="std_former_graduate_year" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="YYYY" pattern="[0-9]{4}" required>
+						<br>
+						<label for="std_former_graduate_year">Year Graduated</label>
+					</div>
+					<div class="equal-content padded-left">
+						<input class="full-width" type="text" name="std_former_school_year" id="std_former_school_year" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="YYYY-YYYY" pattern="[0-9]{4}-[0-9]{4}" required>
+						<br>
+						<label for="std_former_school_year">School Year</label>
+					</div>
+				</div>
+			</fieldset>
+		</fieldset>
+
+		<br>
+
+		<fieldset class="padded-none margin-none margin-top-bottom">
+			<legend class="rounded gold padded-left-right full-width center">
+				<h5>
+					Parent Information
+				</h5>
+			</legend>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Mother's Name
+				</legend>
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<input class="full-width" type="text" name="std_mother_lname" id="std_mother_lname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="std_mother_lname">Last Name</label>
+					</div>
+
+					<div class="equal-content padded-left-right">
+						<input class="full-width" type="text" name="std_mother_fname" id="std_mother_fname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="std_mother_fname">First Name</label>
+					</div>
+
+					<div class="equal-content padded-left">
+						<input class="full-width" type="text" name="std_mother_mname" id="std_mother_mname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="std_mother_mname">Middle Name</label>
+					</div>
+				</div>
+				<div class="equal-container margin-top">
+					<div class="equal-content padded-right">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Occupation
+							</legend>
+							<input class="full-width" type="text" name="std_mother_occupation" id="std_mother_occupation" oninput="this.value = this.value.toUpperCase();" required>
+						</fieldset>
+					</div>
+					<div class="equal-content padded-left">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Contact Number
+							</legend>
+							<input class="full-width" type="tel" name="std_mother_contact" id="std_mother_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
+						</fieldset>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Father's Name
+				</legend>
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<input class="full-width" type="text" name="std_father_lname" id="std_father_lname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="std_father_lname">Last Name</label>
+					</div>
+
+					<div class="equal-content padded-left-right">
+						<input class="full-width" type="text" name="std_father_fname" id="std_father_fname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="std_father_fname">First Name</label>
+					</div>
+
+					<div class="equal-content padded-left">
+						<input class="full-width" type="text" name="std_father_mname" id="std_father_mname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for=" std_father_mname">Middle Name</label>
+					</div>
+				</div>
+				<div class="equal-container margin-top">
+					<div class="equal-content padded-right">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Occupation
+							</legend>
+							<input class="full-width" type="text" name="std_father_occupation" id="std_father_occupation" oninput="this.value = this.value.toUpperCase();" required>
+						</fieldset>
+					</div>
+					<div class="equal-content padded-left">
+						<fieldset class="padded-none margin-none">
+							<legend>
+								Contact Number
+							</legend>
+							<input class="full-width" type="tel" name="std_father_contact" id="std_father_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
+						</fieldset>
+					</div>
+				</div>
+			</fieldset>
+		</fieldset>
+
+		<br>
+
+		<fieldset class="padded-none margin-none margin-top-bottom">
+			<legend class="rounded gold padded-left-right full-width center">
+				<h5>
+					Contact In Case Of Emmergency
+				</h5>
+			</legend>
+			<fieldset class="padded-none margin-none margin-top">
+				<legend>
+					Contact Person
+				</legend>
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<input class="full-width" type="text" name="std_emergency_contact_lname" id="std_emergency_contact_lname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="std_emergency_contact_lname">Last Name</label>
+					</div>
+
+					<div class="equal-content padded-left-right">
+						<input class="full-width" type="text" name="std_emergency_contact_fname" id="std_emergency_contact_fname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="std_emergency_contact_fname">First Name</label>
+					</div>
+
+					<div class="equal-content padded-left">
+						<input class="full-width" type="text" name="std_emergency_contact_mname" id="std_emergency_contact_mname" oninput="this.value = this.value.toUpperCase();" required>
+						<br>
+						<label for="stds_emergency_contact_mname">Middle Name</label>
+					</div>
+				</div>
+				<div class="margin-top">
+					<fieldset class="padded-none margin-none">
+						<legend>
+							Contact Number
+						</legend>
+						<input class="full-width" type="tel" name="std_emergency_contact_contact" id="std_emergency_contact_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
+					</fieldset>
+				</div>
+			</fieldset>
+		</fieldset>
+
+		<br>
+
+		<fieldset class="padded-none margin-none margin-top">
 			<div class="equal-container-spaced">
-				<div class="equal-content">
-					<form class="full-height" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" autocomplete="off">
-						<button type="submit" name="profile" class="padded-left-right full-height full-width rounded">
-							<h1>
-								<?php echo ucfirst($get_username_profile); ?>
-							</h1>
-						</button>
-					</form>
+				<div class="equal-content-spaced half-width">
+					<button type="submit" name="submit_admission_form" class="rounded full-width">Submit</button>
 				</div>
-
-				<div class="equal-content center">
-					<a href="/index.php">
-						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="60" width="60" loading="lazy">
-					</a>
-				</div>
-
-				<div class="equal-content center">
-					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-						<button type="submit" name="logout" class="red rounded" tabindex="-1">Logout</button>
-					</form>
+				<div class="equal-content-spaced">
+					<button type="reset" class="red rounded full-width">Reset</button>
 				</div>
 			</div>
-		</div>
-
-		<div class="padded-top-bottom">
-			<div class="white padded rounded">
-				<div class="blue padded rounded-top">
-					<h1>
-						Admission Form
-					</h1>
-				</div>
-				<div class="light-gray padded rounded-bottom">
-					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" autocomplete="off">
-						<fieldset class="padded-none margin-none margin-bottom">
-							<legend class="rounded gold padded-left-right full-width center">
-								<h2>
-									Learner Information
-								</h2>
-							</legend>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Student's Name
-								</legend>
-								<div class="equal-container">
-									<div class="equal-content padded-right">
-										<input class="full-width" type="text" name="student_last_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="student-last-name">Last Name</label>
-									</div>
-									<div class="equal-content padded-left-right">
-										<input class="full-width" type="text" name="student_first_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="student-first-name">First Name</label>
-									</div>
-									<div class="equal-content padded-left-right">
-										<input class="full-width" type="text" name="student_middle_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for=" student-middle-name">Middle Name</label>
-									</div>
-									<div class="equal-content padded-left">
-										<input class="full-width" type="text" name="student_suffix_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" placeholder="[OPTIONAL]">
-										<br>
-										<label for=" student-suffix-name">Suffix</label>
-									</div>
-								</div>
-							</fieldset>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Student's Date of Birth
-								</legend>
-								<div class="equal-container">
-									<div class="equal-content padded-right">
-										<input class="full-width" type="text" name="student_birthdate_month" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="MM" required>
-										<br>
-										<label for="student-birthdate-month">Month</label>
-									</div>
-									<div class="equal-content padded-left-right">
-										<input class="full-width" type="text" name="student_birthdate_day" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="DD" required>
-										<br>
-										<label for="student-birthdate-month">Day</label>
-									</div>
-									<div class="equal-content padded-left">
-										<input class="full-width" type="text" name="student_birthdate_year" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{4}" placeholder="YYYY" required>
-										<br>
-										<label for="student-birthdate-month">Year</label>
-									</div>
-								</div>
-							</fieldset>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Place of Birth
-								</legend>
-								<input class="full-width" type="text" name="student_birthplace" oninput="this.value = this.value.toUpperCase();" required>
-								<label for="student-birthplace">Address</label>
-							</fieldset>
-							<div class="equal-container margin-top">
-								<div class="equal-content padded-right">
-									<fieldset class="padded-none margin-none">
-										<legend>
-											Age
-										</legend>
-										<input class="full-width" type="number" name="student_age" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" min="1" max="100" required>
-									</fieldset>
-								</div>
-								<div class="equal-content padded-left-right">
-									<fieldset class="padded-none margin-none">
-										<legend>
-											Gender
-										</legend>
-										<input class="full-width" type="text" name="student_gender" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" pattern="[a-zA-Z|\-]+" required>
-									</fieldset>
-								</div>
-								<div class="equal-content padded-left">
-									<fieldset class="padded-none margin-none">
-										<legend>
-											Religion
-										</legend>
-										<input class="full-width" type="text" name="student_religion" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-									</fieldset>
-								</div>
-							</div>
-							<div class="equal-container margin-top">
-								<div class="equal-content padded-right">
-									<fieldset class="padded-none margin-none">
-										<legend>
-											Email Address
-										</legend>
-										<input class="full-width" type="email" name="student_email" oninput="this.value = this.value.toLowerCase();" placeholder="example@email.com" pattern="\S+@\S+\.com" required>
-									</fieldset>
-								</div>
-								<div class="equal-content padded-left-right">
-									<fieldset class="padded-none margin-none">
-										<legend>
-											Contact Number
-										</legend>
-										<input class="full-width" type="tel" name="student_contact_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
-									</fieldset>
-								</div>
-								<div class="equal-content padded-left">
-									<fieldset class="padded-none margin-none">
-										<legend>
-											Telephone Number
-										</legend>
-										<input class="full-width" type="tel" name="student_telephone_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="[OPTIONAL]">
-									</fieldset>
-								</div>
-							</div>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Address
-								</legend>
-								<div class="equal-container">
-									<div class="equal-content padded-right">
-										<input class="full-width" type="text" name="student_address_street" oninput="this.value = this.value.toUpperCase();" required>
-										<br>
-										<label for="student-address-street">Street Address</label>
-									</div>
-									<div class="equal-content padded-left-right">
-										<input class="full-width" type="text" name="student_address_municipality" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="student-address-municipality">Municipality</label>
-									</div>
-									<div class="equal-content padded-left">
-										<input class="full-width" type="text" name="student_address_province" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="student-address-province">Province</label>
-									</div>
-								</div>
-							</fieldset>
-						</fieldset>
-
-						<br>
-
-						<fieldset class="padded-none margin-none margin-top-bottom">
-							<legend class="rounded gold padded-left-right full-width center">
-								<h2>
-									Application Details
-								</h2>
-							</legend>
-							<div class="margin-top">
-								<fieldset class="padded-none margin-none">
-									<legend>
-										Application Grade
-									</legend>
-									<select class="full-width white" name="student_application_grade" onload="this.value = 'Default';" required>
-										<option value="Default" hidden>
-											Select Grade Level
-										</option>
-										<option value="Grade 11">
-											Grade 11
-										</option>
-										<option value="Grade 12">
-											Grade 12
-										</option>
-									</select>
-								</fieldset>
-							</div>
-							<div class="margin-top">
-								<fieldset class="padded-none margin-none">
-									<legend>
-										Enrollment Status
-									</legend>
-									<select class="full-width white" name="student_enrollment_status" onload="this.value = '';">
-										<option value="Default" hidden>
-											Select Enrollment Status
-										</option>
-										<option value="New Student">
-											New Student
-										</option>
-										<option value="Old Student">
-											Old Student
-										</option>
-									</select>
-								</fieldset>
-							</div>
-							<div class="margin-top">
-								<fieldset class="padded-none margin-none">
-									<input class="full-width" type="text" name="student_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="XXXX-XXXXXX" pattern="[0-9]{4}-[0-9]{6}">
-								</fieldset>
-							</div>
-							<div class="margin-top">
-								<ul>
-									Please upload a copy of the following:
-									<li>
-										2x2 Picture
-									</li>
-									<li>
-										PSA
-									</li>
-									<li>
-										Good Moral
-									</li>
-									<li>
-										Form 137
-									</li>
-								</ul>
-
-								<div class="equal-container">
-									<div class="equal-content padded-right">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Upload your 2x2 picture here
-											</legend>
-											<input class="full-width white" type="file" name="student_picture" accept="image/*" required>
-											<label>
-												<small>
-													<em>
-														[Image Only]
-													</em>
-												</small>
-											</label>
-										</fieldset>
-									</div>
-									<div class="equal-content padded-left">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Upload your PSA here
-											</legend>
-											<input class="full-width white" type="file" name="student_psa" accept=".pdf" required>
-											<label>
-												<small>
-													<em>
-														[PDF Only]
-													</em>
-												</small>
-											</label>
-										</fieldset>
-									</div>
-								</div>
-								<div class="equal-container margin-top">
-									<div class="equal-content padded-right">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Upload your Good Moral here
-											</legend>
-											<input class="full-width white" type="file" name="student_good_moral" accept=".pdf" required>
-											<label>
-												<small>
-													<em>
-														[PDF Only]
-													</em>
-												</small>
-											</label>
-										</fieldset>
-									</div>
-									<div class="equal-content padded-left">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Upload your Form 137 here
-											</legend>
-											<input class="full-width white" type="file" name="student_form_137" accept=".pdf" required>
-											<label>
-												<small>
-													<em>
-														[PDF Only]
-													</em>
-												</small>
-											</label>
-										</fieldset>
-									</div>
-								</div>
-							</div>
-						</fieldset>
-
-						<br>
-
-						<fieldset class="padded-none margin-none margin-top-bottom">
-							<legend class="rounded gold padded-left-right full-width center">
-								<h2>
-									Educational Background
-								</h2>
-							</legend>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Learner Reference Number (LRN)
-								</legend>
-								<input class="full-width" type="text" name="student_lrn" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="123456123456" pattern="[0-9]{6}[0-9]{6}" required>
-							</fieldset>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Name of Former School
-								</legend>
-								<input class="full-width" type="text" name="student_former_school" oninput="this.value = this.value.toUpperCase();" required>
-								<br>
-								<label for="student-former-school">Complete School Name</label>
-
-								<div class="equal-container margin-top">
-									<div class="equal-content padded-right">
-										<input class="full-width" type="text" name="student_former_school_graduate_year" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="YYYY" pattern="[0-9]{4}" required>
-										<br>
-										<label for="student_former_school-graduate-year">Year Graduated</label>
-									</div>
-									<div class="equal-content padded-left">
-										<input class="full-width" type="text" name="student_former_school_schoolyear" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="YYYY-YYYY" pattern="[0-9]{4}-[0-9]{4}" required>
-										<br>
-										<label for="student-former-school-schoolyear">School Year</label>
-									</div>
-								</div>
-							</fieldset>
-						</fieldset>
-
-						<br>
-
-						<fieldset class="padded-none margin-none margin-top-bottom">
-							<legend class="rounded gold padded-left-right full-width center">
-								<h2>
-									Parent Information
-								</h2>
-							</legend>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Mother's Name
-								</legend>
-								<div class="equal-container">
-									<div class="equal-content padded-right">
-										<input class="full-width" type="text" name="student_mother_last_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="last-name">Last Name</label>
-									</div>
-
-									<div class="equal-content padded-left-right">
-										<input class="full-width" type="text" name="student_mother_first_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="first-name">First Name</label>
-									</div>
-
-									<div class="equal-content padded-left">
-										<input class="full-width" type="text" name="student_mother_middle_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for=" middle-name">Middle Name</label>
-									</div>
-								</div>
-								<div class="equal-container margin-top">
-									<div class="equal-content padded-right">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Occupation
-											</legend>
-											<input class="full-width" type="text" name="student_mother_occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										</fieldset>
-									</div>
-									<div class="equal-content padded-left">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Contact Number
-											</legend>
-											<input class="full-width" type="tel" name="student_mother_contact_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
-										</fieldset>
-									</div>
-								</div>
-							</fieldset>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Father's Name
-								</legend>
-								<div class="equal-container">
-									<div class="equal-content padded-right">
-										<input class="full-width" type="text" name="student_father_last_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="last-name">Last Name</label>
-									</div>
-
-									<div class="equal-content padded-left-right">
-										<input class="full-width" type="text" name="student_father_first_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="first-name">First Name</label>
-									</div>
-
-									<div class="equal-content padded-left">
-										<input class="full-width" type="text" name="student_father_middle_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for=" middle-name">Middle Name</label>
-									</div>
-								</div>
-								<div class="equal-container margin-top">
-									<div class="equal-content padded-right">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Occupation
-											</legend>
-											<input class="full-width" type="text" name="student_father_occupation" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										</fieldset>
-									</div>
-									<div class="equal-content padded-left">
-										<fieldset class="padded-none margin-none">
-											<legend>
-												Contact Number
-											</legend>
-											<input class="full-width" type="tel" name="student_father_contact_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
-										</fieldset>
-									</div>
-								</div>
-							</fieldset>
-						</fieldset>
-
-						<br>
-
-						<fieldset class="padded-none margin-none margin-top-bottom">
-							<legend class="rounded gold padded-left-right full-width center">
-								<h2>
-									Contact In Case Of Emmergency
-								</h2>
-							</legend>
-							<fieldset class="padded-none margin-none margin-top">
-								<legend>
-									Contact Person
-								</legend>
-								<div class="equal-container">
-									<div class="equal-content padded-right">
-										<input class="full-width" type="text" name="student_emergency_contact_last_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="last-name">Last Name</label>
-									</div>
-
-									<div class="equal-content padded-left-right">
-										<input class="full-width" type="text" name="student_emergency_contact_first_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for="first-name">First Name</label>
-									</div>
-
-									<div class="equal-content padded-left">
-										<input class="full-width" type="text" name="student_emergency_contact_middle_name" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" required>
-										<br>
-										<label for=" middle-name">Middle Name</label>
-									</div>
-								</div>
-								<div class="margin-top">
-									<fieldset class="padded-none margin-none">
-										<legend>
-											Contact Number
-										</legend>
-										<input class="full-width" type="tel" name="student_emergency_contact_contact_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
-									</fieldset>
-								</div>
-							</fieldset>
-						</fieldset>
-
-						<br>
-
-						<fieldset class="padded-none margin-none margin-top">
-							<div class="equal-container-spaced">
-								<div class="equal-content-spaced half-width">
-									<button type="submit" name="submit_admission_form" class="rounded full-width">Submit</button>
-								</div>
-								<div class="equal-content-spaced">
-									<button type="reset" class="red rounded full-width">Reset</button>
-								</div>
-							</div>
-						</fieldset>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
-
-</html>
+		</fieldset>
+	</form>
+</div>

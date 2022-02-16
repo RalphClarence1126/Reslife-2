@@ -89,7 +89,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 	<div class="full-height center">
 		<div class="equal-container fit-width fade-in">
 			<div class="padded white equal-content rounded-left">
-				<h1>Sign In</h1>
+				<h3>Sign In</h3>
 
 				<small>
 					<p>
@@ -129,7 +129,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 			<div class="padded light-gray equal-content rounded-right">
 				<div class="full-height center">
 					<a href="/index.php">
-						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy">
+						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="180" width="180" loading="lazy">
 					</a>
 				</div>
 			</div>

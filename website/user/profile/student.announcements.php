@@ -5,8 +5,7 @@ require('../../database/config.php');
 session_start();
 
 
-$new_student_announcements = $mysqli->query("SELECT UPDATE_TIME FROM information_schema.tables WHERE TABLE_SCHEMA = 'prototype' AND TABLE_NAME = 'ad_stdAnn'")->fetch_object()->UPDATE_TIME;
-
+$_SESSION['viewed_announcement'] = 1;
 
 
 if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
@@ -63,7 +62,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Portal</title>
+	<title>Announcements</title>
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
@@ -74,17 +73,19 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<div class="fade-in padded-left-right">
 		<div class="padded-bottom">
 			<div class="padded white rounded-bottom margin-bottom">
-				<div class="equal-content center">
+				<div class="equal-container">
+					<div class="equal-content center">
 
-				</div>
+					</div>
 
-				<div class="equal-content center">
-					<a href="/index.php">
-						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="60" width="60" loading="lazy">
-					</a>
-				</div>
-				<div class="equal-content center">
-
+					<div class="equal-content center">
+						<a href="/index.php">
+							<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="60" width="60" loading="lazy">
+						</a>
+					</div>
+					<div class="equal-content center">
+						<h2>Announcements</h2>
+					</div>
 				</div>
 			</div>
 
@@ -132,7 +133,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 					</div>
 				</div>
 
-				<div class="rounded padded-top-bottom gray">
+				<div class="rounded-top padded-top-bottom gray">
 					<div class="equal-container-spaced">
 						<div class="equal-content padded-left-right">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
@@ -160,6 +161,51 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 							</form>
 						</div>
 					</div>
+				</div>
+				<div class="rounded-bottom light-gray padded">
+					<h4>
+						Student Announcements
+					</h4>
+
+					<?php
+					$student_announcements = $mysqli->query("SELECT * FROM ad_stdAnn ORDER BY ad_stdAnn_id DESC");
+
+					if ($student_announcements) {
+						while ($announcements = $student_announcements->fetch_assoc()) {
+							$announcement_title = $announcements['ad_stdAnn_title'];
+							$announcement_message = (!$announcements['ad_stdAnn_msg']) ? 'No announcement body' : $announcements['ad_stdAnn_msg'];
+							$announcement_date = $announcements['created_at'];
+
+							echo "<div class='rounded-top blue padded margin-top'><h5>$announcement_title</h5></div>";
+							echo "<div class='rounded-bottom white padded'><p>$announcement_message</p><br><small>$announcement_date</small></div>";
+						}
+
+						$student_announcements->free();
+					}
+					?>
+
+					<hr>
+
+					<h4>
+						University Announcements
+					</h4>
+
+					<?php
+					$university_announcements = $mysqli->query("SELECT * FROM ad_uniAnn ORDER BY ad_uniAnn_id DESC");
+
+					if ($university_announcements) {
+						while ($announcements = $university_announcements->fetch_assoc()) {
+							$announcement_title = $announcements['ad_uniAnn_title'];
+							$announcement_message = (!$announcements['ad_uniAnn_msg']) ? 'No announcement body' : $announcements['ad_uniAnn_msg'];
+							$announcement_date = $announcements['created_at'];
+
+							echo "<div class='rounded-top gold padded margin-top'><h5>$announcement_title</h5></div>";
+							echo "<div class='rounded-bottom white padded'><p>$announcement_message</p><br><small>$announcement_date</small></div>";
+						}
+
+						$university_announcements->free();
+					}
+					?>
 				</div>
 			</div>
 		</div>

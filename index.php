@@ -1,26 +1,15 @@
 <?php
 // Main PHP File
 
+
 session_start();
 
-// Check if user is already logged in
-if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 
-	// Redirect to profile page
-	// header('location: /website/user/profile/admin.php');
-	// exit;
+if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 	header('refresh: 2; url = /website/user/profile/admin.php');
 } else if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
-
-	// Redirect to profile page
-	// header('location: /website/user/profile/student.php');
-	// exit;
 	header('refresh: 2; url = /website/user/profile/student.php');
 } else {
-
-	// Default redirect
-	// header('location: /website/login.php');
-	// exit;
 	header('refresh: 2; url = /website/login.php');
 }
 ?>
