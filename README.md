@@ -4,9 +4,12 @@
 
 ## Pre-requisites
 
+- Apache *(manual configuration is preferable)*
 - PHP 7.1.33 *(or higher)*
   - Cookies enabled
 - MySQL 5.7.19 *(or higher)*
+
+> You can also use LAMP/WAMP/XAMPP
 
 ## Testing & Development
 
