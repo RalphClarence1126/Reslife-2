@@ -163,12 +163,17 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 				<div class="rounded-bottom light-gray padded">
 					<?php
 					$get_admission_form_boolean = $mysqli->query('SELECT g_frm_admn_bool FROM g_frm_admn')->fetch_object()->g_frm_admn_bool;
-					$mysqli->close();
 
 					if (!$get_admission_form_boolean) {
 						include('../notification/form_closed_admission.html');
 					} else {
-						include('../forms/student/admission.php');
+						$pending_submission = $mysqli->query("SELECT * FROM stds_frm_addm WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_acc_id;
+
+						if ($pending_submission) {
+							include('../notification/form_pending_admission.html');
+						} else {
+							include('../forms/student/admission.php');
+						}
 					}
 					?>
 				</div>

@@ -30,6 +30,7 @@ CREATE TABLE ad_stdUpd (
     ad_acc_id INT,
     ad_stdUpd_title LONGTEXT NOT NULL,
     ad_stdUpd_msg LONGTEXT NOT NULL,
+    stds_acc_id INT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (ad_acc_id) REFERENCES ad(ad_acc_id)
 );

@@ -1,3 +1,10 @@
+<?php
+require('../../database/config.php');
+
+
+ob_start();
+?>
+
 <div class="rounded-top gray padded margin-top" id="enrollments">
 	<h3>
 		Pending Enrollments

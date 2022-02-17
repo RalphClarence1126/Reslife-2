@@ -34,87 +34,87 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		$target_dir = "uploads/student/forms/" . $email . "/";
 	}
 
-	$target_file = $target_dir . basename($_FILES["std_2x2_pic"]["name"]);
-	$uploadOk = 1;
-	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-	if ($check !== false) {
-		$uploadOk = 1;
+	$target_file_2x2_pic = $target_dir . basename($_FILES["std_2x2_pic"]["name"]);
+	$uploadOk_2x2_pic = 1;
+	$imageFileType_2x2_pic = strtolower(pathinfo($target_file_2x2_pic, PATHINFO_EXTENSION));
+	if ($check_2x2_pic !== false) {
+		$uploadOk_2x2_pic = 1;
 	} else {
-		$uploadOk = 0;
+		$uploadOk_2x2_pic = 0;
 	}
-	if (file_exists($target_file)) {
-		$uploadOk = 0;
+	if (file_exists($target_file_2x2_pic)) {
+		$uploadOk_2x2_pic = 0;
 	}
-	if ($uploadOk == 1) {
-		if (move_uploaded_file($_FILES["std_2x2_pic"]["tmp_name"], $target_file)) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+	if ($uploadOk_2x2_pic == 1) {
+		if (move_uploaded_file($_FILES["std_2x2_pic"]["tmp_name"], $target_file_2x2_pic)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file_2x2_pic' WHERE stds_acc_id = '$std_acc_id'");
 		}
 	} else {
-		if ($target_file != $target_dir) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
-		}
-	}
-
-	$target_file = $target_dir . basename($_FILES["std_psa"]["name"]);
-	$uploadOk = 1;
-	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-	if ($check !== false) {
-		$uploadOk = 1;
-	} else {
-		$uploadOk = 0;
-	}
-	if (file_exists($target_file)) {
-		$uploadOk = 0;
-	}
-	if ($uploadOk == 1) {
-		if (move_uploaded_file($_FILES["std_psa"]["tmp_name"], $target_file)) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_psa = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
-		}
-	} else {
-		if ($target_file != $target_dir) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_psa = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		if ($target_file_2x2_pic != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file_2x2_pic' WHERE stds_acc_id = '$std_acc_id'");
 		}
 	}
 
-	$target_file = $target_dir . basename($_FILES["std_good_moral"]["name"]);
-	$uploadOk = 1;
-	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-	if ($check !== false) {
-		$uploadOk = 1;
+	$target_file_psa = $target_dir . basename($_FILES["std_psa"]["name"]);
+	$uploadOk_psa = 1;
+	$imageFileType_psa = strtolower(pathinfo($target_file_psa, PATHINFO_EXTENSION));
+	if ($check_psa !== false) {
+		$uploadOk_psa = 1;
 	} else {
-		$uploadOk = 0;
+		$uploadOk_psa = 0;
 	}
-	if (file_exists($target_file)) {
-		$uploadOk = 0;
+	if (file_exists($target_file_psa)) {
+		$uploadOk_psa = 0;
 	}
-	if ($uploadOk == 1) {
-		if (move_uploaded_file($_FILES["std_good_moral"]["tmp_name"], $target_file)) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_good_moral = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+	if ($uploadOk_psa == 1) {
+		if (move_uploaded_file($_FILES["std_psa"]["tmp_name"], $target_file_psa)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_psa = '$target_file_psa' WHERE stds_acc_id = '$std_acc_id'");
 		}
 	} else {
-		if ($target_file != $target_dir) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_good_moral = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		if ($target_file_psa != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_psa = '$target_file_psa' WHERE stds_acc_id = '$std_acc_id'");
 		}
 	}
 
-	$target_file = $target_dir . basename($_FILES["std_form_137"]["name"]);
-	$uploadOk = 1;
-	$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-	if ($check !== false) {
-		$uploadOk = 1;
+	$target_file_good_moral = $target_dir . basename($_FILES["std_good_moral"]["name"]);
+	$uploadOk_good_moral = 1;
+	$imageFileType_good_moral = strtolower(pathinfo($target_file_good_moral, PATHINFO_EXTENSION));
+	if ($check_good_moral !== false) {
+		$uploadOk_good_moral = 1;
 	} else {
-		$uploadOk = 0;
+		$uploadOk_good_moral = 0;
 	}
-	if (file_exists($target_file)) {
-		$uploadOk = 0;
+	if (file_exists($target_file_good_moral)) {
+		$uploadOk_good_moral = 0;
 	}
-	if ($uploadOk == 1) {
-		if (move_uploaded_file($_FILES["std_form_137"]["tmp_name"], $target_file)) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_form_137 = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+	if ($uploadOk_good_moral == 1) {
+		if (move_uploaded_file($_FILES["std_good_moral"]["tmp_name"], $target_file_good_moral)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_good_moral = '$target_file_good_moral' WHERE stds_acc_id = '$std_acc_id'");
 		}
 	} else {
-		if ($target_file != $target_dir) {
-			$mysqli->query("UPDATE stds_frm_addm SET stds_2x2_pic = '$target_file' WHERE stds_acc_id = '$std_acc_id'");
+		if ($target_file_good_moral != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_good_moral = '$target_file_good_moral' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	}
+
+	$target_file_form_137 = $target_dir . basename($_FILES["std_form_137"]["name"]);
+	$uploadOk_form_137 = 1;
+	$imageFileType_form_137 = strtolower(pathinfo($target_file_form_137, PATHINFO_EXTENSION));
+	if ($check_form_137 !== false) {
+		$uploadOk_form_137 = 1;
+	} else {
+		$uploadOk_form_137 = 0;
+	}
+	if (file_exists($target_file_form_137)) {
+		$uploadOk_form_137 = 0;
+	}
+	if ($uploadOk_form_137 == 1) {
+		if (move_uploaded_file($_FILES["std_form_137"]["tmp_name"], $target_file_form_137)) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_form_137 = '$target_file_form_137' WHERE stds_acc_id = '$std_acc_id'");
+		}
+	} else {
+		if ($target_file_form_137 != $target_dir) {
+			$mysqli->query("UPDATE stds_frm_addm SET stds_form_137 = '$target_file_form_137' WHERE stds_acc_id = '$std_acc_id'");
 		}
 	}
 
@@ -153,6 +153,10 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 	$mysqli->query("UPDATE stds_frm_addm SET stds_emergency_contact_lname = '$std_emergency_contact_lname', stds_emergency_contact_fname = '$std_emergency_contact_fname', stds_emergency_contact_mname = '$std_emergency_contact_mname', stds_emergency_contact_contact = '$std_emergency_contact_contact' WHERE stds_acc_id = '$std_acc_id'");
 
 
+	$sql = "INSERT INTO ad_stdUpd (ad_stdUpd_title, ad_stdUpd_msg, stds_acc_id) VALUES ('Admission Status', 'Thank you for filling out the admission form. You are now on the pending list. (This status automated, please wait for further status)', '$std_acc_id');";
+	$mysqli->query($sql);
+
+
 	header('location: /website/user/profile/student.admission.php');
 	exit;
 }
@@ -174,7 +178,7 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 			</legend>
 
 			<div class="notification margin-top">
-				Information saved in your user profile will be directly shown here as well. Any changes you make here will show up in your profile as well.
+				Information saved in your user profile will be directly shown here as well. It is recommended to also setup your profile.
 			</div>
 
 			<fieldset class="padded-none margin-none margin-top">

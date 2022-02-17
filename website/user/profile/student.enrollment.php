@@ -187,8 +187,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 				</div>
 				<div class="rounded-bottom light-gray padded">
 					<?php
-					$get_enrollment_form_boolean = $mysqli->query('SELECT g_frm_enrll_bool FROM g_frm_enrll')->fetch_object()->g_frm_enrll_bool;
-					$mysqli->close();
+					$get_enrollment_form_boolean = $mysqli->query('SELECT g_frm_enrll_bool FROM g_frm_enrll')->fetch_object()->g_frm_enrll_bool;;
 
 					if (!$get_enrollment_form_boolean) {
 						include('../notification/form_closed_enrollment.html');

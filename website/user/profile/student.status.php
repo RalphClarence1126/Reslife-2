@@ -185,7 +185,22 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 					</div>
 				</div>
 				<div class="rounded-bottom light-gray padded">
+					<?php
+					$student_updates = $mysqli->query("SELECT * FROM ad_stdUpd WHERE stds_acc_id = '$std_acc_id' ORDER BY ad_stdUpd_id DESC");
 
+					if ($student_updates) {
+						while ($updates = $student_updates->fetch_assoc()) {
+							$update_title = $updates['ad_stdUpd_title'];
+							$update_message = (!$updates['ad_stdUpd_msg']) ? 'No status body' : $updates['ad_stdUpd_msg'];
+							$update_date = $updates['created_at'];
+
+							echo "<div class='rounded-top blue padded margin-top'><h5>$update_title</h5></div>";
+							echo "<div class='rounded-bottom white padded'><p>$update_message</p><br><small>$update_date</small></div>";
+						}
+
+						$student_updates->free();
+					}
+					?>
 				</div>
 			</div>
 		</div>
