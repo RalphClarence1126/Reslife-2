@@ -228,7 +228,7 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				<h4>Learner Information</h4>
 			</legend>
 
-			<div class="notification-red margin-top-bottom">
+			<div class="notification-red unselectable margin-top-bottom">
 				Information saved in your user profile will be directly shown here as well. It is recommended that you also setup your profile. Any changes you make here will appear on your profile as well.
 			</div>
 

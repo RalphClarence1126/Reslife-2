@@ -41,6 +41,7 @@ body {
 	margin: 0px;
 	height: 100%;
 	color: #606368;
+	font-size: initial;
 }
 
 h1,
@@ -192,6 +193,7 @@ hr {
 	color: #ff3737;
 	font-weight: bold;
 	padding: 10px;
+	cursor: default;
 }
 
 .sticky {

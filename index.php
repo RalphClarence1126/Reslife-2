@@ -3,6 +3,7 @@
 
 
 session_start();
+ob_start();
 
 
 if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
@@ -36,3 +37,8 @@ if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 </body>
 
 </html>
+
+
+<?php
+ob_end_flush();
+?>

@@ -9,8 +9,8 @@ ob_start();
 if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 	$get_username_profile = $_SESSION['username'];
 
-	$email_regex = '/(\S+)@\S+/';
-	$get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
+	// $email_regex = '/(\S+)@\S+/';
+	// $get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
 } else {
 	header('location: /index.php');
 	exit;
@@ -73,7 +73,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Portal</title>
+	<title>Announcements</title>
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
@@ -90,7 +90,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
 						</div>
 						<div class="equal-content center padded-left">
-							<h4>Dashboard</h4>
+							<h4>Announcements</h4>
 						</div>
 					</div>
 				</div>
@@ -171,18 +171,18 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 					</div>
 					<div class="padded-top-bottom border-bottom">
 						<div class="padded-left-right">
-							<div class="notification-red margin-top-bottom">
+							<div class="notification-red unselectable margin-top-bottom">
 								An automatic announcement is made for both students and the university when admissions or enrollments are enabled or disabled.
 							</div>
 
 							<div class="rounded bordered margin-top-bottom">
 								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
 									<div class="padded border-bottom">
-										<input class="full-width" type="text" name="set_ann_title" placeholder="Announcement Title" required><br>
+										<input class="full-width" type="text" name="set_ann_title" placeholder="Announcement title" required><br>
 										<label for="set_ann_title"></label>
 									</div>
 									<div class="padded">
-										<textarea class="full-width" name="set_ann_msg" rows="1" placeholder="Announcements details here..."></textarea>
+										<textarea class="full-width" name="set_ann_msg" rows="1" placeholder="Announcement details here..."></textarea>
 
 										<div class="equal-container margin-top">
 											<div class="equal-content padded-left-right center">
@@ -290,3 +290,8 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 <script src="../../include/js/setMainBodyHeight.js"></script>
 
 </html>
+
+
+<?php
+ob_end_flush();
+?>

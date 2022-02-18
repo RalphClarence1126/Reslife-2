@@ -3,10 +3,15 @@ require('../database/config.php');
 
 
 session_start();
+ob_start();
 
 
-if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
-	header('location: /index.php');
+if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
+	header('location: /website/user/profile/admin.dashboard.php');
+	exit;
+}
+if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
+	header('location: /website/user/profile/student.dashboard.php');
 	exit;
 }
 
@@ -99,3 +104,8 @@ if (isset($_POST['login']) && !empty($_POST['email'])) {
 </body>
 
 </html>
+
+
+<?php
+ob_end_flush();
+?>

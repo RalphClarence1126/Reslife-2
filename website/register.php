@@ -1,31 +1,25 @@
 <?php
-// Require database config
 require('database/config.php');
 
+
 session_start();
+ob_start();
 
-// Check if user is already logged in
+
 if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
-
-	// Redirect to profile page
-	header('location: /website/user/profile/admin.php');
+	header('location: /website/user/profile/admin.dashboard.php');
 	exit;
 }
-
-// Check if user is already logged in
 if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
-
-	// Redirect to profile page
-	header('location: /website/user/profile/student.php');
+	header('location: /website/user/profile/student.dashboard.php');
 	exit;
 }
 
 $signin_message = 'Please fill the form below';
 
-// Check if login email and password is not empty
+
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
-	// Database
 	$sql = 'INSERT INTO stds (stds_email, stds_pass) VALUES (?, ?)';
 
 	if ($stmt = $mysqli->prepare($sql)) {
@@ -35,22 +29,17 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 			$email = $_POST['email'];
 			$password = $_POST['password'];
 
-			// Check if account  email already exists in database
 			$query = "SELECT * FROM stds WHERE stds_email = '$email'";
 			$result = mysqli_query($mysqli, $query);
 			if ($result) {
 				if (mysqli_num_rows($result) > 0) {
 
-					// Account email already exists
 					$signin_message = 'That account already exists';
 				} else {
 
-					// Account email does not exists
 					$stmt->bind_param('ss', $email, $password);
 
 					if ($stmt->execute()) {
-
-						// Redirect to main page
 						header('location: /index.php');
 						exit;
 					} else {
@@ -134,3 +123,8 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 </body>
 
 </html>
+
+
+<?php
+ob_end_flush();
+?>

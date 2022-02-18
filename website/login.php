@@ -1,17 +1,20 @@
 <?php
-// Require database config
 require('database/config.php');
 
+
 session_start();
+ob_start();
 
-// Check if user is already logged in
-if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
 
-	// Redirect to profile page
-	// header('location: /website/user/profile/student.php');
-	header('location: /index.php');
+if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
+	header('location: /website/user/profile/admin.dashboard.php');
 	exit;
 }
+if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
+	header('location: /website/user/profile/student.dashboard.php');
+	exit;
+}
+
 
 $login_message = 'Login to your account';
 $cookie_name = 'remember_email';
@@ -19,61 +22,50 @@ $cookie_name = 'remember_email';
 // Check if login email and password is not empty
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
-	// Validate login email and password credentials
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 
-	// Admin login query
 	$query_admin = "SELECT * FROM ad WHERE ad_email = '$email' AND ad_pass = '$password'";
 	$result_admin = mysqli_query($mysqli, $query_admin);
 
-	// Check for admin login
 	if ($result_admin) {
 		if (mysqli_num_rows($result_admin) > 0) {
 			$_SESSION['valid_admin'] = true;
 			$_SESSION['timeout'] = time();
 			$_SESSION['username'] = $email;
 
-			// Check if user wants to remember login
 			if ($_POST['remember_login'] == 'on') {
 				setcookie($cookie_name, $email, time() + (86400 * 30), '/');
 			} else {
 				setcookie($cookie_name, '', time() - 3600, '/');
 			}
 
-			// Redirect to profile page
-			// header('location: /website/user/profile/student.php');
 			header('location: /index.php');
 			exit;
 		}
 	}
 
-	// Student login query
+
 	$query_student = "SELECT * FROM stds WHERE stds_email = '$email' AND stds_pass = '$password'";
 	$result_student = mysqli_query($mysqli, $query_student);
 
-	// Check for student login
 	if ($result_student) {
 		if (mysqli_num_rows($result_student) > 0) {
 			$_SESSION['valid_student'] = true;
 			$_SESSION['timeout'] = time();
 			$_SESSION['username'] = $email;
 
-			// Check if user wants to remember login
 			if ($_POST['remember_login'] == 'on') {
 				setcookie($cookie_name, $email, time() + (86400 * 30), '/');
 			} else {
 				setcookie($cookie_name, '', time() - 3600, '/');
 			}
 
-			// Redirect to profile page
-			// header('location: /website/user/profile/student.php');
 			header('location: /index.php');
 			exit;
 		}
 	}
 
-	// Invalid login credentials
 	$login_message = 'Invalid email or password';
 }
 ?>
@@ -142,3 +134,8 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 </body>
 
 </html>
+
+
+<?php
+ob_end_flush();
+?>

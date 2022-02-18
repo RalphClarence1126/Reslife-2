@@ -3,17 +3,14 @@ require('../../database/config.php');
 
 
 session_start();
-
-
-$new_student_announcements = $mysqli->query("SELECT UPDATE_TIME FROM information_schema.tables WHERE TABLE_SCHEMA = 'prototype' AND TABLE_NAME = 'ad_stdAnn'")->fetch_object()->UPDATE_TIME;
-
+ob_start();
 
 
 if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
 	$get_username_profile = $_SESSION['username'];
 
-	$email_regex = '/(\S+)@\S+/';
-	$get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
+	// $email_regex = '/(\S+)@\S+/';
+	// $get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
 } else {
 	header('location: /index.php');
 	exit;
@@ -197,3 +194,8 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 <script src="../../include/js/setMainBodyHeight.js"></script>
 
 </html>
+
+
+<?php
+ob_end_flush();
+?>
