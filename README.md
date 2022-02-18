@@ -46,4 +46,4 @@ DB_NAME: prototype
 
 ## Image Attributions
 
-- [kmg design](https://www.flaticon.com/free-icons/user)
+- [kmg design](https://www.flaticon.com/authors/kmg-design)
