@@ -6,9 +6,9 @@ session_start();
 
 
 if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
-	header('refresh: 2; url = /website/user/profile/admin.php');
+	header('refresh: 2; url = /website/user/profile/admin.dashboard.php');
 } else if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
-	header('refresh: 2; url = /website/user/profile/student.php');
+	header('refresh: 2; url = /website/user/profile/student.dashboard.php');
 } else {
 	header('refresh: 2; url = /website/login.php');
 }
@@ -29,8 +29,8 @@ if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 	<link rel="stylesheet" href="/website/include/css/style.css">
 </head>
 
-<body>
-	<div class="full-height center fade-in">
+<body style="cursor: wait;">
+	<div class="full-height center">
 		<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy">
 	</div>
 </body>

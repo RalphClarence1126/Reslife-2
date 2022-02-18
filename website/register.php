@@ -86,39 +86,37 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 </head>
 
 <body>
-	<div class="full-height center">
-		<div class="equal-container fit-width fade-in">
-			<div class="padded white equal-content rounded-left">
-				<h3>Sign In</h3>
+	<div class="full-height center unselectable">
+		<div class="equal-container fit-width rounded bordered">
+			<div class="padded-left-right equal-content">
+				<h2>Sign In</h2>
 
-				<small>
-					<p>
-						Already have an account? <a href="/website/login.php">Login</a> here
-					</p>
-				</small>
+				<span class="no-wrap">
+					<small>
+						<p>Already have an account? <a href="/website/login.php">Login</a> here</p>
+					</small>
+				</span>
 
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
-					<fieldset class="padded-top-bottom margin-none">
-						<legend>
-							<span class="no-wrap">
-								<?php echo $signin_message; ?>
-							</span>
-						</legend>
+					<fieldset>
+						<legend><span class="no-wrap"><?php echo $signin_message; ?></span></legend>
 
-						<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required autofocus>
-						<br>
-						<br>
-						<input class="full-width" type="password" name="password" placeholder="password" minlength="8" required>
+						<div class="margin-top-bottom">
+							<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required autofocus>
+						</div>
+						<div class="margin-top-bottom">
+							<input class="full-width" type="password" name="password" placeholder="password" minlength="8" required>
+						</div>
 
 						<div class="equal-container-spaced margin-top">
 							<div class="equal-content-spaced half-width">
 								<div class="center">
-									<button type="submit" name="login" class="rounded full-width">Login</button>
+									<button type="submit" name="login" class="full-width margin-top-bottom">Login</button>
 								</div>
 							</div>
 							<div class="equal-content-spaced">
 								<div class="center">
-									<button type="reset" class="red rounded">Reset</button>
+									<button type="reset" class="red margin-top-bottom">Reset</button>
 								</div>
 							</div>
 						</div>
@@ -126,11 +124,9 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 					</fieldset>
 				</form>
 			</div>
-			<div class="padded light-gray equal-content rounded-right">
+			<div class="padded equal-content">
 				<div class="full-height center">
-					<a href="/index.php">
-						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="180" width="180" loading="lazy">
-					</a>
+					<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="150" width="150" loading="lazy"></a>
 				</div>
 			</div>
 		</div>

@@ -3,6 +3,7 @@ require('../../database/config.php');
 
 
 session_start();
+ob_start();
 
 
 if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
@@ -22,6 +23,10 @@ if (!empty($_POST) && isset($_POST['dashboard'])) {
 }
 if (!empty($_POST) && isset($_POST['announcements'])) {
 	header('location: /website/user/profile/admin.announcements.php');
+	exit;
+}
+if (!empty($_POST) && isset($_POST['form-builder'])) {
+	header('location: /website/user/profile/admin.form-builder.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['profile'])) {
@@ -147,161 +152,184 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<link rel="stylesheet" href="/website/include/css/style.css">
 </head>
 
-<body>
-	<div class="fade-in padded-left-right">
-		<div class="padded-bottom">
-			<div class="padded white rounded-bottom margin-bottom">
-				<div class="equal-container">
-					<div class="equal-content center">
-
-					</div>
-
-					<div class="equal-content center">
-						<a href="/index.php">
-							<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="60" width="60" loading="lazy">
-						</a>
-					</div>
-					<div class="equal-content center">
-						<h2>Profile</h2>
+<body id="body">
+	<div class="main-container">
+		<div class="main-container-fixed" id="navBar">
+			<div class="equal-container-spaced border-bottom unselectable">
+				<div class="equal-content-spaced padded fit-width">
+					<div class="equal-container fit-width">
+						<div class="equal-content center padded-right">
+							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
+						</div>
+						<div class="equal-content center padded-left">
+							<h4>Profile</h4>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="padded white rounded">
-				<div class="padded margin-bottom equal-container-spaced">
-					<div class="equal-content-spaced">
-						<div class="equal-container">
-							<div class="equal-content margin-right">
-								<div class="full-height center">
-									<a href="/website/user/profile/admin.php">
-										<img class="profile" src="<?php
-																	$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
-																	$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
-
-																	$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-																	echo $retval;
-																	?>" alt="User Profile Picture" height="80" width="80" loading="lazy">
-									</a>
-								</div>
-							</div>
-							<div class="equal-content-spaced margin-left">
-								<div class="full-height center">
-									<h1>
+				<div class="equal-content-spaced padded fit-width">
+					<div class="equal-container fit-width">
+						<div class="equal-content center padded-right">
+							<div>
+								<h6>
+									<span class="no-wrap">
 										<?php
 										$last_name = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
 										$first_name = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
 
-										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : ucwords($get_username_profile);
+										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 
 										echo $retval;
 										?>
-									</h1>
-								</div>
+									</span>
+								</h6>
+								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+									<button type="submit" name="logout" class="red full-width" tabindex="-1">Logout</button>
+								</form>
 							</div>
 						</div>
-					</div>
+						<div class="equal-content center padded-left">
+							<a class="center" href="/website/user/profile/admin.profile.php">
+								<img class="profile" src="<?php
+															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
+															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-					<div class="equal-content-spaced">
-						<div class="full-height center">
+															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+
+															echo $retval;
+															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-container-remaining">
+			<div class="equal-container-spaced full-height">
+				<div class="equal-content-spaced padded-right fit-width">
+					<div class="padded-top-bottom border-bottom">
+						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="logout" class="red rounded" tabindex="-1">Logout</button>
+								<button type="submit" name="dashboard" class="gray full-width" tabindex="-1">Dashboard</button>
+							</form>
+						</div>
+						<div class="padded-left-right margin-top-bottom">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button type="submit" name="announcements" class="gray full-width" tabindex="-1">Announcements</button>
+							</form>
+						</div>
+					</div>
+					<div class="padded-top-bottom border-bottom">
+						<div class="padded-left-right margin-top-bottom">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button type="submit" name="form-builder" class="gray full-width" tabindex="-1">Form Builder</button>
+							</form>
+						</div>
+					</div>
+					<div class="padded-top-bottom">
+						<div class="padded-left-right margin-top-bottom">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button type="submit" name="profile" class="gray full-width active" tabindex="-1">Profile</button>
 							</form>
 						</div>
 					</div>
 				</div>
+				<div class="equal-content-spaced padded-left-right full-width scrollable" id="mainBody">
+					<div class="padded-top-bottom border-bottom unselectable">
+						<div class="padded-left-right">
+							<h2>Admin Information</h2>
+						</div>
+					</div>
+					<div class="padded-top-bottom">
+						<div class="padded-left-right">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
+								<div class="margin-top-bottom">
+									<fieldset>
+										<legend>Personal Information</legend>
 
-				<div class="rounded-top padded-top-bottom gray">
-					<div class="equal-container-spaced">
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="dashboard" class="rounded full-width" tabindex="-1">Dashboard</button>
-							</form>
-						</div>
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="announcements" class="rounded full-width" tabindex="-1">Announcements</button>
-							</form>
-						</div>
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="profile" class="rounded full-width" tabindex="-1">Profile</button>
+										<div class="equal-container">
+											<div class="equal-content padded-right">
+												<input class="full-width" type="text" name="ad_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																														$retval = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
+																																														echo $retval;
+																																														?>"><br>
+												<label for="ad_lname">Last Name</label>
+											</div>
+											<div class="equal-content padded-left-right">
+												<input class="full-width" type="text" name="ad_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																														$retval = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
+																																														echo $retval;
+																																														?>"><br>
+												<label for="ad_fname">First Name</label>
+											</div>
+											<div class="equal-content padded-left-right">
+												<input class="full-width" type="text" name="ad_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																														$retval = $mysqli->query("SELECT ad_mname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_mname;
+																																														echo $retval;
+																																														?>"><br>
+												<label for="ad_mname">Middle Name</label>
+											</div>
+											<div class="equal-content padded-left">
+												<input class="full-width" type="text" name="ad_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																													$retval = $mysqli->query("SELECT ad_suffix FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_suffix;
+																																													echo $retval;
+																																													?>"><br>
+												<label for="ad_sname">Suffix (If any)</label>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+
+								<br>
+
+								<div class="margin-top-bottom">
+									<fieldset>
+										<legend>Account Information</legend>
+
+										<div class="equal-container">
+											<div class="equal-content padded-right">
+												<input class="full-width" type="email" name="ad_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php
+																																													$retval = $mysqli->query("SELECT ad_email FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_email;
+																																													echo $retval;
+																																													?>"><br>
+												<label for="ad_email">Email Address</label>
+											</div>
+											<div class="equal-content padded-left">
+												<input class="full-width" type="password" name="ad_new_pass" placeholder="New Password"><br>
+												<label for="ad_new_pass">New Password</label>
+											</div>
+										</div>
+
+										<div class="equal-container-spaced margin-top">
+											<div class="equal-content-spaced fit-width padded-right">
+												<img src="<?php
+															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
+															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
+
+															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+
+															echo $retval;
+															?>" alt="User Profile Picture" height="250" width="250" loading="lazy">
+											</div>
+											<div class="equal-content-spaced full-width padded-left">
+												<input class="full-width" type="file" name="ad_profile_picture" placeholder="Select New Profile Picture" accept="image/*"><br>
+												<label for="ad_profile_picture">Upload New Profile Picture</label>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+
+								<button type="submit" name="save" class="full-width margin-top-bottom">Save Changes</button>
 							</form>
 						</div>
 					</div>
-				</div>
-				<div class="rounded-bottom light-gray padded">
-					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
-						<fieldset>
-							<legend>Admin Information</legend>
-
-							<div class="equal-container">
-								<div class="equal-content padded-right">
-									<input class="full-width" type="text" name="ad_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																											$retval = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
-																																											echo $retval;
-																																											?>"><br>
-									<label for="ad_lname">Last Name</label>
-								</div>
-								<div class="equal-content padded-left-right">
-									<input class="full-width" type="text" name="ad_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																											$retval = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
-																																											echo $retval;
-																																											?>"><br>
-									<label for="ad_fname">First Name</label>
-								</div>
-								<div class="equal-content padded-left-right">
-									<input class="full-width" type="text" name="ad_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																											$retval = $mysqli->query("SELECT ad_mname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_mname;
-																																											echo $retval;
-																																											?>"><br>
-									<label for="ad_mname">Middle Name</label>
-								</div>
-								<div class="equal-content padded-left">
-									<input class="full-width" type="text" name="ad_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																										$retval = $mysqli->query("SELECT ad_suffix FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_suffix;
-																																										echo $retval;
-																																										?>"><br>
-									<label for="ad_sname">Suffix (If any)</label>
-								</div>
-							</div>
-						</fieldset>
-
-						<hr>
-
-						<fieldset>
-							<legend>Account Information</legend>
-
-							<div class="equal-container">
-								<div class="equal-content padded-right">
-									<input class="full-width" type="email" name="ad_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php
-																																										$retval = $mysqli->query("SELECT ad_email FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_email;
-																																										echo $retval;
-																																										?>"><br>
-									<label for="ad_email">Email Address</label>
-								</div>
-								<div class="equal-content padded-left">
-									<input class="full-width" type="password" name="ad_new_pass" placeholder="New Password"><br>
-									<label for="ad_new_pass">New Password</label>
-								</div>
-							</div>
-
-							<div class="equal-container margin-top">
-								<div class="equal-content">
-									<input class="full-width" type="file" name="ad_profile_picture" placeholder="Select New Profile Picture" accept="image/*"><br>
-									<label for="ad_profile_picture">Select New Profile Picture</label>
-								</div>
-							</div>
-						</fieldset>
-
-						<br>
-
-						<button type="submit" name="save" class="rounded full-width">Save Changes</button>
-					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+
+<script src="../../include/js/setMainBodyHeight.js"></script>
 
 </html>

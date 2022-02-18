@@ -63,7 +63,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Announcements</title>
+	<title>Dashboard</title>
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
@@ -80,7 +80,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
 						</div>
 						<div class="equal-content center padded-left">
-							<h4>Announcements</h4>
+							<h4>Dashboard</h4>
 						</div>
 					</div>
 				</div>
@@ -129,12 +129,12 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 					<div class="padded-top-bottom border-bottom">
 						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="dashboard" class="gray full-width" tabindex="-1">Dashboard</button>
+								<button type="submit" name="dashboard" class="gray full-width active" tabindex="-1">Dashboard</button>
 							</form>
 						</div>
 						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="announcements" class="gray full-width active" tabindex="-1">Announcements</button>
+								<button type="submit" name="announcements" class="gray full-width" tabindex="-1">Announcements</button>
 							</form>
 						</div>
 					</div>
@@ -159,79 +159,35 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 					</div>
 				</div>
 				<div class="equal-content-spaced padded-left-right full-width scrollable" id="mainBody">
-					<div class="equal-container">
-						<div class="equal-content padded-right">
-							<div class="padded-top-bottom border-bottom unselectable">
-								<div class="padded-left-right">
-									<h2>Student Announcements</h2>
-								</div>
-							</div>
-							<div class="padded-top-bottom">
-								<div class="padded-left-right">
-									<?php
-									$student_announcements = $mysqli->query("SELECT * FROM ad_stdAnn ORDER BY ad_stdAnn_id DESC");
-
-									if (mysqli_num_rows($student_announcements) > 0) {
-										while ($announcements = $student_announcements->fetch_assoc()) {
-											$announcement_title = $announcements['ad_stdAnn_title'];
-											$announcement_message = (!$announcements['ad_stdAnn_msg']) ? 'No announcement body' : $announcements['ad_stdAnn_msg'];
-											$announcement_date = $announcements['created_at'];
-
-											echo "<div class='rounded bordered margin-top-bottom'>";
-											echo "<div class='padded-left-right border-bottom'><h4>$announcement_title</h4></div>";
-											echo "<div class='padded'><p>$announcement_message</p><small>$announcement_date</small></div>";
-											echo "</div>";
-										}
-
-										$student_announcements->free();
-									} else {
-										echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no student announcements at the moment.</h6></div>";
-									}
-									?>
-								</div>
-							</div>
-						</div>
-						<div class="equal-content padded-left">
-							<div class="padded-top-bottom border-bottom unselectable">
-								<div class="padded-left-right">
-									<h2>University Announcements</h2>
-								</div>
-							</div>
-							<div class="padded-top-bottom">
-								<div class="padded-left-right">
-									<?php
-									$university_announcements = $mysqli->query("SELECT * FROM ad_uniAnn ORDER BY ad_uniAnn_id DESC");
-
-									if (mysqli_num_rows($university_announcements) > 0) {
-										while ($announcements = $university_announcements->fetch_assoc()) {
-											$announcement_title = $announcements['ad_uniAnn_title'];
-											$announcement_message = (!$announcements['ad_uniAnn_msg']) ? 'No announcement body' : $announcements['ad_uniAnn_msg'];
-											$announcement_date = $announcements['created_at'];
-
-											echo "<div class='rounded bordered margin-top-bottom'>";
-											echo "<div class='padded-left-right border-bottom'><h4>$announcement_title</h4></div>";
-											echo "<div class='padded'><p>$announcement_message</p><small>$announcement_date</small></div>";
-											echo "</div>";
-										}
-
-										$university_announcements->free();
-									} else {
-										echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no university announcements at the moment.</h6></div>";
-									}
-									?>
-								</div>
-							</div>
+					<div class="padded-top-bottom border-bottom unselectable">
+						<div class="padded-left-right">
+							<h2>Status Updates</h2>
 						</div>
 					</div>
-					<?php
-					if ($_SESSION['show_admissions']) {
-						include('admin/admn_submissions.php');
-					}
+					<div class="padded-top-bottom">
+						<div class="padded-left-right">
+							<?php
+							$student_updates = $mysqli->query("SELECT * FROM ad_stdUpd WHERE stds_acc_id = '$std_acc_id' ORDER BY ad_stdUpd_id DESC");
 
-					if ($_SESSION['show_enrollments']) {
-						include('admin/enrll_submissions.php');
-					}
-					?>
+							if (mysqli_num_rows($student_updates) > 0) {
+								while ($updates = $student_updates->fetch_assoc()) {
+									$update_title = $updates['ad_stdUpd_title'];
+									$update_message = (!$updates['ad_stdUpd_msg']) ? 'No status body' : $updates['ad_stdUpd_msg'];
+									$update_date = $updates['created_at'];
+
+									echo "<div class='rounded bordered margin-top-bottom'>";
+									echo "<div class='padded-left-right border-bottom'><h4>$update_title</h4></div>";
+									echo "<div class='padded'><p>$update_message</p><small>$update_date</small></div>";
+									echo "</div>";
+								}
+
+								$student_updates->free();
+							} else {
+								echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no status updates at the moment.</h6></div>";
+							}
+							?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -13,6 +13,64 @@ $sql = '';
 if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 	$mysqli->query("INSERT INTO stds_frm_addm (stds_acc_id) VALUES ('$std_acc_id')");
 
+	if ($_POST['std_lname']) {
+		$std_last_name = $_POST['std_lname'];
+		$mysqli->query("UPDATE stds SET stds_lname = '$std_last_name' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	if ($_POST['std_fname']) {
+		$std_first_name = $_POST['std_fname'];
+		$mysqli->query("UPDATE stds SET stds_fname = '$std_first_name' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	if ($_POST['std_mname']) {
+		$std_middle_name = $_POST['std_mname'];
+		$mysqli->query("UPDATE stds SET stds_mname = '$std_middle_name' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	// if ($_POST['std_sname']) {
+	$std_suffix = $_POST['std_sname'];
+	$mysqli->query("UPDATE stds SET stds_suffix = '$std_suffix' WHERE stds_acc_id = '$std_acc_id'");
+	// }
+
+
+	if ($_POST['std_contact']) {
+		$std_contact = $_POST['std_contact'];
+		$mysqli->query("UPDATE stds SET stds_contact = '$std_contact' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	if ($_POST['std_gender']) {
+		$std_gender = $_POST['std_gender'];
+		$mysqli->query("UPDATE stds SET stds_gender = '$std_gender' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	if ($_POST['std_religion']) {
+		$std_religion = $_POST['std_religion'];
+		$mysqli->query("UPDATE stds SET stds_regligion = '$std_religion' WHERE stds_acc_id = '$std_acc_id'");
+	}
+
+
+	if ($_POST['std_age']) {
+		$std_age = $_POST['std_age'];
+		$mysqli->query("UPDATE stds SET stds_age = '$std_age' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	if ($_POST['std_birth_month']) {
+		$std_birth_month = $_POST['std_birth_month'];
+		$mysqli->query("UPDATE stds SET stds_birth_month = '$std_birth_month' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	if ($_POST['std_birth_day']) {
+		$std_birth_day = $_POST['std_birth_day'];
+		$mysqli->query("UPDATE stds SET stds_birth_day = '$std_birth_day' WHERE stds_acc_id = '$std_acc_id'");
+	}
+	if ($_POST['std_birth_day']) {
+		$std_birth_day = $_POST['std_birth_day'];
+		$mysqli->query("UPDATE stds SET stds_birth_year = '$std_birth_day' WHERE stds_acc_id = '$std_acc_id'");
+	}
+
+
+	if ($_POST['std_birthplace']) {
+		$std_birthplace = $_POST['std_birthplace'];
+		$mysqli->query("UPDATE stds SET stds_address = '$std_birthplace' WHERE stds_acc_id = '$std_acc_id'");
+	}
+
+	$std_email = $_POST['std_email'];
+	$mysqli->query("UPDATE stds SET stds_email = '$std_email' WHERE stds_acc_id = '$std_acc_id'");
+
 	$std_birth_address = $_POST['std_birth_address'];
 	$std_tel_number = $_POST['std_tel_number'];
 
@@ -163,28 +221,19 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 ?>
 
 
-<div class="blue padded rounded-top">
-	<h4>
-		Admission Form
-	</h4>
-</div>
-<div class="white padded rounded-bottom">
+<div class="margin-top-bottom padded rounded bordered unselectable">
 	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" autocomplete="off">
 		<fieldset class="padded-none margin-none margin-bottom">
-			<legend class="rounded gold padded-left-right full-width center">
-				<h5>
-					Learner Information
-				</h5>
+			<legend class="padded-left-right full-width center">
+				<h4>Learner Information</h4>
 			</legend>
 
-			<div class="notification margin-top">
-				Information saved in your user profile will be directly shown here as well. It is recommended to also setup your profile.
+			<div class="notification-red margin-top-bottom">
+				Information saved in your user profile will be directly shown here as well. It is recommended that you also setup your profile. Any changes you make here will appear on your profile as well.
 			</div>
 
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Student's Name
-				</legend>
+				<legend>Student's Name</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
 						<input class="full-width" type="text" name="std_lname" id="std_lname" oninput="this.value = this.value.toUpperCase();" value="<?php
@@ -221,17 +270,15 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				</div>
 			</fieldset>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Student's Date of Birth
-				</legend>
+				<legend>Student's Date of Birth</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
-						<input class="full-width" type="text" name="std_birth_moth" id="std_birth_moth" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="MM" value="<?php
+						<input class="full-width" type="text" name="std_birth_month" id="std_birth_month" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="MM" value="<?php
 																																																											$retval = $mysqli->query("SELECT stds_birth_month FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_month;
 																																																											echo $retval;
 																																																											?>" required>
 						<br>
-						<label for="std_birth_moth">Month</label>
+						<label for="std_birth_month">Month</label>
 					</div>
 					<div class="equal-content padded-left-right">
 						<input class="full-width" type="text" name="std_birth_day" id="std_birth_day" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="DD" value="<?php
@@ -252,18 +299,14 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				</div>
 			</fieldset>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Place of Birth
-				</legend>
+				<legend>Place of Birth</legend>
 				<input class="full-width" type="text" name="std_birth_address" id="std_birth_address" oninput="this.value = this.value.toUpperCase();" required>
 				<label for="std_birth_address">Address</label>
 			</fieldset>
 			<div class="equal-container margin-top">
 				<div class="equal-content padded-right">
 					<fieldset class="padded-none margin-none">
-						<legend>
-							Age
-						</legend>
+						<legend>Age</legend>
 						<input class="full-width" type="number" name="std_age" id="std_age" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" min="1" max="100" value="<?php
 																																																			$retval = $mysqli->query("SELECT stds_age FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_age;
 																																																			echo $retval;
@@ -272,33 +315,27 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				</div>
 				<div class="equal-content padded-left-right">
 					<fieldset class="padded-none margin-none">
-						<legend>
-							Gender
-						</legend>
-						<input class="full-width" type="text" name="std_gender" id="std_gender" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" pattern="[a-zA-Z|\-]+" value="<?php
-																																																										$retval = $mysqli->query("SELECT stds_gender FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_gender;
-																																																										echo $retval;
-																																																										?>" required>
+						<legend>Gender</legend>
+						<input class="full-width" type="text" name="std_gender" id="std_gender" oninput="this.value = this.value.toUpperCase();" pattern="[a-zA-Z|\-]+" value="<?php
+																																												$retval = $mysqli->query("SELECT stds_gender FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_gender;
+																																												echo $retval;
+																																												?>" required>
 					</fieldset>
 				</div>
 				<div class="equal-content padded-left">
 					<fieldset class="padded-none margin-none">
-						<legend>
-							Religion
-						</legend>
-						<input class="full-width" type="text" name="std_religion" id="std_religion" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" value="<?php
-																																																						$retval = $mysqli->query("SELECT stds_regligion FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_regligion;
-																																																						echo $retval;
-																																																						?>" required>
+						<legend>Religion</legend>
+						<input class="full-width" type="text" name="std_religion" id="std_religion" oninput="this.value = this.value.toUpperCase();" value="<?php
+																																							$retval = $mysqli->query("SELECT stds_regligion FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_regligion;
+																																							echo $retval;
+																																							?>" required>
 					</fieldset>
 				</div>
 			</div>
 			<div class="equal-container margin-top">
 				<div class="equal-content padded-right">
 					<fieldset class="padded-none margin-none">
-						<legend>
-							Email Address
-						</legend>
+						<legend>Email Address</legend>
 						<input class="full-width" type="email" name="std_email" id="std_email" oninput="this.value = this.value.toLowerCase();" placeholder="example@email.com" pattern="\S+@\S+\.com" value="<?php
 																																																				$retval = $mysqli->query("SELECT stds_email FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_email;
 																																																				echo $retval;
@@ -307,9 +344,7 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				</div>
 				<div class="equal-content padded-left-right">
 					<fieldset class="padded-none margin-none">
-						<legend>
-							Contact Number
-						</legend>
+						<legend>Contact Number</legend>
 						<input class="full-width" type="tel" name="std_contact" id="std_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" value="<?php
 																																																																																																$retval = $mysqli->query("SELECT stds_contact FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_contact;
 																																																																																																echo $retval;
@@ -318,17 +353,13 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				</div>
 				<div class="equal-content padded-left">
 					<fieldset class="padded-none margin-none">
-						<legend>
-							Telephone Number
-						</legend>
+						<legend>Telephone Number</legend>
 						<input class="full-width" type="tel" name="std_tel_number" id="std_tel_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="[OPTIONAL]">
 					</fieldset>
 				</div>
 			</div>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Current Address
-				</legend>
+				<legend>Current Address</legend>
 				<input class="full-width" type="text" name="std_birthplace" id="std_birthplace" oninput="this.value = this.value.toUpperCase();" value="<?php
 																																						$retval = $mysqli->query("SELECT stds_address FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_address;
 																																						echo $retval;
@@ -339,16 +370,12 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		<br>
 
 		<fieldset class="padded-none margin-none margin-top-bottom">
-			<legend class="rounded gold padded-left-right full-width center">
-				<h5>
-					Application Details
-				</h5>
+			<legend class="padded-left-right full-width center">
+				<h4>Application Details</h4>
 			</legend>
 			<div class="margin-top">
 				<fieldset class="padded-none margin-none">
-					<legend>
-						Application Grade
-					</legend>
+					<legend>Application Grade</legend>
 					<select class="full-width white" name="std_grade_level" id="std_grade_level" onload="this.value = 'Default';" required>
 						<option value="Default" hidden>
 							Select Grade Level
@@ -364,19 +391,11 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 			</div>
 			<div class="margin-top">
 				<fieldset class="padded-none margin-none">
-					<legend>
-						Student Status
-					</legend>
+					<legend>Student Status</legend>
 					<select class="full-width white" name="std_student_status" id="std_student_status" onload="this.value = '';">
-						<option value="Default" hidden>
-							Select Student Status
-						</option>
-						<option value="New Student">
-							New Student
-						</option>
-						<option value="Old Student">
-							Old Student
-						</option>
+						<option value="Default" hidden>Select Student Status</option>
+						<option value="New Student">New Student</option>
+						<option value="Old Student">Old Student</option>
 					</select>
 				</fieldset>
 			</div>
@@ -390,81 +409,41 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 			<div class="margin-top">
 				<ul>
 					Please upload a copy of the following:
-					<li>
-						2x2 Picture
-					</li>
-					<li>
-						PSA
-					</li>
-					<li>
-						Good Moral
-					</li>
-					<li>
-						Form 137
-					</li>
+					<li>2x2 Picture</li>
+					<li>PSA</li>
+					<li>Good Moral</li>
+					<li>Form 137</li>
 				</ul>
 
 				<div class="equal-container">
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Upload your 2x2 picture here
-							</legend>
+							<legend>Upload your 2x2 picture here</legend>
 							<input class="full-width white" type="file" name="std_2x2_pic" id="std_2x2_pic" accept="image/*" required>
-							<label>
-								<small>
-									<em>
-										[Image Only]
-									</em>
-								</small>
-							</label>
+							<label><small><em>[Image Only]</em></small></label>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Upload your PSA here
-							</legend>
+							<legend>Upload your PSA here</legend>
 							<input class="full-width white" type="file" name="std_psa" id="std_psa" accept=".pdf" required>
-							<label>
-								<small>
-									<em>
-										[PDF Only]
-									</em>
-								</small>
-							</label>
+							<label><small><em>[PDF Only]</em></small></label>
 						</fieldset>
 					</div>
 				</div>
 				<div class="equal-container margin-top">
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Upload your Good Moral here
-							</legend>
+							<legend>Upload your Good Moral here</legend>
 							<input class="full-width white" type="file" name="std_good_moral" id="std_good_moral" accept=".pdf" required>
-							<label>
-								<small>
-									<em>
-										[PDF Only]
-									</em>
-								</small>
-							</label>
+							<label><small><em>[PDF Only]</em></small></label>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Upload your Form 137 here
-							</legend>
+							<legend>Upload your Form 137 here</legend>
 							<input class="full-width white" type="file" name="std_form_137" id="std_form_137" accept=".pdf" required>
-							<label>
-								<small>
-									<em>
-										[PDF Only]
-									</em>
-								</small>
-							</label>
+							<label><small><em>[PDF Only]</em></small></label>
 						</fieldset>
 					</div>
 				</div>
@@ -474,21 +453,15 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		<br>
 
 		<fieldset class="padded-none margin-none margin-top-bottom">
-			<legend class="rounded gold padded-left-right full-width center">
-				<h5>
-					Educational Background
-				</h5>
+			<legend class="padded-left-right full-width center">
+				<h4>Educational Background</h4>
 			</legend>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Learner Reference Number (LRN)
-				</legend>
+				<legend>Learner Reference Number (LRN)</legend>
 				<input class="full-width" type="text" name="std_std_lrn" id="std_std_lrn" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="123456123456" pattern="[0-9]{6}[0-9]{6}" required>
 			</fieldset>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Name of Former School
-				</legend>
+				<legend>Name of Former School</legend>
 				<input class="full-width" type="text" name="std_former_school" id="std_former_school" oninput="this.value = this.value.toUpperCase();" required>
 				<br>
 				<label for="std_former_school">Complete School Name</label>
@@ -511,15 +484,11 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		<br>
 
 		<fieldset class="padded-none margin-none margin-top-bottom">
-			<legend class="rounded gold padded-left-right full-width center">
-				<h5>
-					Parent Information
-				</h5>
+			<legend class="padded-left-right full-width center">
+				<h4>Parent Information</h4>
 			</legend>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Mother's Name
-				</legend>
+				<legend>Mother's Name</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
 						<input class="full-width" type="text" name="std_mother_lname" id="std_mother_lname" oninput="this.value = this.value.toUpperCase();" required>
@@ -542,26 +511,20 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				<div class="equal-container margin-top">
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Occupation
-							</legend>
+							<legend>Occupation</legend>
 							<input class="full-width" type="text" name="std_mother_occupation" id="std_mother_occupation" oninput="this.value = this.value.toUpperCase();" required>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Contact Number
-							</legend>
+							<legend>Contact Number</legend>
 							<input class="full-width" type="tel" name="std_mother_contact" id="std_mother_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
 						</fieldset>
 					</div>
 				</div>
 			</fieldset>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Father's Name
-				</legend>
+				<legend>Father's Name</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
 						<input class="full-width" type="text" name="std_father_lname" id="std_father_lname" oninput="this.value = this.value.toUpperCase();" required>
@@ -584,17 +547,13 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				<div class="equal-container margin-top">
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Occupation
-							</legend>
+							<legend>Occupation</legend>
 							<input class="full-width" type="text" name="std_father_occupation" id="std_father_occupation" oninput="this.value = this.value.toUpperCase();" required>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
-							<legend>
-								Contact Number
-							</legend>
+							<legend>Contact Number</legend>
 							<input class="full-width" type="tel" name="std_father_contact" id="std_father_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
 						</fieldset>
 					</div>
@@ -605,15 +564,11 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		<br>
 
 		<fieldset class="padded-none margin-none margin-top-bottom">
-			<legend class="rounded gold padded-left-right full-width center">
-				<h5>
-					Contact In Case Of Emmergency
-				</h5>
+			<legend class="padded-left-right full-width center">
+				<h4>Contact In Case Of Emmergency</h4>
 			</legend>
 			<fieldset class="padded-none margin-none margin-top">
-				<legend>
-					Contact Person
-				</legend>
+				<legend>Contact Person</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
 						<input class="full-width" type="text" name="std_emergency_contact_lname" id="std_emergency_contact_lname" oninput="this.value = this.value.toUpperCase();" required>
@@ -635,9 +590,7 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 				</div>
 				<div class="margin-top">
 					<fieldset class="padded-none margin-none">
-						<legend>
-							Contact Number
-						</legend>
+						<legend>Contact Number</legend>
 						<input class="full-width" type="tel" name="std_emergency_contact_contact" id="std_emergency_contact_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" required>
 					</fieldset>
 				</div>
@@ -649,10 +602,10 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		<fieldset class="padded-none margin-none margin-top">
 			<div class="equal-container-spaced">
 				<div class="equal-content-spaced half-width">
-					<button type="submit" name="submit_admission_form" class="rounded full-width">Submit</button>
+					<button type="submit" name="submit_admission_form" class="full-width">Submit</button>
 				</div>
 				<div class="equal-content-spaced">
-					<button type="reset" class="red rounded full-width">Reset</button>
+					<button type="reset" class="red full-width">Reset</button>
 				</div>
 			</div>
 		</fieldset>

@@ -6,6 +6,10 @@ session_start();
 ob_start();
 
 
+$new_student_announcements = $mysqli->query("SELECT UPDATE_TIME FROM information_schema.tables WHERE TABLE_SCHEMA = 'prototype' AND TABLE_NAME = 'ad_stdAnn'")->fetch_object()->UPDATE_TIME;
+
+
+
 if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
 	$get_username_profile = $_SESSION['username'];
 
@@ -17,8 +21,8 @@ if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
 }
 
 
-if (!empty($_POST) && isset($_POST['status'])) {
-	header('location: /website/user/profile/student.status.php');
+if (!empty($_POST) && isset($_POST['dashboard'])) {
+	header('location: /website/user/profile/student.dashboard.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['announcements'])) {
@@ -67,119 +71,125 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	<link rel="stylesheet" href="/website/include/css/style.css">
 </head>
 
-<body>
-	<div class="fade-in padded-left-right">
-		<div class="padded-bottom">
-			<div class="padded white rounded-bottom margin-bottom">
-				<div class="equal-container">
-					<div class="equal-content center">
-
-					</div>
-
-					<div class="equal-content center">
-						<a href="/index.php">
-							<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="60" width="60" loading="lazy">
-						</a>
-					</div>
-					<div class="equal-content center">
-						<h2>Admission</h2>
+<body id="body">
+	<div class="main-container">
+		<div class="main-container-fixed" id="navBar">
+			<div class="equal-container-spaced border-bottom unselectable">
+				<div class="equal-content-spaced padded fit-width">
+					<div class="equal-container fit-width">
+						<div class="equal-content center padded-right">
+							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
+						</div>
+						<div class="equal-content center padded-left">
+							<h4>Admission</h4>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="padded white rounded">
-				<div class="padded margin-bottom equal-container-spaced">
-					<div class="equal-content-spaced">
-						<div class="equal-container">
-							<div class="equal-content margin-right">
-								<div class="full-height center">
-									<a href="/website/user/profile/student.php">
-										<img class="profile" src="<?php
-																	$profile_picture = $mysqli->query("SELECT stds_profile_pic FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_profile_pic;
-																	$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
-
-																	$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-																	echo $retval;
-																	?>" alt="User Profile Picture" height="80" width="80" loading="lazy">
-									</a>
-								</div>
-							</div>
-							<div class="equal-content-spaced margin-left">
-								<div class="full-height center">
-									<h1>
+				<div class="equal-content-spaced padded fit-width">
+					<div class="equal-container fit-width">
+						<div class="equal-content center padded-right">
+							<div>
+								<h6>
+									<span class="no-wrap">
 										<?php
 										$last_name = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
 										$first_name = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
 
-										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : ucwords($get_username_profile);
+										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 
 										echo $retval;
 										?>
-									</h1>
-								</div>
+									</span>
+								</h6>
+								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+									<button type="submit" name="logout" class="red full-width" tabindex="-1">Logout</button>
+								</form>
 							</div>
 						</div>
-					</div>
+						<div class="equal-content center padded-left">
+							<a class="center" href="/website/user/profile/student.profile.php">
+								<img class="profile" src="<?php
+															$profile_picture = $mysqli->query("SELECT stds_profile_pic FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_profile_pic;
+															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-					<div class="equal-content-spaced">
-						<div class="full-height center">
+															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+
+															echo $retval;
+															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-container-remaining">
+			<div class="equal-container-spaced full-height">
+				<div class="equal-content-spaced padded-right fit-width">
+					<div class="padded-top-bottom border-bottom">
+						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="logout" class="red rounded" tabindex="-1">Logout</button>
+								<button type="submit" name="dashboard" class="gray full-width" tabindex="-1">Dashboard</button>
+							</form>
+						</div>
+						<div class="padded-left-right margin-top-bottom">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button type="submit" name="announcements" class="gray full-width" tabindex="-1">Announcements</button>
+							</form>
+						</div>
+					</div>
+					<div class="padded-top-bottom border-bottom">
+						<div class="padded-left-right margin-top-bottom">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button type="submit" name="admission" class="gray full-width active" tabindex="-1">Admission</button>
+							</form>
+						</div>
+						<div class="padded-left-right margin-top-bottom">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button type="submit" name="enrollment" class="gray full-width" tabindex="-1">Enrollment</button>
+							</form>
+						</div>
+					</div>
+					<div class="padded-top-bottom">
+						<div class="padded-left-right margin-top-bottom">
+							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button type="submit" name="profile" class="gray full-width" tabindex="-1">Profile</button>
 							</form>
 						</div>
 					</div>
 				</div>
-
-				<div class="rounded-top padded-top-bottom gray">
-					<div class="equal-container-spaced">
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="status" class="rounded full-width" tabindex="-1">Status</button>
-							</form>
-						</div>
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="announcements" class="rounded full-width" tabindex="-1">Announcements</button>
-							</form>
-						</div>
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="admission" class="rounded full-width" tabindex="-1">Admission</button>
-							</form>
-						</div>
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="enrollment" class="rounded full-width" tabindex="-1">Enrollment</button>
-							</form>
-						</div>
-						<div class="equal-content padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="profile" class="rounded full-width" tabindex="-1">Profile</button>
-							</form>
+				<div class="equal-content-spaced padded-left-right full-width scrollable" id="mainBody">
+					<div class="padded-top-bottom border-bottom unselectable">
+						<div class="padded-left-right">
+							<h2>Admission Form</h2>
 						</div>
 					</div>
-				</div>
-				<div class="rounded-bottom light-gray padded">
-					<?php
-					$get_admission_form_boolean = $mysqli->query('SELECT g_frm_admn_bool FROM g_frm_admn')->fetch_object()->g_frm_admn_bool;
+					<div class="padded-top-bottom">
+						<div class="padded-left-right">
+							<?php
+							$get_admission_form_boolean = $mysqli->query('SELECT g_frm_admn_bool FROM g_frm_admn')->fetch_object()->g_frm_admn_bool;
 
-					if (!$get_admission_form_boolean) {
-						include('../notification/form_closed_admission.html');
-					} else {
-						$pending_submission = $mysqli->query("SELECT * FROM stds_frm_addm WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_acc_id;
+							if (!$get_admission_form_boolean) {
+								include('../notification/form_closed_admission.html');
+							} else {
+								$pending_submission = $mysqli->query("SELECT * FROM stds_frm_addm WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_acc_id;
 
-						if ($pending_submission) {
-							include('../notification/form_pending_admission.html');
-						} else {
-							include('../forms/student/admission.php');
-						}
-					}
-					?>
+								if ($pending_submission) {
+									include('../notification/form_pending_admission.html');
+								} else {
+									include('../forms/student/admission.php');
+								}
+							}
+							?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+
+<script src="../../include/js/setMainBodyHeight.js"></script>
 
 </html>

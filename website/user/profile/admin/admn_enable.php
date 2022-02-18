@@ -15,7 +15,7 @@ if (isset($_POST['enable_admission'])) {
 
 
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-	<button type="submit" name="enable_admission" class="gold rounded full-width" tabindex="-1">
+	<button type="submit" name="enable_admission" class="full-width" tabindex="-1">
 		Enable Admissions
 	</button>
 </form>

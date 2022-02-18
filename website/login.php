@@ -94,31 +94,27 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 </head>
 
 <body>
-	<div class="full-height center">
-		<div class="equal-container fit-width fade-in">
-			<div class="padded white equal-content rounded-left">
-				<h3>
-					Login
-				</h3>
+	<div class="full-height center unselectable">
+		<div class="equal-container fit-width rounded bordered">
+			<div class="padded-left-right equal-content">
+				<h2>Login</h2>
 
-				<small>
-					<p>
-						Don't have an account? <a href="/website/register.php">Sign in</a> here
-					</p>
-				</small>
+				<span class="no-wrap">
+					<small>
+						<p>Don't have an account? <a href="/website/register.php">Sign in</a> here</p>
+					</small>
+				</span>
 
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
-					<fieldset class="padded-top-bottom margin-none">
-						<legend>
-							<span class="no-wrap">
-								<?php echo $login_message; ?>
-							</span>
-						</legend>
+					<fieldset>
+						<legend><span class="no-wrap"><?php echo $login_message; ?></span></legend>
 
-						<input class="full-width" type="email" name="email" placeholder="email" value="<?php echo (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : ''; ?>" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+" required autofocus>
-						<br>
-						<br>
-						<input class="full-width" type="password" name="password" placeholder="password" required>
+						<div class="margin-top-bottom">
+							<input class="full-width" type="email" name="email" placeholder="email" value="<?php echo (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : ''; ?>" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+" required autofocus>
+						</div>
+						<div class="margin-top-bottom">
+							<input class="full-width" type="password" name="password" placeholder="password" required>
+						</div>
 
 						<div class="equal-container margin-top-bottom">
 							<div class="equal-content padded-left-right center">
@@ -128,24 +124,17 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 								</span>
 							</div>
 							<div class="equal-content padded-left-right center">
-								<!-- <a href="/website/user/recover.php"> -->
-								<a>
-									<span class="no-wrap">
-										Forgot Password?
-									</span>
-								</a>
+								<a href="/website/user/recover.php"><span class="no-wrap">Forgot Password?</span></a>
 							</div>
 						</div>
 
-						<button type="submit" name="login" class="rounded full-width">Login</button>
+						<button type="submit" name="login" class="full-width margin-top-bottom">Login</button>
 					</fieldset>
 				</form>
 			</div>
-			<div class="padded light-gray equal-content rounded-right">
+			<div class="padded equal-content">
 				<div class="full-height center">
-					<a href="/index.php">
-						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="180" width="180" loading="lazy">
-					</a>
+					<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="150" width="150" loading="lazy"></a>
 				</div>
 			</div>
 		</div>

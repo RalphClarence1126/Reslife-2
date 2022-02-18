@@ -15,7 +15,7 @@ if (isset($_POST['enable_enrollment'])) {
 
 
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-	<button type="submit" name="enable_enrollment" class="gold rounded full-width" tabindex="-1">
+	<button type="submit" name="enable_enrollment" class="full-width" tabindex="-1">
 		Enable Enrollments
 	</button>
 </form>

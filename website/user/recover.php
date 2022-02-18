@@ -1,26 +1,44 @@
 <?php
+require('../database/config.php');
+
+
 session_start();
 
-// Check if user is already logged in
-if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
 
-	// Redirect to profile page
-	// header('location: /website/user/profile/student.php');
+if (isset($_SESSION['valid']) && !empty($_SESSION['valid'])) {
 	header('location: /index.php');
 	exit;
 }
 
 $signin_message = 'Please input account email';
 
-// Check if email is not empty
+
 if (isset($_POST['login']) && !empty($_POST['email'])) {
 
-	// Validate email
-	if ($_POST['email'] == 'user@email.com') {
-		$signin_message = 'An email to reset account password has been sent to ' . $_POST['email'];
+	$email = $_POST['email'];
+
+	$query_student = "SELECT * FROM stds WHERE stds_email = '$email'";
+	$result_student = mysqli_query($mysqli, $query_student);
+
+	if ($result_student) {
+		if (mysqli_num_rows($result_student) > 0) {
+			$recovery_msg = "First line of text\nSecond line of text";
+			$recovery_msg = wordwrap($recover_msg, 70);
+			$headers = 'From: noreply@prototype.com';
+
+			if (mail($email, 'Account Recovery', $recover_msg, $headers)) {
+				$signin_message = 'An email to reset account password has been sent to ' . $_POST['email'];
+			} else {
+				$signin_message = 'There was an error sending email to reset account password to ' . $_POST['email'];
+			}
+		} else {
+			$signin_message = 'Account does not exist [2]';
+		}
 	} else {
-		$signin_message = 'User does not exist';
+		$signin_message = 'Account does not exist [1]';
 	}
+
+	header('refresh: 2; url = /website/user/recover.php');
 }
 ?>
 
@@ -40,41 +58,39 @@ if (isset($_POST['login']) && !empty($_POST['email'])) {
 </head>
 
 <body>
-	<div class="full-height center">
-		<div class="equal-container fit-width fade-in">
-			<div class="padded white equal-content rounded-left">
-				<h1>
-					<span class="no-wrap">Forgot Password</span>
-				</h1>
+	<div class="full-height center unselectable">
+		<div class="equal-container fit-width rounded bordered">
+			<div class="padded-left-right equal-content">
+				<h2><span class="no-wrap">Forgot Password</span></h2>
 
-				<small>
-					<p>
-						Already have an account? <a href="/website/login.php">Login</a> here
-					</p>
-				</small>
+				<span class="no-wrap">
+					<small>
+						<p>Already have an account? <a href="/website/login.php">Login</a> here</p>
+					</small>
+				</span>
 
-				<small>
-					<p>
-						Don't have an account? <a href="/website/register.php">Sign in</a> here
-					</p>
-				</small>
+				<span class="no-wrap">
+					<small>
+						<p>Don't have an account? <a href="/website/register.php">Sign in</a> here</p>
+					</small>
+				</span>
 
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
-					<fieldset class="padded-top-bottom margin-none">
-						<legend>
-							<?php echo $signin_message; ?>
-						</legend>
+					<fieldset>
+						<legend><span class="no-wrap"><?php echo $signin_message; ?></span></legend>
 
-						<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required>
+						<div class="margin-top-bottom">
+							<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required>
+						</div>
 
-						<button type="submit" name="login" class="rounded full-width margin-top">Reset Password</button>
+						<button type="submit" name="login" class="full-width margin-top-bottom">Reset Password</button>
 					</fieldset>
 				</form>
 			</div>
-			<div class="padded light-gray equal-content rounded-right">
+			<div class="padded equal-content">
 				<div class="full-height center">
 					<a href="/index.php">
-						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy">
+						<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="150" width="150" loading="lazy">
 					</a>
 				</div>
 			</div>
