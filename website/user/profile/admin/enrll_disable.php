@@ -8,7 +8,7 @@ ob_start();
 if (isset($_POST['disable_enrollment'])) {
 	$mysqli->query("UPDATE g_frm_enrll SET g_frm_enrll_bool = 0 WHERE g_frm_enrll_id = 1");
 
-	header('location: /website/user/profile/admin.dashboard.php');
+	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
 ?>

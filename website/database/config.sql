@@ -80,6 +80,7 @@ CREATE TABLE stds_frm_addm (
 
     -- Application Details
     stds_grade_level VARCHAR(255),
+    stds_admission_strand VARCHAR(255),
     stds_student_status VARCHAR(255),
     stds_std_number VARCHAR(255) UNIQUE,
     stds_2x2_pic LONGTEXT,

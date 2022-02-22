@@ -9,13 +9,22 @@ $email = $_SESSION['username'];
 $ad_acc_id = $mysqli->query("SELECT * FROM ad WHERE ad_email = '$email'")->fetch_object()->ad_acc_id;
 $sql = '';
 
-$_SESSION['view_details_open'] = 0;
+
 if (!empty($_POST) && isset($_POST['view_details_open'])) {
 	$_SESSION['view_details_open'] = 1;
+	$_SESSION['student_account_id'] = $_POST['std_acc_id'];
+
+	header('location: /website/user/profile/admin-dashboard.php');
+	exit;
 }
-if (!empty($_POST) && isset($_POST['view_details_close'])) {
+if (!empty($_POST) && isset($_POST['hide_details_close'])) {
 	$_SESSION['view_details_open'] = 0;
+	$_SESSION['student_account_id'] = '';
+
+	header('location: /website/user/profile/admin-dashboard.php');
+	exit;
 }
+
 
 if (!empty($_POST) && isset($_POST['accept_admission'])) {
 	$std_acc_id = $_POST['std_acc_id'];
@@ -25,7 +34,7 @@ if (!empty($_POST) && isset($_POST['accept_admission'])) {
 
 	$mysqli->query("DELETE FROM stds_frm_addm WHERE stds_acc_id = '$std_acc_id'");
 
-	header('location: /website/user/profile/admin.dashboard.php');
+	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['reject_admission'])) {
@@ -36,7 +45,7 @@ if (!empty($_POST) && isset($_POST['reject_admission'])) {
 
 	$mysqli->query("DELETE FROM stds_frm_addm WHERE stds_acc_id = '$std_acc_id'");
 
-	header('location: /website/user/profile/admin.dashboard.php');
+	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
 ?>
@@ -46,33 +55,40 @@ if (!empty($_POST) && isset($_POST['reject_admission'])) {
 	<input type="hidden" name="std_acc_id" value="<?php echo $admissions_student_account_id ?>">
 
 	<div class="rounded padded equal-container-spaced margin-top-bottom bordered">
-		<div class="equal-content-spaced">
-			<div class="equal-container-spaced">
-				<div class="equal-content-spaced margin-right">
-					<div class="full-height center">
-						<img class="profile" src="<?php echo ($admissions_student_picture) ? $admissions_student_picture : '/website/include/images/rtu-seal.png'; ?>" alt="Student 2x2 Picture" height="40" width="40" loading="lazy">
+		<div class="equal-content-spaced fit-width">
+			<div class="margin-right">
+				<div class="equal-container">
+					<div class="equal-content-spaced margin-right">
+						<div class="full-height center">
+							<img class="profile" src="<?php echo ($admissions_student_picture) ? $admissions_student_picture : '/website/include/images/rtu-seal.png'; ?>" alt="Student 2x2 Picture" height="40" width="40" loading="lazy">
+						</div>
 					</div>
-				</div>
-				<div class="equal-content-spaced margin-left">
-					<div class="full-height center">
-						<h6><?php echo $admissions_student_number ?> : <?php echo $admissions_student_lrn ?></h6>
+					<div class="equal-content-spaced margin-left">
+						<div class="full-height center">
+							<h6><?php echo $admissions_student_number ?> : <?php echo $admissions_student_lrn ?></h6>
+						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
-		<div class="equal-content-spaced">
-			<div class="full-height center">
+		<div class="equal-content-spaced full-width">
+			<div class="full-height center margin-left-right">
 				<?php
-				if ($_SESSION['view_details_open']) {
-					echo '<button type="submit" name="view_details_close" class="red full-width" tabindex="-1">Hide Admission Details</button>';
+				if ($_SESSION['student_account_id'] == $admissions_student_account_id) {
+					if ($_SESSION['view_details_open']) {
+						echo '<button type="submit" name="hide_details_close" class="red full-width" tabindex="-1">Hide Admission Details</button>';
+					} else {
+						echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details/button>';
+					}
 				} else {
 					echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details</button>';
 				}
 				?>
 			</div>
 		</div>
-		<div class="equal-content-spaced">
-			<div class="full-height center">
+		<div class="equal-content-spaced fit-width">
+			<div class="full-height center margin-left">
 				<div class="equal-container-spaced">
 					<div class="equal-content-spaced margin-right">
 						<button type="submit" name="accept_admission" class="full-width" tabindex="-1">Accept</button>
@@ -86,8 +102,12 @@ if (!empty($_POST) && isset($_POST['reject_admission'])) {
 	</div>
 
 	<?php
-	if ($_SESSION['view_details_open']) {
-		include('../forms/admin/admission.php');
+	if ($_SESSION['student_account_id'] == $admissions_student_account_id) {
+		if ($_SESSION['view_details_open']) {
+			include('../forms/admin/admission.php');
+		} else {
+			echo '';
+		}
 	} else {
 		echo '';
 	}

@@ -57,9 +57,9 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		$std_birth_day = $_POST['std_birth_day'];
 		$mysqli->query("UPDATE stds SET stds_birth_day = '$std_birth_day' WHERE stds_acc_id = '$std_acc_id'");
 	}
-	if ($_POST['std_birth_day']) {
-		$std_birth_day = $_POST['std_birth_day'];
-		$mysqli->query("UPDATE stds SET stds_birth_year = '$std_birth_day' WHERE stds_acc_id = '$std_acc_id'");
+	if ($_POST['std_birth_year']) {
+		$std_birth_year = $_POST['std_birth_year'];
+		$mysqli->query("UPDATE stds SET stds_birth_year = '$std_birth_year' WHERE stds_acc_id = '$std_acc_id'");
 	}
 
 
@@ -78,10 +78,11 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 
 
 	$std_grade_level = $_POST['std_grade_level'];
+	$std_admission_strand = $_POST['std_admission_strand'];
 	$std_student_status = $_POST['std_student_status'];
 	$std_std_number = $_POST['std_std_number'];
 
-	$mysqli->query("UPDATE stds_frm_addm SET stds_grade_level = '$std_grade_level', stds_student_status = '$std_student_status', stds_std_number = '$std_std_number' WHERE stds_acc_id = '$std_acc_id'");
+	$mysqli->query("UPDATE stds_frm_addm SET stds_grade_level = '$std_grade_level', stds_admission_strand = '$std_admission_strand', stds_student_status = '$std_student_status', stds_std_number = '$std_std_number' WHERE stds_acc_id = '$std_acc_id'");
 
 	$target_dir = "uploads/student/forms/";
 
@@ -215,14 +216,14 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 	$mysqli->query($sql);
 
 
-	header('location: /website/user/profile/student.admission.php');
+	header('location: /website/user/profile/student-admission.php');
 	exit;
 }
 ?>
 
 
 <div class="margin-top-bottom padded rounded bordered unselectable">
-	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" autocomplete="off">
+	<form id="student_admission_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" autocomplete="off">
 		<fieldset class="padded-none margin-none margin-bottom">
 			<legend class="padded-left-right full-width center">
 				<h4>Learner Information</h4>
@@ -371,23 +372,39 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 
 		<fieldset class="padded-none margin-none margin-top-bottom">
 			<legend class="padded-left-right full-width center">
-				<h4>Application Details</h4>
+				<h4>Admission Details</h4>
 			</legend>
 			<div class="margin-top">
-				<fieldset class="padded-none margin-none">
-					<legend>Application Grade</legend>
-					<select class="full-width white" name="std_grade_level" id="std_grade_level" onload="this.value = 'Default';" required>
-						<option value="Default" hidden>
-							Select Grade Level
-						</option>
-						<option value="Grade 11">
-							Grade 11
-						</option>
-						<option value="Grade 12">
-							Grade 12
-						</option>
-					</select>
-				</fieldset>
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<fieldset class="padded-none margin-none">
+							<legend>Student Grade</legend>
+							<select class="full-width white" name="std_grade_level" id="std_grade_level" onload="this.value = 'Default';" required>
+								<option value="Default" hidden>
+									Select Grade Level
+								</option>
+								<option value="Grade 11">
+									Grade 11
+								</option>
+								<option value="Grade 12">
+									Grade 12
+								</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="equal-content padded-left">
+						<fieldset class="padded-none margin-none">
+							<legend>Student Strand</legend>
+							<select class="full-width white" name="std_admission_strand" id="std_admission_strand" onload="this.value = 'Default';" required>
+								<option value="Default" hidden>Select Strand Preference</option>
+								<option value="STEM">STEM</option>
+								<option value="ABM">ABM</option>
+								<option value="HUMSS">HUMSS</option>
+								<option value="TVL - ICT">TVL - ICT</option>
+							</select>
+						</fieldset>
+					</div>
+				</div>
 			</div>
 			<div class="margin-top">
 				<fieldset class="padded-none margin-none">
@@ -611,3 +628,74 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		</fieldset>
 	</form>
 </div>
+
+<script>
+	const getAdmissionForm = document.getElementById('student_admission_form');
+	getAdmissionForm.addEventListener('keypress', function(event) {
+		if (event.getModifierState('CapsLock')) {
+			alert('You have capslock on.\n\nThe admission form will automatically all caps your input.')
+		}
+		if (event.key === 'Enter') {
+			event.preventDefault();
+		}
+	});
+
+
+	const getSystemDate = new Date,
+		currentYear = getSystemDate.getFullYear().toString();
+
+	const inputStudentBirthMonth = document.getElementById('std_birth_month');
+	const inputStudentBirthDay = document.getElementById('std_birth_day');
+	const inputStudentBirthYear = document.getElementById('std_birth_year');
+	const inputStudentBirthAge = document.getElementById('std_age');
+
+	let getStudentBirthMonth, getStudentBirthDay, getStudentBirthYear, getStudentBirthAge;
+
+
+	inputStudentBirthMonth.addEventListener('input', function() {
+		getStudentBirthMonth = inputStudentBirthMonth.value.toString();
+		inputStudentBirthMonth.value = (getStudentBirthMonth > 12) ? '12' : getStudentBirthMonth;
+	});
+	inputStudentBirthDay.addEventListener('input', function() {
+		getStudentBirthDay = inputStudentBirthDay.value.toString();;
+		inputStudentBirthDay.value = (getStudentBirthDay > 31) ? '31' : getStudentBirthDay;
+	});
+	inputStudentBirthYear.addEventListener('input', function() {
+		getStudentBirthYear = inputStudentBirthYear.value.toString();
+		inputStudentBirthYear.value = (getStudentBirthYear > currentYear) ? currentYear : getStudentBirthYear;
+	});
+
+
+	function validateYearAndAge(studentBirthYear, studentBirthAge) {
+		const expectedStudentAge = currentYear - studentBirthYear;
+		const validateStudentAge = expectedStudentAge - studentBirthAge;
+		if (validateStudentAge > 100) return;
+		if (validateStudentAge > 1) {
+			return alert(`Your age does not match your birthday.`);
+		} else if (validateStudentAge < 0) {
+			return alert(`Your age does not match your birthday.`);
+		} else {
+			return;
+		}
+	}
+	inputStudentBirthYear.addEventListener('focusout', function() {
+		getStudentBirthYear = inputStudentBirthYear.value.toString();
+		getStudentBirthAge = inputStudentBirthAge.value.toString();
+		if (!getStudentBirthAge) {
+			return;
+		} else {
+			if (!getStudentBirthYear) return;
+			return validateYearAndAge(getStudentBirthYear, getStudentBirthAge);
+		}
+	});
+	inputStudentBirthAge.addEventListener('focusout', function() {
+		getStudentBirthYear = inputStudentBirthYear.value.toString();
+		getStudentBirthAge = inputStudentBirthAge.value.toString();
+		if (!getStudentBirthYear) {
+			return;
+		} else {
+			if (!getStudentBirthAge) return;
+			return validateYearAndAge(getStudentBirthYear, getStudentBirthAge);
+		}
+	});
+</script>

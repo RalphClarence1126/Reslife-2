@@ -8,7 +8,7 @@ ob_start();
 if (isset($_POST['enable_admission'])) {
 	$mysqli->query("UPDATE g_frm_admn SET g_frm_admn_bool = 1 WHERE g_frm_admn_id = 1");
 
-	header('location: /website/user/profile/admin.dashboard.php');
+	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
 ?>

@@ -32,7 +32,8 @@
 
 html {
 	scroll-behavior: smooth;
-	font-family: sans-serif;
+	font-size: initial;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	height: 100%;
 }
 
@@ -41,7 +42,7 @@ body {
 	margin: 0px;
 	height: 100%;
 	color: #606368;
-	font-size: initial;
+	overflow-y: initial;
 }
 
 h1,
@@ -148,16 +149,84 @@ hr {
 .border-right {
 	border-right: 1px solid #b9b9b9;
 }
+
+.bordered-blue {
+	border: 1px solid #0096ff;
+	background-color: #0096ff1f;
+}
+.border-blue-top {
+	border-top: 1px solid #0096ff;
+}
+.border-blue-left {
+	border-left: 1px solid #0096ff;
+}
+.border-blue-bottom {
+	border-bottom: 1px solid #0096ff;
+}
+.border-blue-right {
+	border-right: 1px solid #0096ff;
+}
+
+.bordered-gold {
+	border: 1px solid #ffc001;
+	background-color: #ffc0011f;
+}
+.border-gold-top {
+	border-top: 1px solid #ffc001;
+}
+.border-gold-left {
+	border-left: 1px solid #ffc001;
+}
+.border-gold-bottom {
+	border-bottom: 1px solid #ffc001;
+}
+.border-gold-right {
+	border-right: 1px solid #ffc001;
+}
+
+.bordered-red {
+	border: 1px solid #f59191;
+	background-color: #ff37371f;
+}
+.border-red-top {
+	border-top: 1px solid #f59191;
+}
+.border-red-left {
+	border-left: 1px solid #f59191;
+}
+.border-red-bottom {
+	border-bottom: 1px solid #f59191;
+}
+.border-red-right {
+	border-right: 1px solid #f59191;
+}
+
+.bordered-green {
+	border: 1px solid #66ff33;
+	background-color: #66ff331f;
+}
+.border-green-top {
+	border-top: 1px solid #66ff33;
+}
+.border-green-left {
+	border-left: 1px solid #66ff33;
+}
+.border-green-bottom {
+	border-bottom: 1px solid #66ff33;
+}
+.border-green-right {
+	border-right: 1px solid #66ff33;
+}
 /* End Border */
 
 /* Scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
 	width: 10px;
-}
-::-webkit-scrollbar-thumb {
+} */
+/* ::-webkit-scrollbar-thumb {
 	background: #b9b9b9;
 	border-radius: 5px;
-}
+} */
 /* End Scrollbar */
 
 /* Container */
@@ -281,6 +350,16 @@ img.profile {
 /* End Profile Picture */
 
 /* Form */
+form a.button-link {
+	color: #606368;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: bold;
+	padding: 10px;
+}
+form a.button-link:hover {
+	background-color: #1b1b1b1f;
+}
+
 fieldset {
 	border: none;
 	margin: 0px;
@@ -297,8 +376,9 @@ input {
 	border: 1px solid #b9b9b9;
 	border-radius: 6px;
 	background-color: transparent;
-	color: #1b1b1b;
-	font-family: monospace;
+	color: #606368;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: bold;
 	padding: 10px;
 }
 input:hover {
@@ -307,13 +387,21 @@ input:hover {
 input:focus {
 	border: 1px solid #0096ff;
 }
+input[type='checkbox'] + label {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: bold;
+}
+input:disabled {
+	color: #1b1b1b;
+}
 select {
 	outline: none;
 	border: 1px solid #b9b9b9;
 	border-radius: 6px;
 	background-color: transparent;
-	color: #1b1b1b;
-	font-family: monospace;
+	color: #606368;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: bold;
 	padding: 10px;
 }
 select:hover {
@@ -322,13 +410,17 @@ select:hover {
 select:focus {
 	border: 1px solid #0096ff;
 }
+select:disabled {
+	color: #1b1b1b;
+}
 textarea {
 	outline: none;
 	border: 1px solid #b9b9b9;
 	border-radius: 6px;
 	background-color: transparent;
-	color: #1b1b1b;
-	font-family: monospace;
+	color: #606368;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: bold;
 	padding: 10px;
 }
 textarea:hover {
@@ -343,6 +435,8 @@ button {
 	border-radius: 100px;
 	background-color: #ffffff;
 	color: #0096ff;
+	padding: 5px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -360,6 +454,8 @@ button.red {
 	border-radius: 100px;
 	background-color: #ffffff;
 	color: #ff3737;
+	padding: 5px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -372,16 +468,29 @@ button.gray {
 	border-radius: 100px;
 	background-color: #ffffff;
 	color: #606368;
+	padding: 5px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-weight: bold;
 	cursor: pointer;
 }
 button.gray:hover {
 	background-color: #b9b9b91f;
 }
+
+button.has-announcement {
+	border: 1px solid #ff3737 !important;
+	border-radius: 100px;
+	background-color: #ff3737 !important;
+	color: #ffffff !important;
+	padding: 5px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: bold;
+	cursor: pointer;
+}
 /* End Form */
 
 /* Mobile Dynamic */
-/* @media only screen and (max-width: 992px) {
+@media only screen and (max-width: 760px) {
 	h1,
 	h2,
 	h3,
@@ -389,6 +498,10 @@ button.gray:hover {
 	h5,
 	h6 {
 		text-align: center;
+	}
+
+	.scrollable {
+		overflow-y: initial;
 	}
 
 	.equal-container {
@@ -451,5 +564,5 @@ button.gray:hover {
 	::-webkit-scrollbar {
 		width: 0px;
 	}
-} */
+}
 /* End Mobile Dynamic */

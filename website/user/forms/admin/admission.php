@@ -17,22 +17,34 @@ session_start();
 				<legend>Student's Name</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
-						<input class="full-width" type="text" name="std_lname" id="std_lname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_lname" id="std_lname" value="<?php
+																										$retval = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_lname;
+																										echo $retval;
+																										?>" disabled>
 						<br>
 						<label for="std_lname">Last Name</label>
 					</div>
 					<div class="equal-content padded-left-right">
-						<input class="full-width" type="text" name="std_fname" id="std_fname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_fname" id="std_fname" value="<?php
+																										$retval = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_fname;
+																										echo $retval;
+																										?>" disabled>
 						<br>
 						<label for="std_fname">First Name</label>
 					</div>
 					<div class="equal-content padded-left-right">
-						<input class="full-width" type="text" name="std_mname" id="std_mname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_mname" id="std_mname" value="<?php
+																										$retval = $mysqli->query("SELECT stds_mname FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_mname;
+																										echo $retval;
+																										?>" disabled>
 						<br>
 						<label for="std_mname">Middle Name</label>
 					</div>
 					<div class="equal-content padded-left">
-						<input class="full-width" type="text" name="std_suffix" id="std_suffix" oninput="this.value = this.value.toUpperCase();" placeholder="[OPTIONAL]" disabled>
+						<input class="full-width" type="text" name="std_suffix" id="std_suffix" value="<?php
+																										$retval = $mysqli->query("SELECT stds_suffix FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_suffix;
+																										echo $retval;
+																										?>" disabled>
 						<br>
 						<label for="std_suffix">Suffix</label>
 					</div>
@@ -42,17 +54,26 @@ session_start();
 				<legend>Student's Date of Birth</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
-						<input class="full-width" type="text" name="std_birth_moth" id="std_birth_moth" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="MM" disabled>
+						<input class="full-width" type="text" name="std_birth_moth" id="std_birth_moth" value="<?php
+																												$retval = $mysqli->query("SELECT stds_birth_month FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_birth_month;
+																												echo $retval;
+																												?>" disabled>
 						<br>
 						<label for="std_birth_moth">Month</label>
 					</div>
 					<div class="equal-content padded-left-right">
-						<input class="full-width" type="text" name="std_birth_day" id="std_birth_day" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{2}" placeholder="DD" disabled>
+						<input class="full-width" type="text" name="std_birth_day" id="std_birth_day" value="<?php
+																												$retval = $mysqli->query("SELECT stds_birth_day FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_birth_day;
+																												echo $retval;
+																												?>" disabled>
 						<br>
 						<label for="std_birth_day">Day</label>
 					</div>
 					<div class="equal-content padded-left">
-						<input class="full-width" type="text" name="std_birth_year" id="std_birth_year" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" pattern="[0-9]{4}" placeholder="YYYY" disabled>
+						<input class="full-width" type="text" name="std_birth_year" id="std_birth_year" value="<?php
+																												$retval = $mysqli->query("SELECT stds_birth_year FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_birth_year;
+																												echo $retval;
+																												?>" disabled>
 						<br>
 						<label for="std_birth_year">Year</label>
 					</div>
@@ -60,26 +81,38 @@ session_start();
 			</fieldset>
 			<fieldset class="padded-none margin-none margin-top">
 				<legend>Place of Birth</legend>
-				<input class="full-width" type="text" name="std_birth_address" id="std_birth_address" oninput="this.value = this.value.toUpperCase();" disabled>
+				<input class="full-width" type="text" name="std_birth_address" id="std_birth_address" value="<?php
+																												$retval = $mysqli->query("SELECT stds_birth_address FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_birth_address;
+																												echo $retval;
+																												?>" disabled>
 				<label for="std_birth_address">Address</label>
 			</fieldset>
 			<div class="equal-container margin-top">
 				<div class="equal-content padded-right">
 					<fieldset class="padded-none margin-none">
 						<legend>Age</legend>
-						<input class="full-width" type="number" name="std_age" id="std_age" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" min="1" max="100" disabled>
+						<input class="full-width" type="text" name="std_age" id="std_age" value="<?php
+																									$retval = $mysqli->query("SELECT stds_age FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_age;
+																									echo $retval;
+																									?>" disabled>
 					</fieldset>
 				</div>
 				<div class="equal-content padded-left-right">
 					<fieldset class="padded-none margin-none">
 						<legend>Gender</legend>
-						<input class="full-width" type="text" name="std_gender" id="std_gender" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" pattern="[a-zA-Z|\-]+" disabled>
+						<input class="full-width" type="text" name="std_gender" id="std_gender" value="<?php
+																										$retval = $mysqli->query("SELECT stds_gender FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_gender;
+																										echo $retval;
+																										?>" disabled>
 					</fieldset>
 				</div>
 				<div class="equal-content padded-left">
 					<fieldset class="padded-none margin-none">
 						<legend>Religion</legend>
-						<input class="full-width" type="text" name="std_religion" id="std_religion" oninput="this.value = this.value.replace(/[^a-zA-Z|\-.]/g, '').replace(/(\..*)\./g, '$1').toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_religion" id="std_religion" value="<?php
+																											$retval = $mysqli->query("SELECT stds_regligion FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_regligion;
+																											echo $retval;
+																											?>" disabled>
 					</fieldset>
 				</div>
 			</div>
@@ -87,25 +120,37 @@ session_start();
 				<div class="equal-content padded-right">
 					<fieldset class="padded-none margin-none">
 						<legend>Email Address</legend>
-						<input class="full-width" type="email" name="std_email" id="std_email" oninput="this.value = this.value.toLowerCase();" placeholder="example@email.com" pattern="\S+@\S+\.com" disabled>
+						<input class="full-width" type="email" name="std_email" id="std_email" value="<?php
+																										$retval = $mysqli->query("SELECT stds_email FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_email;
+																										echo $retval;
+																										?>" disabled>
 					</fieldset>
 				</div>
 				<div class="equal-content padded-left-right">
 					<fieldset class="padded-none margin-none">
 						<legend>Contact Number</legend>
-						<input class="full-width" type="tel" name="std_contact" id="std_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" disabled>
+						<input class="full-width" type="tel" name="std_contact" id="std_contact" value="<?php
+																										$retval = $mysqli->query("SELECT stds_contact FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_contact;
+																										echo $retval;
+																										?>" disabled>
 					</fieldset>
 				</div>
 				<div class="equal-content padded-left">
 					<fieldset class="padded-none margin-none">
 						<legend>Telephone Number</legend>
-						<input class="full-width" type="tel" name="std_tel_number" id="std_tel_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="[OPTIONAL]" disabled>
+						<input class="full-width" type="tel" name="std_tel_number" id="std_tel_number" value="<?php
+																												$retval = $mysqli->query("SELECT stds_tel_number FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_tel_number;
+																												echo $retval;
+																												?>" disabled>
 					</fieldset>
 				</div>
 			</div>
 			<fieldset class="padded-none margin-none margin-top">
 				<legend>Current Address</legend>
-				<input class="full-width" type="text" name="std_birthplace" id="std_birthplace" oninput="this.value = this.value.toUpperCase();" disabled>
+				<input class="full-width" type="text" name="std_birthplace" id="std_birthplace" value="<?php
+																										$retval = $mysqli->query("SELECT stds_address FROM stds WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_address;
+																										echo $retval;
+																										?>" disabled>
 			</fieldset>
 		</fieldset>
 
@@ -116,76 +161,92 @@ session_start();
 				<h4>Application Details</h4>
 			</legend>
 			<div class="margin-top">
-				<fieldset class="padded-none margin-none">
-					<legend>Application Grade</legend>
-					<select class="full-width white" name="std_grade_level" id="std_grade_level" onload="this.value = 'Default';" disabled>
-						<option value="Default" hidden>
-							Select Grade Level
-						</option>
-						<option value="Grade 11">
-							Grade 11
-						</option>
-						<option value="Grade 12">
-							Grade 12
-						</option>
-					</select>
-				</fieldset>
+				<div class="equal-container">
+					<div class="equal-content padded-right">
+						<fieldset class="padded-none margin-none">
+							<legend>Student Grade</legend>
+							<input class="full-width white" name="std_grade_level" id="std_grade_level" value="<?php
+																												$retval = $mysqli->query("SELECT stds_grade_level FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_grade_level;
+																												echo $retval;
+																												?>" disabled>
+						</fieldset>
+					</div>
+					<div class="equal-content padded-left">
+						<fieldset class="padded-none margin-none">
+							<legend>Student Strand</legend>
+							<input class="full-width white" name="std_admission_strand" id="std_admission_strand" value="<?php
+																															$retval = $mysqli->query("SELECT stds_admission_strand FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_admission_strand;
+																															echo $retval;
+																															?>" disabled>
+						</fieldset>
+					</div>
+				</div>
 			</div>
 			<div class="margin-top">
 				<fieldset class="padded-none margin-none">
 					<legend>Student Status</legend>
-					<select class="full-width white" name="std_student_status" id="std_student_status" onload="this.value = '';" disabled>
-						<option value="Default" hidden>Select Student Status</option>
-						<option value="New Student">New Student</option>
-						<option value="Old Student">Old Student</option>
-					</select>
+					<input class="full-width white" name="std_student_status" id="std_student_status" value="<?php
+																												$retval = $mysqli->query("SELECT stds_student_status FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_student_status;
+																												echo $retval;
+																												?>" disabled>
 				</fieldset>
 			</div>
 			<div class="margin-top">
 				<fieldset class="padded-none margin-none">
-					<input class="full-width" type="text" name="std_std_number" id="std_std_number" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="XXXX-XXXXXX" pattern="[0-9]{4}-[0-9]{6}" disabled>
+					<input class="full-width" type="text" name="std_std_number" id="std_std_number" value="<?php
+																											$retval = $mysqli->query("SELECT stds_std_number FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_std_number;
+																											echo $retval;
+																											?>" disabled>
 					<br>
 					<label for="std_std_number">Student Number</label>
 				</fieldset>
 			</div>
 			<div class="margin-top">
-				<ul>
-					Please upload a copy of the following:
-					<li>2x2 Picture</li>
-					<li>PSA</li>
-					<li>Good Moral</li>
-					<li>Form 137</li>
-				</ul>
-
 				<div class="equal-container">
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
-							<legend>Upload your 2x2 picture here</legend>
-							<input class="full-width white" type="file" name="std_2x2_pic" id="std_2x2_pic" accept="image/*" disabled>
-							<label><small><em>[Image Only]</em></small></label>
+							<legend>2x2 picture</legend>
+							<div class="full-width center">
+								<a class="full-width rounded bordered button-link" href="<?php
+																							$retval = $mysqli->query("SELECT stds_2x2_pic FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_2x2_pic;
+																							echo $retval;
+																							?>" target="_blank" type="image/*" rel="noopener noreferrer nofollow external">View Student 2x2</a>
+							</div>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
-							<legend>Upload your PSA here</legend>
-							<input class="full-width white" type="file" name="std_psa" id="std_psa" accept=".pdf" disabled>
-							<label><small><em>[PDF Only]</em></small></label>
+							<legend>PSA</legend>
+							<div class="full-width center">
+								<a class="full-width rounded bordered button-link" href="<?php
+																							$retval = $mysqli->query("SELECT stds_psa FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_psa;
+																							echo $retval;
+																							?>" target="_blank" type="application/pdf" rel="noopener noreferrer nofollow external">View Student PSA</a>
+							</div>
 						</fieldset>
 					</div>
 				</div>
 				<div class="equal-container margin-top">
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
-							<legend>Upload your Good Moral here</legend>
-							<input class="full-width white" type="file" name="std_good_moral" id="std_good_moral" accept=".pdf" disabled>
-							<label><small><em>[PDF Only]</em></small></label>
+							<legend>Good Moral</legend>
+							<div class="full-width center">
+								<a class="full-width rounded bordered button-link" href="<?php
+																							$retval = $mysqli->query("SELECT stds_good_moral FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_good_moral;
+																							echo $retval;
+																							?>" target="_blank" type="application/pdf" rel="noopener noreferrer nofollow external">View Student Good Moral</a>
+							</div>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
-							<legend>Upload your Form 137 here</legend>
-							<input class="full-width white" type="file" name="std_form_137" id="std_form_137" accept=".pdf" disabled>
-							<label><small><em>[PDF Only]</em></small></label>
+							<legend>Form 137</legend>
+							<div class="full-width center">
+								<a class="full-width rounded bordered button-link" href="<?php
+																							$retval = $mysqli->query("SELECT stds_form_137 FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_form_137;
+																							echo $retval;
+																							?>" target="_blank" type="application/pdf" rel="noopener noreferrer nofollow external">View Student Form 137</a>
+							</div>
 						</fieldset>
 					</div>
 				</div>
@@ -200,22 +261,34 @@ session_start();
 			</legend>
 			<fieldset class="padded-none margin-none margin-top">
 				<legend>Learner Reference Number (LRN)</legend>
-				<input class="full-width" type="text" name="std_std_lrn" id="std_std_lrn" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="123456123456" pattern="[0-9]{6}[0-9]{6}" disabled>
+				<input class="full-width" type="text" name="std_std_lrn" id="std_std_lrn" value="<?php
+																									$retval = $mysqli->query("SELECT stds_std_lrn FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_std_lrn;
+																									echo $retval;
+																									?>" disabled>
 			</fieldset>
 			<fieldset class="padded-none margin-none margin-top">
 				<legend>Name of Former School</legend>
-				<input class="full-width" type="text" name="std_former_school" id="std_former_school" oninput="this.value = this.value.toUpperCase();" disabled>
+				<input class="full-width" type="text" name="std_former_school" id="std_former_school" value="<?php
+																												$retval = $mysqli->query("SELECT stds_former_school FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_former_school;
+																												echo $retval;
+																												?>" disabled>
 				<br>
 				<label for="std_former_school">Complete School Name</label>
 
 				<div class="equal-container margin-top">
 					<div class="equal-content padded-right">
-						<input class="full-width" type="text" name="std_former_graduate_year" id="std_former_graduate_year" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="YYYY" pattern="[0-9]{4}" disabled>
+						<input class="full-width" type="text" name="std_former_graduate_year" id="std_former_graduate_year" value="<?php
+																																	$retval = $mysqli->query("SELECT stds_former_graduate_year FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_former_graduate_year;
+																																	echo $retval;
+																																	?>" disabled>
 						<br>
 						<label for="std_former_graduate_year">Year Graduated</label>
 					</div>
 					<div class="equal-content padded-left">
-						<input class="full-width" type="text" name="std_former_school_year" id="std_former_school_year" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="YYYY-YYYY" pattern="[0-9]{4}-[0-9]{4}" disabled>
+						<input class="full-width" type="text" name="std_former_school_year" id="std_former_school_year" value="<?php
+																																$retval = $mysqli->query("SELECT stds_former_school_year FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_former_school_year;
+																																echo $retval;
+																																?>" disabled>
 						<br>
 						<label for="std_former_school_year">School Year</label>
 					</div>
@@ -233,19 +306,28 @@ session_start();
 				<legend>Mother's Name</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
-						<input class="full-width" type="text" name="std_mother_lname" id="std_mother_lname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_mother_lname" id="std_mother_lname" value="<?php
+																													$retval = $mysqli->query("SELECT stds_mother_lname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_mother_lname;
+																													echo $retval;
+																													?>" disabled>
 						<br>
 						<label for="std_mother_lname">Last Name</label>
 					</div>
 
 					<div class="equal-content padded-left-right">
-						<input class="full-width" type="text" name="std_mother_fname" id="std_mother_fname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_mother_fname" id="std_mother_fname" value="<?php
+																													$retval = $mysqli->query("SELECT stds_mother_fname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_mother_fname;
+																													echo $retval;
+																													?>" disabled>
 						<br>
 						<label for="std_mother_fname">First Name</label>
 					</div>
 
 					<div class="equal-content padded-left">
-						<input class="full-width" type="text" name="std_mother_mname" id="std_mother_mname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_mother_mname" id="std_mother_mname" value="<?php
+																													$retval = $mysqli->query("SELECT stds_mother_mname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_mother_mname;
+																													echo $retval;
+																													?>" disabled>
 						<br>
 						<label for="std_mother_mname">Middle Name</label>
 					</div>
@@ -254,13 +336,19 @@ session_start();
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
 							<legend>Occupation</legend>
-							<input class="full-width" type="text" name="std_mother_occupation" id="std_mother_occupation" oninput="this.value = this.value.toUpperCase();" disabled>
+							<input class="full-width" type="text" name="std_mother_occupation" id="std_mother_occupation" value="<?php
+																																	$retval = $mysqli->query("SELECT stds_mother_occupation FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_mother_occupation;
+																																	echo $retval;
+																																	?>" disabled>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
 							<legend>Contact Number</legend>
-							<input class="full-width" type="tel" name="std_mother_contact" id="std_mother_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" disabled>
+							<input class="full-width" type="tel" name="std_mother_contact" id="std_mother_contact" value="<?php
+																															$retval = $mysqli->query("SELECT stds_mother_contact FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_mother_contact;
+																															echo $retval;
+																															?>" disabled>
 						</fieldset>
 					</div>
 				</div>
@@ -269,19 +357,28 @@ session_start();
 				<legend>Father's Name</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
-						<input class="full-width" type="text" name="std_father_lname" id="std_father_lname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_father_lname" id="std_father_lname" value="<?php
+																													$retval = $mysqli->query("SELECT stds_father_lname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_father_lname;
+																													echo $retval;
+																													?>" disabled>
 						<br>
 						<label for="std_father_lname">Last Name</label>
 					</div>
 
 					<div class="equal-content padded-left-right">
-						<input class="full-width" type="text" name="std_father_fname" id="std_father_fname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_father_fname" id="std_father_fname" value="<?php
+																													$retval = $mysqli->query("SELECT stds_father_fname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_father_fname;
+																													echo $retval;
+																													?>" disabled>
 						<br>
 						<label for="std_father_fname">First Name</label>
 					</div>
 
 					<div class="equal-content padded-left">
-						<input class="full-width" type="text" name="std_father_mname" id="std_father_mname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_father_mname" id="std_father_mname" value="<?php
+																													$retval = $mysqli->query("SELECT stds_father_mname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_father_mname;
+																													echo $retval;
+																													?>" disabled>
 						<br>
 						<label for=" std_father_mname">Middle Name</label>
 					</div>
@@ -290,13 +387,19 @@ session_start();
 					<div class="equal-content padded-right">
 						<fieldset class="padded-none margin-none">
 							<legend>Occupation</legend>
-							<input class="full-width" type="text" name="std_father_occupation" id="std_father_occupation" oninput="this.value = this.value.toUpperCase();" disabled>
+							<input class="full-width" type="text" name="std_father_occupation" id="std_father_occupation" value="<?php
+																																	$retval = $mysqli->query("SELECT stds_father_occupation FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_father_occupation;
+																																	echo $retval;
+																																	?>" disabled>
 						</fieldset>
 					</div>
 					<div class="equal-content padded-left">
 						<fieldset class="padded-none margin-none">
 							<legend>Contact Number</legend>
-							<input class="full-width" type="tel" name="std_father_contact" id="std_father_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" disabled>
+							<input class="full-width" type="tel" name="std_father_contact" id="std_father_contact" value="<?php
+																															$retval = $mysqli->query("SELECT stds_father_contact FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_father_contact;
+																															echo $retval;
+																															?>" disabled>
 						</fieldset>
 					</div>
 				</div>
@@ -313,19 +416,28 @@ session_start();
 				<legend>Contact Person</legend>
 				<div class="equal-container">
 					<div class="equal-content padded-right">
-						<input class="full-width" type="text" name="std_emergency_contact_lname" id="std_emergency_contact_lname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_emergency_contact_lname" id="std_emergency_contact_lname" value="<?php
+																																			$retval = $mysqli->query("SELECT stds_emergency_contact_lname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_emergency_contact_lname;
+																																			echo $retval;
+																																			?>" disabled>
 						<br>
 						<label for="std_emergency_contact_lname">Last Name</label>
 					</div>
 
 					<div class="equal-content padded-left-right">
-						<input class="full-width" type="text" name="std_emergency_contact_fname" id="std_emergency_contact_fname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_emergency_contact_fname" id="std_emergency_contact_fname" value="<?php
+																																			$retval = $mysqli->query("SELECT stds_emergency_contact_fname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_emergency_contact_fname;
+																																			echo $retval;
+																																			?>" disabled>
 						<br>
 						<label for="std_emergency_contact_fname">First Name</label>
 					</div>
 
 					<div class="equal-content padded-left">
-						<input class="full-width" type="text" name="std_emergency_contact_mname" id="std_emergency_contact_mname" oninput="this.value = this.value.toUpperCase();" disabled>
+						<input class="full-width" type="text" name="std_emergency_contact_mname" id="std_emergency_contact_mname" value="<?php
+																																			$retval = $mysqli->query("SELECT stds_emergency_contact_mname FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_emergency_contact_mname;
+																																			echo $retval;
+																																			?>" disabled>
 						<br>
 						<label for="stds_emergency_contact_mname">Middle Name</label>
 					</div>
@@ -333,7 +445,10 @@ session_start();
 				<div class="margin-top">
 					<fieldset class="padded-none margin-none">
 						<legend>Contact Number</legend>
-						<input class="full-width" type="tel" name="std_emergency_contact_contact" id="std_emergency_contact_contact" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" disabled>
+						<input class="full-width" type="tel" name="std_emergency_contact_contact" id="std_emergency_contact_contact" value="<?php
+																																			$retval = $mysqli->query("SELECT stds_emergency_contact_contact FROM stds_frm_addm WHERE stds_acc_id = '$admissions_student_account_id'")->fetch_object()->stds_emergency_contact_contact;
+																																			echo $retval;
+																																			?>" disabled>
 					</fieldset>
 				</div>
 			</fieldset>

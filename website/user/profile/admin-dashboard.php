@@ -18,19 +18,19 @@ if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 
 
 if (!empty($_POST) && isset($_POST['dashboard'])) {
-	header('location: /website/user/profile/admin.dashboard.php');
+	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['announcements'])) {
-	header('location: /website/user/profile/admin.announcements.php');
+	header('location: /website/user/profile/admin-announcements.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['form-builder'])) {
-	header('location: /website/user/profile/admin.form-builder.php');
+	header('location: /website/user/profile/admin-form-builder.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['profile'])) {
-	header('location: /website/user/profile/admin.profile.php');
+	header('location: /website/user/profile/admin-profile.php');
 	exit;
 }
 
@@ -38,10 +38,16 @@ if (!empty($_POST) && isset($_POST['profile'])) {
 if (!empty($_POST) && isset($_POST['admission'])) {
 	$_SESSION['show_admissions'] = 1;
 	$_SESSION['show_enrollments'] = 0;
+
+	header('location: /website/user/profile/admin-dashboard.php');
+	exit;
 }
 if (!empty($_POST) && isset($_POST['enrollment'])) {
 	$_SESSION['show_admissions'] = 0;
 	$_SESSION['show_enrollments'] = 1;
+
+	header('location: /website/user/profile/admin-dashboard.php');
+	exit;
 }
 
 
@@ -78,19 +84,18 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 		<div class="main-container-fixed" id="navBar">
 			<div class="equal-container-spaced border-bottom unselectable">
 				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width">
-						<div class="equal-content center padded-right">
+					<div class="equal-container fit-width full-height center">
+						<div class="equal-content center margin-right">
 							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
 						</div>
-						<div class="equal-content center padded-left">
+						<div class="equal-content center margin-left">
 							<h4>Dashboard</h4>
 						</div>
 					</div>
 				</div>
-
 				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width">
-						<div class="equal-content center padded-right">
+					<div class="equal-container fit-width full-height center">
+						<div class="equal-content center margin-right">
 							<div>
 								<h6>
 									<span class="no-wrap">
@@ -109,8 +114,8 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 								</form>
 							</div>
 						</div>
-						<div class="equal-content center padded-left">
-							<a class="center" href="/website/user/profile/admin.profile.php">
+						<div class="equal-content center margin-left">
+							<a class="center" href="/website/user/profile/admin-profile.php">
 								<img class="profile" src="<?php
 															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
 															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
@@ -125,10 +130,9 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 				</div>
 			</div>
 		</div>
-
 		<div class="main-container-remaining">
 			<div class="equal-container-spaced full-height">
-				<div class="equal-content-spaced padded-right fit-width">
+				<div class="equal-content-spaced margin-right border-bottom" style="min-width: 200px;">
 					<div class="padded-top-bottom border-bottom">
 						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
@@ -156,9 +160,9 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 						</div>
 					</div>
 				</div>
-				<div class="equal-content-spaced padded-left-right full-width scrollable" id="mainBody">
+				<div class="equal-content-spaced margin-left-right full-width scrollable" id="mainBody">
 					<div class="equal-container">
-						<div class="equal-content padded-right">
+						<div class="equal-content margin-right">
 							<div class="padded-top-bottom border-bottom unselectable">
 								<div class="padded-left-right">
 									<h2>Admissions</h2>
@@ -166,22 +170,26 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 							</div>
 							<div class="padded-top-bottom">
 								<div class="margin-top-bottom">
-									<?php
-									if ($mysqli->query("SELECT g_frm_admn_bool FROM g_frm_admn WHERE g_frm_admn_id = 1")->fetch_object()->g_frm_admn_bool) {
-										include('admin/admn_disable.php');
-									} else {
-										include('admin/admn_enable.php');
-									}
-									?>
+									<div class="padded-left-right">
+										<?php
+										if ($mysqli->query("SELECT g_frm_admn_bool FROM g_frm_admn WHERE g_frm_admn_id = 1")->fetch_object()->g_frm_admn_bool) {
+											include('admin/admn_disable.php');
+										} else {
+											include('admin/admn_enable.php');
+										}
+										?>
+									</div>
 								</div>
 								<div class="margin-top-bottom">
-									<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-										<button type="submit" name="admission" class=" full-width" tabindex="-1">Show Student Admissions</button>
-									</form>
+									<div class="padded-left-right">
+										<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+											<button type="submit" name="admission" class=" full-width" tabindex="-1">Show Student Admissions</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="equal-content padded-left">
+						<div class="equal-content margin-left">
 							<div class="padded-top-bottom border-bottom unselectable">
 								<div class="padded-left-right">
 									<h2>Enrollments</h2>
@@ -189,23 +197,26 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 							</div>
 							<div class="padded-top-bottom">
 								<div class="margin-top-bottom">
-									<?php
-									if ($mysqli->query("SELECT g_frm_enrll_bool FROM g_frm_enrll WHERE g_frm_enrll_id = 1")->fetch_object()->g_frm_enrll_bool) {
-										include('admin/enrll_disable.php');
-									} else {
-										include('admin/enrll_enable.php');
-									}
-									?>
+									<div class="padded-left-right">
+										<?php
+										if ($mysqli->query("SELECT g_frm_enrll_bool FROM g_frm_enrll WHERE g_frm_enrll_id = 1")->fetch_object()->g_frm_enrll_bool) {
+											include('admin/enrll_disable.php');
+										} else {
+											include('admin/enrll_enable.php');
+										}
+										?>
+									</div>
 								</div>
 								<div class="margin-top-bottom">
-									<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-										<button type="submit" name="enrollment" class=" full-width" tabindex="-1">Show Student Enrollments</button>
-									</form>
+									<div class="padded-left-right">
+										<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+											<button type="submit" name="enrollment" class=" full-width" tabindex="-1">Show Student Enrollments</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
 					<?php
 					if ($_SESSION['show_admissions']) {
 						include('admin/admn_submissions.php');

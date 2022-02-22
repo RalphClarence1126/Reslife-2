@@ -18,19 +18,19 @@ if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
 
 
 if (!empty($_POST) && isset($_POST['dashboard'])) {
-	header('location: /website/user/profile/admin.dashboard.php');
+	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['announcements'])) {
-	header('location: /website/user/profile/admin.announcements.php');
+	header('location: /website/user/profile/admin-announcements.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['form-builder'])) {
-	header('location: /website/user/profile/admin.form-builder.php');
+	header('location: /website/user/profile/admin-form-builder.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['profile'])) {
-	header('location: /website/user/profile/admin.profile.php');
+	header('location: /website/user/profile/admin-profile.php');
 	exit;
 }
 
@@ -123,7 +123,7 @@ if (isset($_POST['save'])) {
 	}
 
 
-	header('location: /website/user/profile/admin.profile.php');
+	header('location: /website/user/profile/admin-profile.php');
 	exit;
 }
 
@@ -157,19 +157,18 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 		<div class="main-container-fixed" id="navBar">
 			<div class="equal-container-spaced border-bottom unselectable">
 				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width">
-						<div class="equal-content center padded-right">
+					<div class="equal-container fit-width full-height center">
+						<div class="equal-content center margin-right">
 							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
 						</div>
-						<div class="equal-content center padded-left">
+						<div class="equal-content center margin-left">
 							<h4>Profile</h4>
 						</div>
 					</div>
 				</div>
-
 				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width">
-						<div class="equal-content center padded-right">
+					<div class="equal-container fit-width full-height center">
+						<div class="equal-content center margin-right">
 							<div>
 								<h6>
 									<span class="no-wrap">
@@ -188,8 +187,8 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 								</form>
 							</div>
 						</div>
-						<div class="equal-content center padded-left">
-							<a class="center" href="/website/user/profile/admin.profile.php">
+						<div class="equal-content center margin-left">
+							<a class="center" href="/website/user/profile/admin-profile.php">
 								<img class="profile" src="<?php
 															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
 															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
@@ -204,10 +203,9 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 				</div>
 			</div>
 		</div>
-
 		<div class="main-container-remaining">
 			<div class="equal-container-spaced full-height">
-				<div class="equal-content-spaced padded-right fit-width">
+				<div class="equal-content-spaced margin-right border-bottom" style="min-width: 200px;">
 					<div class="padded-top-bottom border-bottom">
 						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
@@ -235,7 +233,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 						</div>
 					</div>
 				</div>
-				<div class="equal-content-spaced padded-left-right full-width scrollable" id="mainBody">
+				<div class="equal-content-spaced margin-left-right full-width scrollable" id="mainBody">
 					<div class="padded-top-bottom border-bottom unselectable">
 						<div class="padded-left-right">
 							<h2>Admin Information</h2>
@@ -247,7 +245,6 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 								<div class="margin-top-bottom">
 									<fieldset>
 										<legend>Personal Information</legend>
-
 										<div class="equal-container">
 											<div class="equal-content padded-right">
 												<input class="full-width" type="text" name="ad_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php
@@ -280,13 +277,10 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										</div>
 									</fieldset>
 								</div>
-
 								<br>
-
 								<div class="margin-top-bottom">
 									<fieldset>
 										<legend>Account Information</legend>
-
 										<div class="equal-container">
 											<div class="equal-content padded-right">
 												<input class="full-width" type="email" name="ad_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php
@@ -300,17 +294,18 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 												<label for="ad_new_pass">New Password</label>
 											</div>
 										</div>
-
 										<div class="equal-container-spaced margin-top">
 											<div class="equal-content-spaced fit-width padded-right">
-												<img src="<?php
-															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
-															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
+												<div class="full-width center">
+													<img src="<?php
+																$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
+																$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+																$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 
-															echo $retval;
-															?>" alt="User Profile Picture" height="250" width="250" loading="lazy">
+																echo $retval;
+																?>" alt="User Profile Picture" height="250" width="250" loading="lazy">
+												</div>
 											</div>
 											<div class="equal-content-spaced full-width padded-left">
 												<input class="full-width" type="file" name="ad_profile_picture" placeholder="Select New Profile Picture" accept="image/*"><br>
@@ -319,7 +314,6 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										</div>
 									</fieldset>
 								</div>
-
 								<button type="submit" name="save" class="full-width margin-top-bottom">Save Changes</button>
 							</form>
 						</div>
