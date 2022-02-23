@@ -5,7 +5,7 @@ require('../../database/config.php');
 ob_start();
 ?>
 
-<div class="padded-top-bottom border-top unselectable" id="admissions">
+<div class="padded-top-bottom border-top unselectable" id="enrollments">
 	<div class="padded-left-right">
 		<h4>Pending Enrollments</h4>
 	</div>

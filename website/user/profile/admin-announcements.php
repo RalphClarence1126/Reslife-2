@@ -160,7 +160,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 						</div>
 					</div>
 				</div>
-				<div class="equal-content-spaced margin-left-right full-width scrollable" id="mainBody">
+				<div class="equal-content-spaced margin-left full-width scrollable" id="mainBody">
 					<div class="padded-top-bottom border-bottom unselectable">
 						<div class="padded-left-right">
 							<h2>Create Announcements</h2>

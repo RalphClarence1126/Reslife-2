@@ -1,5 +1,5 @@
 -- Create initial database
-CREATE DATABASE prototype;
+-- CREATE DATABASE prototype;
 
 
 -- Create admin accounts table in database

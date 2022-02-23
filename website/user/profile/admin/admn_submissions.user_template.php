@@ -55,7 +55,7 @@ if (!empty($_POST) && isset($_POST['reject_admission'])) {
 	<input type="hidden" name="std_acc_id" value="<?php echo $admissions_student_account_id ?>">
 
 	<div class="rounded padded equal-container-spaced margin-top-bottom bordered">
-		<div class="equal-content-spaced fit-width">
+		<div class="equal-content-spaced">
 			<div class="margin-right">
 				<div class="equal-container">
 					<div class="equal-content-spaced margin-right">
@@ -72,14 +72,14 @@ if (!empty($_POST) && isset($_POST['reject_admission'])) {
 			</div>
 
 		</div>
-		<div class="equal-content-spaced full-width">
+		<div class="equal-content-spaced">
 			<div class="full-height center margin-left-right">
 				<?php
 				if ($_SESSION['student_account_id'] == $admissions_student_account_id) {
 					if ($_SESSION['view_details_open']) {
 						echo '<button type="submit" name="hide_details_close" class="red full-width" tabindex="-1">Hide Admission Details</button>';
 					} else {
-						echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details/button>';
+						echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details</button>';
 					}
 				} else {
 					echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details</button>';
@@ -87,7 +87,7 @@ if (!empty($_POST) && isset($_POST['reject_admission'])) {
 				?>
 			</div>
 		</div>
-		<div class="equal-content-spaced fit-width">
+		<div class="equal-content-spaced">
 			<div class="full-height center margin-left">
 				<div class="equal-container-spaced">
 					<div class="equal-content-spaced margin-right">

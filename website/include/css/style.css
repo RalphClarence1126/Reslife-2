@@ -220,13 +220,13 @@ hr {
 /* End Border */
 
 /* Scrollbar */
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
 	width: 10px;
-} */
-/* ::-webkit-scrollbar-thumb {
+}
+::-webkit-scrollbar-thumb {
 	background: #b9b9b9;
 	border-radius: 5px;
-} */
+}
 /* End Scrollbar */
 
 /* Container */
@@ -337,6 +337,19 @@ hr {
 }
 /* End Container */
 
+/* Accordion */
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+	cursor: pointer;
+}
+
+.panel {
+	background-color: transparent;
+	display: none;
+	overflow: hidden;
+}
+/* End Accordion */
+
 /* Text */
 .no-wrap {
 	white-space: nowrap;
@@ -435,6 +448,7 @@ button {
 	border-radius: 100px;
 	background-color: #ffffff;
 	color: #0096ff;
+	margin: 5px 0px;
 	padding: 5px;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-weight: bold;
@@ -454,6 +468,7 @@ button.red {
 	border-radius: 100px;
 	background-color: #ffffff;
 	color: #ff3737;
+	margin: 5px 0px;
 	padding: 5px;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-weight: bold;
@@ -468,6 +483,7 @@ button.gray {
 	border-radius: 100px;
 	background-color: #ffffff;
 	color: #606368;
+	margin: 5px 0px;
 	padding: 5px;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-weight: bold;
@@ -482,6 +498,7 @@ button.has-announcement {
 	border-radius: 100px;
 	background-color: #ff3737 !important;
 	color: #ffffff !important;
+	margin: 5px 0px;
 	padding: 5px;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-weight: bold;
@@ -563,6 +580,14 @@ button.has-announcement {
 
 	::-webkit-scrollbar {
 		width: 0px;
+	}
+}
+
+@media only screen and (min-width: 1520px) {
+	.main-container-remaining {
+		width: 1520px;
+		margin-left: auto;
+		margin-right: auto;
 	}
 }
 /* End Mobile Dynamic */
