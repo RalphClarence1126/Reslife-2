@@ -87,9 +87,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										$last_name = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
 										$first_name = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
 
-										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
-
-										echo $retval;
+										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
 									</span>
 								</h6>
@@ -104,9 +102,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
 															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-															echo $retval;
+															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
 							</a>
 						</div>

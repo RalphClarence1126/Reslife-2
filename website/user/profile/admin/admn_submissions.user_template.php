@@ -54,47 +54,56 @@ if (!empty($_POST) && isset($_POST['reject_admission'])) {
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 	<input type="hidden" name="std_acc_id" value="<?php echo $admissions_student_account_id ?>">
 
-	<div class="rounded padded equal-container-spaced margin-top-bottom bordered">
-		<div class="equal-content-spaced">
-			<div class="margin-right">
-				<div class="equal-container">
-					<div class="equal-content-spaced margin-right">
-						<div class="full-height center">
-							<img class="profile" src="<?php echo ($admissions_student_picture) ? $admissions_student_picture : '/website/include/images/rtu-seal.png'; ?>" alt="Student 2x2 Picture" height="40" width="40" loading="lazy">
+	<div class="rounded bordered margin-top-bottom">
+		<div class="padded-left-right border-bottom">
+			<h6>Admission ID: <?php echo $admissions_id; ?></h6>
+			<h6>Student Account ID: <?php echo $admissions_student_account_id; ?></h6>
+		</div>
+		<div class="padded equal-container-spaced">
+			<div class="equal-content-spaced">
+				<div class="margin-right">
+					<div class="equal-container">
+						<div class="equal-content-spaced margin-right">
+							<div class="full-height center">
+								<img class="profile" src="<?php echo ($admissions_student_picture) ? $admissions_student_picture : '/website/include/images/rtu-seal.png'; ?>" alt="Student 2x2 Picture" height="40" width="40" loading="lazy">
+							</div>
 						</div>
-					</div>
-					<div class="equal-content-spaced margin-left">
-						<div class="full-height center">
-							<h6><?php echo $admissions_student_number ?> : <?php echo $admissions_student_lrn ?></h6>
+						<div class="equal-content-spaced margin-left">
+							<div class="full-height center">
+								<h6><?php echo $admissions_student_number ?> : <?php echo $admissions_student_lrn ?></h6>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-		</div>
-		<div class="equal-content-spaced">
-			<div class="full-height center margin-left-right">
-				<?php
-				if ($_SESSION['student_account_id'] == $admissions_student_account_id) {
-					if ($_SESSION['view_details_open']) {
-						echo '<button type="submit" name="hide_details_close" class="red full-width" tabindex="-1">Hide Admission Details</button>';
+			</div>
+			<div class="equal-content-spaced">
+				<div class="full-height center margin-left-right">
+					<?php
+					if ($_SESSION['student_account_id'] == $admissions_student_account_id) {
+						if ($_SESSION['view_details_open']) {
+							echo '<button type="submit" name="hide_details_close" class="red full-width" tabindex="-1">Hide Admission Details</button>';
+						} else {
+							echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details</button>';
+						}
 					} else {
 						echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details</button>';
 					}
-				} else {
-					echo '<button type="submit" name="view_details_open" class="full-width" tabindex="-1">View Admission Details</button>';
-				}
-				?>
+					?>
+				</div>
 			</div>
-		</div>
-		<div class="equal-content-spaced">
-			<div class="full-height center margin-left">
-				<div class="equal-container-spaced">
-					<div class="equal-content-spaced margin-right">
-						<button type="submit" name="accept_admission" class="full-width" tabindex="-1">Accept</button>
-					</div>
-					<div class="equal-content-spaced margin-left">
-						<button type="submit" name="reject_admission" class="red full-width" tabindex="-1">Reject</button>
+			<div class="equal-content-spaced">
+				<div class="full-height center margin-left">
+					<div class="equal-container">
+						<div class="equal-content margin-right">
+							<button type="submit" name="accept_admission" class="full-width" tabindex="-1">Accept</button>
+						</div>
+						<?php
+						($admissions_status == 'PENDING') ? include('admn_submissions.user_template_waiting.php') : include('admn_submissions.user_template_pending.php');
+						?>
+						<div class="equal-content margin-left">
+							<button type="submit" name="reject_admission" class="red full-width" tabindex="-1">Reject</button>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -35,16 +35,31 @@ if (!empty($_POST) && isset($_POST['profile'])) {
 }
 
 
-if (!empty($_POST) && isset($_POST['admission'])) {
+if (!empty($_POST) && isset($_POST['show_admissions'])) {
 	$_SESSION['show_admissions'] = 1;
 	$_SESSION['show_enrollments'] = 0;
 
 	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
-if (!empty($_POST) && isset($_POST['enrollment'])) {
+if (!empty($_POST) && isset($_POST['hide_admissions'])) {
+	$_SESSION['show_admissions'] = 0;
+	$_SESSION['show_enrollments'] = 0;
+
+	header('location: /website/user/profile/admin-dashboard.php');
+	exit;
+}
+
+if (!empty($_POST) && isset($_POST['show_enrollments'])) {
 	$_SESSION['show_admissions'] = 0;
 	$_SESSION['show_enrollments'] = 1;
+
+	header('location: /website/user/profile/admin-dashboard.php');
+	exit;
+}
+if (!empty($_POST) && isset($_POST['hide_enrollments'])) {
+	$_SESSION['show_admissions'] = 0;
+	$_SESSION['show_enrollments'] = 0;
 
 	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
@@ -103,9 +118,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										$last_name = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
 										$first_name = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
 
-										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
-
-										echo $retval;
+										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
 									</span>
 								</h6>
@@ -120,9 +133,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
 															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-															echo $retval;
+															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
 							</a>
 						</div>
@@ -172,18 +183,20 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 								<div class="margin-top-bottom">
 									<div class="padded-left-right">
 										<?php
-										if ($mysqli->query("SELECT g_frm_admn_bool FROM g_frm_admn WHERE g_frm_admn_id = 1")->fetch_object()->g_frm_admn_bool) {
-											include('admin/admn_disable.php');
-										} else {
-											include('admin/admn_enable.php');
-										}
+										($mysqli->query("SELECT g_frm_admn_bool FROM g_frm_admn WHERE g_frm_admn_id = 1")->fetch_object()->g_frm_admn_bool) ? include('admin/admn_disable.php') : include('admin/admn_enable.php');
 										?>
 									</div>
 								</div>
 								<div class="margin-top-bottom">
 									<div class="padded-left-right">
 										<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-											<button type="submit" name="admission" class=" full-width" tabindex="-1">Show Student Admissions</button>
+											<?php
+											if (!$_SESSION['show_admissions']) {
+												echo "<button type='submit' name='show_admissions' class='full-width' tabindex='-1'>Show Student Admissions</button>";
+											} else {
+												echo "<button type='submit' name='hide_admissions' class='red full-width' tabindex='-1'>Hide Student Admissions</button>";
+											}
+											?>
 										</form>
 									</div>
 								</div>
@@ -199,18 +212,20 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 								<div class="margin-top-bottom">
 									<div class="padded-left-right">
 										<?php
-										if ($mysqli->query("SELECT g_frm_enrll_bool FROM g_frm_enrll WHERE g_frm_enrll_id = 1")->fetch_object()->g_frm_enrll_bool) {
-											include('admin/enrll_disable.php');
-										} else {
-											include('admin/enrll_enable.php');
-										}
+										($mysqli->query("SELECT g_frm_enrll_bool FROM g_frm_enrll WHERE g_frm_enrll_id = 1")->fetch_object()->g_frm_enrll_bool) ? include('admin/enrll_disable.php') : include('admin/enrll_enable.php');
 										?>
 									</div>
 								</div>
 								<div class="margin-top-bottom">
 									<div class="padded-left-right">
 										<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-											<button type="submit" name="enrollment" class=" full-width" tabindex="-1">Show Student Enrollments</button>
+											<?php
+											if (!$_SESSION['show_enrollments']) {
+												echo "<button type='submit' name='show_enrollments' class='full-width' tabindex='-1'>Show Student Enrollments</button>";
+											} else {
+												echo "<button type='submit' name='hide_enrollments' class='red full-width' tabindex='-1'>Hide Student Enrollments</button>";
+											}
+											?>
 										</form>
 									</div>
 								</div>
@@ -218,13 +233,9 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 						</div>
 					</div>
 					<?php
-					if ($_SESSION['show_admissions']) {
-						include('admin/admn_submissions.php');
-					}
+					($_SESSION['show_admissions']) ? include('admin/admn_submissions.php')  : '';
 
-					if ($_SESSION['show_enrollments']) {
-						include('admin/enrll_submissions.php');
-					}
+					($_SESSION['show_enrollments']) ? include('admin/enrll_submissions.php') : '';
 					?>
 				</div>
 			</div>

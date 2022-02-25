@@ -71,7 +71,7 @@ CREATE TABLE stds (
 CREATE TABLE stds_frm_addm (
     stds_submission_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     stds_acc_id INT UNIQUE,
-    stds_status_bool BOOLEAN,
+    stds_status_bool VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     -- Learner Information

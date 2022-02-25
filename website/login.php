@@ -34,11 +34,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 			$_SESSION['timeout'] = time();
 			$_SESSION['username'] = $email;
 
-			if ($_POST['remember_login'] == 'on') {
-				setcookie($cookie_name, $email, time() + (86400 * 30), '/');
-			} else {
-				setcookie($cookie_name, '', time() - 3600, '/');
-			}
+			($_POST['remember_login'] == 'on') ? setcookie($cookie_name, $email, time() + (86400 * 30), '/') : setcookie($cookie_name, '', time() - 3600, '/');
 
 			header('location: /index.php');
 			exit;
@@ -54,11 +50,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 			$_SESSION['timeout'] = time();
 			$_SESSION['username'] = $email;
 
-			if ($_POST['remember_login'] == 'on') {
-				setcookie($cookie_name, $email, time() + (86400 * 30), '/');
-			} else {
-				setcookie($cookie_name, '', time() - 3600, '/');
-			}
+			($_POST['remember_login'] == 'on') ? setcookie($cookie_name, $email, time() + (86400 * 30), '/') : setcookie($cookie_name, '', time() - 3600, '/');
 
 			$result_student->free();
 

@@ -257,9 +257,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										$last_name = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
 										$first_name = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
 
-										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
-
-										echo $retval;
+										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
 									</span>
 								</h6>
@@ -274,9 +272,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 															$profile_picture = $mysqli->query("SELECT stds_profile_pic FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_profile_pic;
 															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-															echo $retval;
+															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
 							</a>
 						</div>
@@ -328,94 +324,58 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										<legend>Personal Information</legend>
 										<div class="equal-container">
 											<div class="equal-content padded-right">
-												<input class="full-width" type="text" name="std_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																														$retval = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
-																																														echo $retval;
-																																														?>"><br>
+												<input class="full-width" type="text" name="std_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname; ?>"><br>
 												<label for="std_lname">Last Name</label>
 											</div>
 											<div class="equal-content padded-left-right">
-												<input class="full-width" type="text" name="std_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																														$retval = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
-																																														echo $retval;
-																																														?>"><br>
+												<input class="full-width" type="text" name="std_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname; ?>"><br>
 												<label for="std_fname">First Name</label>
 											</div>
 											<div class="equal-content padded-left-right">
-												<input class="full-width" type="text" name="std_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																															$retval = $mysqli->query("SELECT stds_mname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_mname;
-																																															echo $retval;
-																																															?>"><br>
+												<input class="full-width" type="text" name="std_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT stds_mname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_mname; ?>"><br>
 												<label for="std_mname">Middle Name</label>
 											</div>
 											<div class="equal-content padded-left">
-												<input class="full-width" type="text" name="std_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																													$retval = $mysqli->query("SELECT stds_suffix FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_suffix;
-																																													echo $retval;
-																																													?>"><br>
+												<input class="full-width" type="text" name="std_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT stds_suffix FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_suffix; ?>"><br>
 												<label for="std_sname">Suffix (If any)</label>
 											</div>
 										</div>
 										<div class="equal-container margin-top">
 											<div class="equal-content padded-right">
-												<input class="full-width" type="tel" name="std_contact_number" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php
-																																																																																																				$retval = $mysqli->query("SELECT stds_contact FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_contact;
-																																																																																																				echo $retval;
-																																																																																																				?>"><br>
+												<input class="full-width" type="tel" name="std_contact_number" placeholder="09XX-XXX-XXXX" pattern="(([0-9]{4})-([0-9]{3})-([0-9]{4}))|(([0-9]{4})([0-9]{3})([0-9]{4}))|((\+63)(([0-9]{3})-([0-9]{3})-([0-9]{4})))|((\+63)(([0-9]{3})([0-9]{3})([0-9]{4})))" oninput="this.value = this.value.replace(/[^0-9|\-.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php echo $mysqli->query("SELECT stds_contact FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_contact; ?>"><br>
 												<label for="std_contact_number">Contact Number</label>
 											</div>
 											<div class="equal-content padded-left-right">
-												<input class="full-width" type="text" name="std_gender" pattern="[a-zA-Z|\-]+" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																														$retval = $mysqli->query("SELECT stds_gender FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_gender;
-																																														echo $retval;
-																																														?>"><br>
+												<input class="full-width" type="text" name="std_gender" pattern="[a-zA-Z|\-]+" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT stds_gender FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_gender; ?>"><br>
 												<label for="std_gender">Gender</label>
 											</div>
 											<div class="equal-content padded-left">
-												<input class="full-width" type="text" name="std_religion" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																									$retval = $mysqli->query("SELECT stds_regligion FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_regligion;
-																																									echo $retval;
-																																									?>"><br>
+												<input class="full-width" type="text" name="std_religion" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT stds_regligion FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_regligion; ?>"><br>
 												<label for="std_religion">Religion</label>
 											</div>
 										</div>
 										<div class="equal-content margin-top">
 											<div class="equal-container">
 												<div class="equal-content padded-right">
-													<input class="full-width" type="number" name="std_age" min="1" max="100" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php
-																																																							$retval = $mysqli->query("SELECT stds_age FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_age;
-																																																							echo $retval;
-																																																							?>"><br>
+													<input class="full-width" type="number" name="std_age" min="1" max="100" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php echo $mysqli->query("SELECT stds_age FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_age; ?>"><br>
 													<label for="std_age">Age</label>
 												</div>
 												<div class="equal-content padded-left-right">
-													<input class="full-width" type="text" name="std_mbirthdate" placeholder="MM" pattern="[0-9]{2}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php
-																																																													$retval = $mysqli->query("SELECT stds_birth_month FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_month;
-																																																													echo $retval;
-																																																													?>"><br>
+													<input class="full-width" type="text" name="std_mbirthdate" placeholder="MM" pattern="[0-9]{2}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php echo $mysqli->query("SELECT stds_birth_month FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_month; ?>"><br>
 													<label for="std_mbirthdate">Month</label>
 												</div>
 												<div class="equal-content padded-left-right">
-													<input class="full-width" type="text" name="std_dbirthdate" placeholder="DD" pattern="[0-9]{2}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php
-																																																													$retval = $mysqli->query("SELECT stds_birth_day FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_day;
-																																																													echo $retval;
-																																																													?>"><br>
+													<input class="full-width" type="text" name="std_dbirthdate" placeholder="DD" pattern="[0-9]{2}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php echo $mysqli->query("SELECT stds_birth_day FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_day; ?>"><br>
 													<label for="std_dbirthdate">Day</label>
 												</div>
 												<div class="equal-content padded-left">
-													<input class="full-width" type="text" name="std_ybirthdate" placeholder="YYYY" pattern="[0-9]{4}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php
-																																																													$retval = $mysqli->query("SELECT stds_birth_year FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_year;
-																																																													echo $retval;
-																																																													?>"><br>
+													<input class="full-width" type="text" name="std_ybirthdate" placeholder="YYYY" pattern="[0-9]{4}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="<?php echo $mysqli->query("SELECT stds_birth_year FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_birth_year; ?>"><br>
 													<label for="std_ybirthdate">Year</label>
 												</div>
 											</div>
 										</div>
 										<div class="equal-content margin-top">
-											<input class="full-width" type="text" name="std_birthplace" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																								$retval = $mysqli->query("SELECT stds_address FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_address;
-																																								echo $retval;
-																																								?>"><br>
+											<input class="full-width" type="text" name="std_birthplace" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT stds_address FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_address; ?>"><br>
 											<label for="std_birthplace">Address</label>
 										</div>
 									</fieldset>
@@ -427,10 +387,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 
 										<div class="equal-container">
 											<div class="equal-content padded-right">
-												<input class="full-width" type="email" name="std_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php
-																																													$retval = $mysqli->query("SELECT stds_email FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_email;
-																																													echo $retval;
-																																													?>"><br>
+												<input class="full-width" type="email" name="std_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php echo $mysqli->query("SELECT stds_email FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_email; ?>"><br>
 												<label for="std_email">Email Address</label>
 											</div>
 											<div class="equal-content padded-left">
@@ -446,9 +403,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 																$profile_picture = $mysqli->query("SELECT stds_profile_pic FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_profile_pic;
 																$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-																$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-																echo $retval;
+																echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 																?>" alt="User Profile Picture" height="200" width="200" loading="lazy">
 												</div>
 											</div>

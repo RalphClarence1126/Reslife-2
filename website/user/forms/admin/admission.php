@@ -158,7 +158,7 @@ session_start();
 
 		<fieldset class="padded-none margin-none margin-top-bottom">
 			<legend class="padded-left-right full-width center">
-				<h4>Application Details</h4>
+				<h4>Admission Details</h4>
 			</legend>
 			<div class="margin-top">
 				<div class="equal-container">
@@ -408,7 +408,7 @@ session_start();
 
 		<br>
 
-		<fieldset class="padded-none margin-none margin-top-bottom">
+		<fieldset class="padded-none margin-none margin-top">
 			<legend class="padded-left-right full-width center">
 				<h4>Contact In Case Of Emmergency</h4>
 			</legend>

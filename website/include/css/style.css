@@ -490,7 +490,7 @@ button.gray {
 	cursor: pointer;
 }
 button.gray:hover {
-	background-color: #b9b9b91f;
+	background-color: #1b1b1b1f;
 }
 
 button.has-announcement {
@@ -521,30 +521,6 @@ button.has-announcement {
 		overflow-y: initial;
 	}
 
-	.equal-container {
-		display: inline-block;
-	}
-	.equal-content {
-		border-radius: 0px;
-		margin: 0px 0px 10px;
-	}
-	.equal-content:last-child {
-		border-radius: 0px;
-		margin: 0px;
-	}
-
-	.equal-container-spaced {
-		display: inline-block;
-	}
-	.equal-content-spaced {
-		border-radius: 0px;
-		margin: 0px 0px 10px;
-	}
-	.equal-content-spaced:last-child {
-		border-radius: 0px;
-		margin: 0px;
-	}
-
 	.margin-left-right {
 		margin: 0px 0px !important;
 	}
@@ -553,6 +529,30 @@ button.has-announcement {
 	}
 	.margin-right {
 		margin-right: 0px !important;
+	}
+
+	.equal-container {
+		display: inline-block;
+	}
+	.equal-content {
+		border-radius: 0px;
+		margin-bottom: 10px !important;
+	}
+	.equal-content:last-child {
+		border-radius: 0px;
+		margin: 0px !important;
+	}
+
+	.equal-container-spaced {
+		display: inline-block;
+	}
+	.equal-content-spaced {
+		border-radius: 0px;
+		margin-bottom: 10px !important;
+	}
+	.equal-content-spaced:last-child {
+		border-radius: 0px;
+		margin: 0px !important;
 	}
 
 	.three-quarter-width {

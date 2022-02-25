@@ -4,6 +4,7 @@ require('../../database/config.php');
 
 ob_start();
 
+
 if (!empty($_POST) && isset($_POST['del_stdAnn'])) {
 	$stdAnn_id = $_POST['stdAnn_id'];
 

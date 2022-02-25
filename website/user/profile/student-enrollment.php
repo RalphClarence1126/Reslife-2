@@ -117,9 +117,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										$last_name = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
 										$first_name = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
 
-										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
-
-										echo $retval;
+										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
 									</span>
 								</h6>
@@ -134,9 +132,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 															$profile_picture = $mysqli->query("SELECT stds_profile_pic FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_profile_pic;
 															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-															echo $retval;
+															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
 							</a>
 						</div>
@@ -185,11 +181,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 							<?php
 							$get_enrollment_form_boolean = $mysqli->query('SELECT g_frm_enrll_bool FROM g_frm_enrll')->fetch_object()->g_frm_enrll_bool;;
 
-							if (!$get_enrollment_form_boolean) {
-								include('../notification/form_closed_enrollment.html');
-							} else {
-								include('../forms/student/enrollment.php');
-							}
+							(!$get_enrollment_form_boolean) ? include('../notification/form_closed_enrollment.html') : include('../forms/student/enrollment.php');
 							?>
 						</div>
 					</div>

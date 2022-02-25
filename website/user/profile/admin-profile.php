@@ -176,9 +176,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										$last_name = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
 										$first_name = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
 
-										$retval = ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
-
-										echo $retval;
+										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
 									</span>
 								</h6>
@@ -193,9 +191,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
 															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-															echo $retval;
+															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
 							</a>
 						</div>
@@ -247,31 +243,19 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										<legend>Personal Information</legend>
 										<div class="equal-container">
 											<div class="equal-content padded-right">
-												<input class="full-width" type="text" name="ad_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																														$retval = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
-																																														echo $retval;
-																																														?>"><br>
+												<input class="full-width" type="text" name="ad_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname; ?>"><br>
 												<label for="ad_lname">Last Name</label>
 											</div>
 											<div class="equal-content padded-left-right">
-												<input class="full-width" type="text" name="ad_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																														$retval = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
-																																														echo $retval;
-																																														?>"><br>
+												<input class="full-width" type="text" name="ad_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname; ?>"><br>
 												<label for="ad_fname">First Name</label>
 											</div>
 											<div class="equal-content padded-left-right">
-												<input class="full-width" type="text" name="ad_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																														$retval = $mysqli->query("SELECT ad_mname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_mname;
-																																														echo $retval;
-																																														?>"><br>
+												<input class="full-width" type="text" name="ad_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_mname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_mname; ?>"><br>
 												<label for="ad_mname">Middle Name</label>
 											</div>
 											<div class="equal-content padded-left">
-												<input class="full-width" type="text" name="ad_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php
-																																													$retval = $mysqli->query("SELECT ad_suffix FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_suffix;
-																																													echo $retval;
-																																													?>"><br>
+												<input class="full-width" type="text" name="ad_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_suffix FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_suffix; ?>"><br>
 												<label for="ad_sname">Suffix (If any)</label>
 											</div>
 										</div>
@@ -283,10 +267,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 										<legend>Account Information</legend>
 										<div class="equal-container">
 											<div class="equal-content padded-right">
-												<input class="full-width" type="email" name="ad_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php
-																																													$retval = $mysqli->query("SELECT ad_email FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_email;
-																																													echo $retval;
-																																													?>"><br>
+												<input class="full-width" type="email" name="ad_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php echo $mysqli->query("SELECT ad_email FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_email; ?>"><br>
 												<label for="ad_email">Email Address</label>
 											</div>
 											<div class="equal-content padded-left">
@@ -301,9 +282,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 																$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
 																$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-																$retval = ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-
-																echo $retval;
+																echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
 																?>" alt="User Profile Picture" height="250" width="250" loading="lazy">
 												</div>
 											</div>
