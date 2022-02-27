@@ -1,130 +1,132 @@
--- Create initial database
 -- CREATE DATABASE prototype;
 
 
--- Create admin accounts table in database
-CREATE TABLE ad (
-    ad_acc_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ad_email VARCHAR(255) NOT NULL UNIQUE,
-    ad_pass VARCHAR(255) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `ad` (
+  `ad_acc_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ad_email` varchar(255) NOT NULL,
+  `ad_pass` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `ad_lname` varchar(255) DEFAULT NULL,
+  `ad_fname` varchar(255) DEFAULT NULL,
+  `ad_mname` varchar(255) DEFAULT NULL,
+  `ad_suffix` varchar(255) DEFAULT NULL,
+  `ad_profile_pic` longtext,
+  `ad_account_theme` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ad_acc_id`),
+  UNIQUE KEY `ad_email` (`ad_email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-    ad_lname VARCHAR(255),
-    ad_fname VARCHAR(255),
-    ad_mname VARCHAR(255),
-    ad_suffix VARCHAR(255),
-    ad_profile_pic LONGTEXT
-);
--- Create student announcements table for students
-CREATE TABLE ad_stdAnn (
-    ad_stdAnn_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ad_acc_id INT,
-    ad_stdAnn_title LONGTEXT NOT NULL,
-    ad_stdAnn_msg LONGTEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ad_acc_id) REFERENCES ad(ad_acc_id)
-);
--- Create student updates table for students
-CREATE TABLE ad_stdUpd (
-    ad_stdUpd_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ad_acc_id INT,
-    ad_stdUpd_title LONGTEXT NOT NULL,
-    ad_stdUpd_msg LONGTEXT NOT NULL,
-    stds_acc_id INT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ad_acc_id) REFERENCES ad(ad_acc_id)
-);
--- Create university announcements table for students
-CREATE TABLE ad_uniAnn (
-    ad_uniAnn_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ad_acc_id INT,
-    ad_uniAnn_title LONGTEXT NOT NULL,
-    ad_uniAnn_msg LONGTEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ad_acc_id) REFERENCES ad(ad_acc_id)
-);
+CREATE TABLE `ad_stdAnn` (
+  `ad_stdAnn_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ad_acc_id` int(11) DEFAULT NULL,
+  `ad_stdAnn_title` longtext NOT NULL,
+  `ad_stdAnn_msg` longtext NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ad_stdAnn_id`),
+  KEY `ad_acc_id` (`ad_acc_id`),
+  CONSTRAINT `ad_stdann_ibfk_1` FOREIGN KEY (`ad_acc_id`) REFERENCES `ad` (`ad_acc_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `ad_stdUpd` (
+  `ad_stdUpd_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ad_acc_id` int(11) DEFAULT NULL,
+  `ad_stdUpd_title` longtext NOT NULL,
+  `ad_stdUpd_msg` longtext NOT NULL,
+  `stds_acc_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ad_stdUpd_id`),
+  KEY `ad_acc_id` (`ad_acc_id`),
+  CONSTRAINT `ad_stdupd_ibfk_1` FOREIGN KEY (`ad_acc_id`) REFERENCES `ad` (`ad_acc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `ad_uniAnn` (
+  `ad_uniAnn_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ad_acc_id` int(11) DEFAULT NULL,
+  `ad_uniAnn_title` longtext NOT NULL,
+  `ad_uniAnn_msg` longtext NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ad_uniAnn_id`),
+  KEY `ad_acc_id` (`ad_acc_id`),
+  CONSTRAINT `ad_uniann_ibfk_1` FOREIGN KEY (`ad_acc_id`) REFERENCES `ad` (`ad_acc_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 
--- Create student accounts table in database
-CREATE TABLE stds (
-    stds_acc_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    stds_email VARCHAR(255) NOT NULL UNIQUE,
-    stds_pass VARCHAR(255) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `stds` (
+  `stds_acc_id` int(11) NOT NULL AUTO_INCREMENT,
+  `stds_email` varchar(255) NOT NULL,
+  `stds_pass` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `stds_std_num` varchar(12) DEFAULT NULL,
+  `stds_lname` varchar(255) DEFAULT NULL,
+  `stds_fname` varchar(255) DEFAULT NULL,
+  `stds_mname` varchar(255) DEFAULT NULL,
+  `stds_suffix` varchar(255) DEFAULT NULL,
+  `stds_contact` varchar(255) DEFAULT NULL,
+  `stds_gender` varchar(255) DEFAULT NULL,
+  `stds_regligion` varchar(255) DEFAULT NULL,
+  `stds_age` varchar(255) DEFAULT NULL,
+  `stds_birth_month` varchar(255) DEFAULT NULL,
+  `stds_birth_day` varchar(255) DEFAULT NULL,
+  `stds_birth_year` varchar(255) DEFAULT NULL,
+  `stds_address` longtext,
+  `stds_profile_pic` longtext,
+  `stds_account_theme` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`stds_acc_id`),
+  UNIQUE KEY `stds_email` (`stds_email`),
+  UNIQUE KEY `stds_std_num` (`stds_std_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=39690 DEFAULT CHARSET=latin1;
 
-    stds_std_num VARCHAR(12) UNIQUE,
-    stds_lname VARCHAR(255),
-    stds_fname VARCHAR(255),
-    stds_mname VARCHAR(255),
-    stds_suffix VARCHAR(255),
-    stds_contact VARCHAR(255),
-    stds_gender VARCHAR(255),
-    stds_regligion VARCHAR(255),
-    stds_age VARCHAR(255),
-    stds_birth_month VARCHAR(255),
-    stds_birth_day VARCHAR(255),
-    stds_birth_year VARCHAR(255),
-    stds_address LONGTEXT,
-    stds_profile_pic LONGTEXT
-    -- Alter to add columns for student basic info as necessarry
-);
-CREATE TABLE stds_frm_addm (
-    stds_submission_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    stds_acc_id INT UNIQUE,
-    stds_status_bool VARCHAR(255),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `stds_frm_addm` (
+  `stds_submission_id` int(11) NOT NULL AUTO_INCREMENT,
+  `stds_acc_id` int(11) DEFAULT NULL,
+  `stds_status_bool` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `stds_birth_address` longtext,
+  `stds_tel_number` varchar(255) DEFAULT NULL,
+  `stds_grade_level` varchar(255) DEFAULT NULL,
+  `stds_admission_strand` varchar(255) DEFAULT NULL,
+  `stds_student_status` varchar(255) DEFAULT NULL,
+  `stds_std_number` varchar(255) DEFAULT NULL,
+  `stds_2x2_pic` longtext,
+  `stds_psa` longtext,
+  `stds_good_moral` longtext,
+  `stds_form_137` longtext,
+  `stds_std_lrn` varchar(255) DEFAULT NULL,
+  `stds_former_school` longtext,
+  `stds_former_graduate_year` varchar(255) DEFAULT NULL,
+  `stds_former_school_year` varchar(255) DEFAULT NULL,
+  `stds_mother_lname` varchar(255) DEFAULT NULL,
+  `stds_mother_fname` varchar(255) DEFAULT NULL,
+  `stds_mother_mname` varchar(255) DEFAULT NULL,
+  `stds_mother_occupation` longtext,
+  `stds_mother_contact` varchar(255) DEFAULT NULL,
+  `stds_father_lname` varchar(255) DEFAULT NULL,
+  `stds_father_fname` varchar(255) DEFAULT NULL,
+  `stds_father_mname` varchar(255) DEFAULT NULL,
+  `stds_father_occupation` longtext,
+  `stds_father_contact` varchar(255) DEFAULT NULL,
+  `stds_emergency_contact_lname` varchar(255) DEFAULT NULL,
+  `stds_emergency_contact_fname` varchar(255) DEFAULT NULL,
+  `stds_emergency_contact_mname` varchar(255) DEFAULT NULL,
+  `stds_emergency_contact_contact` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`stds_submission_id`),
+  UNIQUE KEY `stds_acc_id` (`stds_acc_id`),
+  UNIQUE KEY `stds_std_number` (`stds_std_number`),
+  UNIQUE KEY `stds_std_lrn` (`stds_std_lrn`),
+  CONSTRAINT `stds_frm_addm_ibfk_1` FOREIGN KEY (`stds_acc_id`) REFERENCES `stds` (`stds_acc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-    -- Learner Information
-    stds_birth_address LONGTEXT,
-    stds_tel_number VARCHAR(255),
 
-    -- Application Details
-    stds_grade_level VARCHAR(255),
-    stds_admission_strand VARCHAR(255),
-    stds_student_status VARCHAR(255),
-    stds_std_number VARCHAR(255) UNIQUE,
-    stds_2x2_pic LONGTEXT,
-    stds_psa LONGTEXT,
-    stds_good_moral LONGTEXT,
-    stds_form_137 LONGTEXT,
+CREATE TABLE `g_frm_admn` (
+  `g_frm_admn_id` int(11) NOT NULL AUTO_INCREMENT,
+  `g_frm_admn_bool` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`g_frm_admn_id`),
+  UNIQUE KEY `g_frm_admn_bool` (`g_frm_admn_bool`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-    -- Educational Background
-    stds_std_lrn VARCHAR(255) UNIQUE,
-    stds_former_school LONGTEXT,
-    stds_former_graduate_year VARCHAR(255),
-    stds_former_school_year VARCHAR(255),
-
-    -- Parent Information
-    stds_mother_lname VARCHAR(255),
-    stds_mother_fname VARCHAR(255),
-    stds_mother_mname VARCHAR(255),
-    stds_mother_occupation LONGTEXT,
-    stds_mother_contact VARCHAR(255),
-
-    stds_father_lname VARCHAR(255),
-    stds_father_fname VARCHAR(255),
-    stds_father_mname VARCHAR(255),
-    stds_father_occupation LONGTEXT,
-    stds_father_contact VARCHAR(255),
-
-    -- Contact Information
-    stds_emergency_contact_lname VARCHAR(255),
-    stds_emergency_contact_fname VARCHAR(255),
-    stds_emergency_contact_mname VARCHAR(255),
-    stds_emergency_contact_contact VARCHAR(255),
-
-    FOREIGN KEY (stds_acc_id) REFERENCES stds(stds_acc_id)
-);
-
--- Create global boolean form table
-CREATE TABLE g_frm_admn (
-    g_frm_admn_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    g_frm_admn_bool BOOLEAN UNIQUE
-);
--- Insert default value
 INSERT INTO g_frm_admn(g_frm_admn_bool)
 VALUES (0);
--- Create trigger that automatically creates both a student and university announcement on admission form boolean update
+
 DELIMITER $$
 CREATE TRIGGER g_frm_admn_upd
     AFTER UPDATE
@@ -156,15 +158,16 @@ END; $$
 DELIMITER ;
 
 
--- Create global boolean form table
-CREATE TABLE g_frm_enrll (
-    g_frm_enrll_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    g_frm_enrll_bool BOOLEAN UNIQUE
-);
--- Insert default value
+CREATE TABLE `g_frm_enrll` (
+  `g_frm_enrll_id` int(11) NOT NULL AUTO_INCREMENT,
+  `g_frm_enrll_bool` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`g_frm_enrll_id`),
+  UNIQUE KEY `g_frm_enrll_bool` (`g_frm_enrll_bool`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
 INSERT INTO g_frm_enrll(g_frm_enrll_bool)
 VALUES (0);
--- Create trigger that automatically creates both a student and university Enrollment on admission form boolean update
+
 DELIMITER $$
 CREATE TRIGGER g_frm_enrll_upd
     AFTER UPDATE

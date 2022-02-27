@@ -17,6 +17,7 @@ CREATE TABLE `stds` (
   `stds_birth_year` varchar(255) DEFAULT NULL,
   `stds_address` longtext,
   `stds_profile_pic` longtext,
+  `stds_account_theme` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`stds_acc_id`),
   UNIQUE KEY `stds_email` (`stds_email`),
   UNIQUE KEY `stds_std_num` (`stds_std_num`)
@@ -25,7 +26,7 @@ CREATE TABLE `stds` (
 CREATE TABLE `stds_frm_addm` (
   `stds_submission_id` int(11) NOT NULL AUTO_INCREMENT,
   `stds_acc_id` int(11) DEFAULT NULL,
-  `stds_status_bool` tinyint(1) DEFAULT NULL,
+  `stds_status_bool` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `stds_birth_address` longtext,
   `stds_tel_number` varchar(255) DEFAULT NULL,

@@ -41,28 +41,6 @@ $filter_order = (!$_SESSION['filter_filterOrder']) ? 'ASC' : $_SESSION['filter_f
 ?>
 
 
-<div class="padded-top-bottom border-top unselectable" id="admissions">
-	<div class="padded-left-right">
-		<h4>Waiting Admissions</h4>
-
-		<?php
-		$sql = "SELECT * FROM stds_frm_addm  ORDER BY created_at ASC";
-		$get_submissions_total = mysqli_query($mysqli, $sql);
-		$submissions_total = mysqli_num_rows($get_submissions_total);
-
-		if ($submissions_total) {
-			$sql = "SELECT * FROM stds_frm_addm WHERE stds_status_bool = 'PENDING' ORDER BY created_at ASC";
-			$get_pending_total = mysqli_query($mysqli, $sql);
-			$pending_total = mysqli_num_rows($get_pending_total);
-
-			($pending_total) ? $new_submissions_total = $submissions_total - $pending_total . '/' : '';
-
-			echo "<h6>$new_submissions_total$submissions_total Waiting</h6>";
-		}
-		$get_submissions_total->free();
-		?>
-	</div>
-</div>
 <div class="padded-top-bottom border-top unselectable">
 	<div class="padded-left-right">
 		<button class="full-width accordion">Filter Options</button>
@@ -167,6 +145,28 @@ $filter_order = (!$_SESSION['filter_filterOrder']) ? 'ASC' : $_SESSION['filter_f
 		</div>
 	</div>
 </div>
+<div class="padded-top-bottom border-top unselectable" id="admissions">
+	<div class="padded-left-right">
+		<h4>Waiting Admissions</h4>
+
+		<?php
+		$sql = "SELECT * FROM stds_frm_addm  ORDER BY created_at ASC";
+		$get_submissions_total = mysqli_query($mysqli, $sql);
+		$submissions_total = mysqli_num_rows($get_submissions_total);
+
+		if ($submissions_total) {
+			$sql = "SELECT * FROM stds_frm_addm WHERE stds_status_bool = 'PENDING' ORDER BY created_at ASC";
+			$get_pending_total = mysqli_query($mysqli, $sql);
+			$pending_total = mysqli_num_rows($get_pending_total);
+
+			($pending_total) ? $new_submissions_total = $submissions_total - $pending_total . '/' : '';
+
+			echo "<h6>$new_submissions_total$submissions_total Waiting</h6>";
+		}
+		$get_submissions_total->free();
+		?>
+	</div>
+</div>
 <div class="padded-top-bottom border-top">
 	<div class="padded-left-right">
 		<?php
@@ -220,7 +220,7 @@ $filter_order = (!$_SESSION['filter_filterOrder']) ? 'ASC' : $_SESSION['filter_f
 		?>
 	</div>
 </div>
-<div class="padded-top-bottom border-top unselectable" id="admissions">
+<div class="padded-top-bottom border-top unselectable">
 	<div class="padded-left-right">
 		<h4>Pending Admissions</h4>
 

@@ -10,9 +10,9 @@ session_start();
 ob_start();
 
 
-if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
+if (isset($_COOKIE['valid_admin']) && !empty($_COOKIE['valid_admin'])) {
 	header('refresh: 2; url = /website/user/profile/admin-dashboard.php');
-} else if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
+} else if (isset($_COOKIE['valid_student']) && !empty($_COOKIE['valid_student'])) {
 	header('refresh: 2; url = /website/user/profile/student-dashboard.php');
 } else {
 	header('refresh: 2; url = /website/login.php');

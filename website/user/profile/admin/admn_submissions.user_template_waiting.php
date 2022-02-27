@@ -5,7 +5,7 @@ require('../../database/config.php');
 ob_start();
 
 
-$email = $_SESSION['username'];
+$email = $_COOKIE['username'];
 $ad_acc_id = $mysqli->query("SELECT * FROM ad WHERE ad_email = '$email'")->fetch_object()->ad_acc_id;
 $sql = '';
 

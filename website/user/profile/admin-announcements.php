@@ -6,8 +6,8 @@ session_start();
 ob_start();
 
 
-if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
-	$get_username_profile = $_SESSION['username'];
+if (isset($_COOKIE['valid_admin']) && !empty($_COOKIE['valid_admin'])) {
+	$get_username_profile = $_COOKIE['username'];
 
 	// $email_regex = '/(\S+)@\S+/';
 	// $get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
@@ -35,7 +35,7 @@ if (!empty($_POST) && isset($_POST['profile'])) {
 }
 
 
-$email = $_SESSION['username'];
+$email = $_COOKIE['username'];
 $ad_acc_id = $mysqli->query("SELECT * FROM ad WHERE ad_email = '$email'")->fetch_object()->ad_acc_id;
 
 
@@ -59,6 +59,9 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	$_SESSION = array();
 	session_destroy();
 
+	setcookie('valid_admin', '', time() - 3600, '/');
+	setcookie('username', '', time() - 3600, '/');
+
 	header('location: /index.php');
 	exit;
 }
@@ -76,7 +79,17 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
-	<link rel="stylesheet" href="/website/include/css/style.css">
+	<link rel="stylesheet" href="<?php
+									$account_theme = $mysqli->query("SELECT ad_account_theme FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_account_theme;
+
+									if ($account_theme == 'DARK') {
+										echo '/website/include/css/style-dark.css';
+									} elseif ($account_theme == 'RTU') {
+										echo '/website/include/css/style-rtu.css';
+									} else {
+										echo '/website/include/css/style.css';
+									}
+									?>">
 </head>
 
 <body id="body">
@@ -128,7 +141,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 		</div>
 		<div class="main-container-remaining">
 			<div class="equal-container-spaced full-height">
-				<div class="equal-content-spaced margin-right border-bottom" style="min-width: 200px;">
+				<div class="equal-content-spaced margin-right border-bottom" id="menuBar" style="min-width: 200px;">
 					<div class="padded-top-bottom border-bottom">
 						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
@@ -229,7 +242,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 											if (!$admin_id) {
 												echo "<div class='rounded bordered-gold margin-top-bottom'>";
 												echo "<div class='padded-left-right border-gold-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded border-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
+												echo "<div class='padded border-gold-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
 												if (!$admin_id) {
 													echo "<div class='padded'><div class='notification-red unselectable margin-top-bottom'>Automated announcements can not be deleted.</div></div>";
 												} else {
@@ -279,7 +292,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 											if (!$admin_id) {
 												echo "<div class='rounded bordered-blue margin-top-bottom'>";
 												echo "<div class='padded-left-right border-blue-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded border-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
+												echo "<div class='padded border-blue-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
 												if (!$admin_id) {
 													echo "<div class='padded'><div class='notification-red unselectable margin-top-bottom'>Automated announcements can not be deleted.</div></div>";
 												} else {

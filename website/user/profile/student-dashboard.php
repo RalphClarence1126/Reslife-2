@@ -6,8 +6,8 @@ session_start();
 ob_start();
 
 
-if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
-	$get_username_profile = $_SESSION['username'];
+if (isset($_COOKIE['valid_student']) && !empty($_COOKIE['valid_student'])) {
+	$get_username_profile = $_COOKIE['username'];
 
 	// $email_regex = '/(\S+)@\S+/';
 	// $get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
@@ -35,7 +35,7 @@ if (!empty($_POST) && isset($_POST['profile'])) {
 }
 
 
-$email = $_SESSION['username'];
+$email = $_COOKIE['username'];
 $std_acc_id = $mysqli->query("SELECT * FROM stds WHERE stds_email = '$email'")->fetch_object()->stds_acc_id;
 $sql = '';
 
@@ -43,6 +43,9 @@ $sql = '';
 if (!empty($_POST) && isset($_POST['logout'])) {
 	$_SESSION = array();
 	session_destroy();
+
+	setcookie('valid_student', '', time() - 3600, '/');
+	setcookie('username', '', time() - 3600, '/');
 
 	header('location: /index.php');
 	exit;
@@ -61,7 +64,17 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
-	<link rel="stylesheet" href="/website/include/css/style.css">
+	<link rel="stylesheet" href="<?php
+									$account_theme = $mysqli->query("SELECT stds_account_theme FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_account_theme;
+
+									if ($account_theme == 'DARK') {
+										echo '/website/include/css/style-dark.css';
+									} elseif ($account_theme == 'RTU') {
+										echo '/website/include/css/style-rtu.css';
+									} else {
+										echo '/website/include/css/style.css';
+									}
+									?>">
 </head>
 
 <body id="body">
@@ -113,7 +126,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 		</div>
 		<div class="main-container-remaining">
 			<div class="equal-container-spaced full-height">
-				<div class="equal-content-spaced margin-right border-bottom" style="min-width: 200px;">
+				<div class="equal-content-spaced margin-right border-bottom" id="menuBar" style="min-width: 200px;">
 					<div class="padded-top-bottom border-bottom">
 						<div class="padded-left-right margin-top-bottom">
 							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">

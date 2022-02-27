@@ -230,6 +230,13 @@ hr {
 /* End Scrollbar */
 
 /* Container */
+#navBar {
+	background-color: #ffc001;
+}
+#menuBar {
+	background-color: #0096ff;
+}
+
 .main-container {
 	display: flex;
 	flex-flow: column;
@@ -455,7 +462,7 @@ textarea:focus {
 button {
 	border: 1px solid #b9b9b9;
 	border-radius: 100px;
-	background-color: #ffffff;
+	background-color: transparent;
 	color: #0096ff;
 	margin: 5px 0px;
 	padding: 5px;
@@ -463,19 +470,33 @@ button {
 	font-weight: bold;
 	cursor: pointer;
 }
+#menuBar button {
+	border: 1px solid #007cff;
+	border-radius: 100px;
+	background-color: transparent;
+	color: #ffffff;
+	margin: 5px 0px;
+	padding: 5px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: bold;
+	cursor: pointer;
+}
 button.active {
-	border: 1px solid #0096ff !important;
-	background-color: #0096ff !important;
-	color: #ffffff !important;
+	border: 1px solid #b9b9b9 !important;
+	background-color: #ffffff !important;
+	color: #0096ff !important;
 }
 button:hover {
+	background-color: #1b1b1b1f;
+}
+#menuBar button:hover {
 	background-color: #1b1b1b1f;
 }
 
 button.red {
 	border: 1px solid #f59191;
 	border-radius: 100px;
-	background-color: #ffffff;
+	background-color: transparent;
 	color: #ff3737;
 	margin: 5px 0px;
 	padding: 5px;
@@ -490,7 +511,7 @@ button.red:hover {
 button.gray {
 	border: 1px solid #b9b9b9;
 	border-radius: 100px;
-	background-color: #ffffff;
+	background-color: transparent;
 	color: #606368;
 	margin: 5px 0px;
 	padding: 5px;

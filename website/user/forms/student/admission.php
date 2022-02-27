@@ -5,7 +5,7 @@ require('../../database/config.php');
 session_start();
 
 
-$email = $_SESSION['username'];
+$email = $_COOKIE['username'];
 $std_acc_id = $mysqli->query("SELECT * FROM stds WHERE stds_email = '$email'")->fetch_object()->stds_acc_id;
 $sql = '';
 
@@ -25,8 +25,8 @@ if (!empty($_POST) && isset($_POST['submit_admission_form'])) {
 		$std_middle_name = $_POST['std_mname'];
 		$mysqli->query("UPDATE stds SET stds_mname = '$std_middle_name' WHERE stds_acc_id = '$std_acc_id'");
 	}
-	// if ($_POST['std_sname']) {
-	$std_suffix = $_POST['std_sname'];
+	// if ($_POST['std_suffix']) {
+	$std_suffix = $_POST['std_suffix'];
 	$mysqli->query("UPDATE stds SET stds_suffix = '$std_suffix' WHERE stds_acc_id = '$std_acc_id'");
 	// }
 

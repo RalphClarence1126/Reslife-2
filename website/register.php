@@ -6,11 +6,11 @@ session_start();
 ob_start();
 
 
-if (isset($_SESSION['valid_admin']) && !empty($_SESSION['valid_admin'])) {
+if (isset($_COOKIE['valid_admin']) && !empty($_COOKIE['valid_admin'])) {
 	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
-if (isset($_SESSION['valid_student']) && !empty($_SESSION['valid_student'])) {
+if (isset($_COOKIE['valid_student']) && !empty($_COOKIE['valid_student'])) {
 	header('location: /website/user/profile/student-dashboard.php');
 	exit;
 }
@@ -74,7 +74,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 	<link rel="stylesheet" href="/website/include/css/style.css">
 </head>
 
-<body>
+<body style="display: table; margin-left: auto; margin-right: auto;">
 	<div class="center unselectable" style="height: 100% !important;">
 		<div class="padded">
 			<div class="equal-container fit-width rounded bordered">
