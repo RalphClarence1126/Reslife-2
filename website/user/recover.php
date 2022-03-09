@@ -6,43 +6,42 @@ session_start();
 ob_start();
 
 
-if (isset($_COOKIE['valid_admin']) && !empty($_COOKIE['valid_admin'])) {
+if (isset($_COOKIE['login_admin']) && !empty($_COOKIE['login_admin'])) {
 	header('location: /website/user/profile/admin-dashboard.php');
 	exit;
 }
-if (isset($_COOKIE['valid_student']) && !empty($_COOKIE['valid_student'])) {
+if (isset($_COOKIE['login_student']) && !empty($_COOKIE['login_student'])) {
 	header('location: /website/user/profile/student-dashboard.php');
 	exit;
 }
 
 
-$signin_message = 'Please input account email';
+$recover_message = 'Please input account email';
 
 
 if (isset($_POST['login']) && !empty($_POST['email'])) {
-
 	$email = $_POST['email'];
 
 	$query_student = "SELECT * FROM stds WHERE stds_email = '$email'";
-	$result_student = mysqli_query($mysqli, $query_student);
-	if ($result_student) {
-		if (mysqli_num_rows($result_student) > 0) {
-			$recovery_msg = "Your account will be recovered shortly.";
-			$recovery_msg = wordwrap($recover_msg, 70);
+	$query_student_result = mysqli_query($mysqli, $query_student);
+	if ($query_student_result) {
+		if (mysqli_num_rows($query_student_result) > 0) {
+			$recover_message = "Your account will be recovered shortly.";
+			$recover_message = wordwrap($recover_msg, 70);
 			$headers = 'From: noreply@prototype.com';
 
 			if (mail($email, 'Account Recovery', $recover_msg, $headers)) {
-				$signin_message = 'An email to reset account password has been sent to ' . $_POST['email'];
+				$recover_message = 'An email to reset account password has been sent to ' . $_POST['email'];
 			} else {
-				$signin_message = 'There was an error sending email to reset account password to ' . $_POST['email'];
+				$recover_message = 'There was an error sending email to reset account password to ' . $_POST['email'];
 			}
 		} else {
-			$signin_message = 'Account does not exist';
+			$recover_message = 'Account does not exist';
 		}
 	} else {
-		$signin_message = 'Account does not exist';
+		$recover_message = 'Account does not exist';
 	}
-	$result_student->free();
+	$query_student_result->free();
 
 
 	header('refresh: 2; url = /website/user/recover.php');
@@ -64,39 +63,45 @@ if (isset($_POST['login']) && !empty($_POST['email'])) {
 	<link rel="stylesheet" href="/website/include/css/style.css">
 </head>
 
-<body style="display: table; margin-left: auto; margin-right: auto;">
-	<div class="center unselectable" style="height: 100% !important;">
-		<div class="padded">
-			<div class="equal-container fit-width rounded bordered">
-				<div class="padded-left-right equal-content">
-					<h2><span class="no-wrap">Forgot Password</span></h2>
+<body>
+	<div class="center full-view-height">
+		<div class="rounded padded fit-width equal-container bordered">
+			<div class="margin-right padded equal-content">
+				<h2>
 					<span class="no-wrap">
-						<small>
-							<p>Already have an account? <a href="/website/login.php">Login</a> here</p>
-						</small>
+						Forgot Password
 					</span>
-					<span class="no-wrap">
-						<small>
-							<p>Don't have an account? <a href="/website/register.php">Sign in</a> here</p>
-						</small>
-					</span>
-					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
-						<fieldset>
-							<legend><span class="no-wrap"><?php echo $signin_message; ?></span></legend>
-							<div class="margin-top-bottom">
-								<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required>
-							</div>
-							<button type="submit" name="login" class="full-width margin-top-bottom">Reset Password</button>
-						</fieldset>
-					</form>
-				</div>
-				<div class="padded equal-content">
-					<div class="full-height center">
-						<a href="/index.php">
-							<img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="150" width="150" loading="lazy">
-						</a>
-					</div>
-				</div>
+				</h2>
+				<p>
+					<small>
+						<span class="no-wrap">
+							Already have an account? <a href="/website/login.php">Login</a> here
+						</span>
+					</small>
+				</p>
+				<p>
+					<small>
+						<span class="no-wrap">
+							Don't have an account? <a href="/website/register.php">Sign in</a> here
+						</span>
+					</small>
+				</p>
+				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
+					<fieldset>
+						<legend>
+							<span class="no-wrap">
+								<?php echo $recover_message; ?>
+							</span>
+						</legend>
+						<div class="margin-top-bottom">
+							<input class="full-width" type="email" name="email" placeholder="email" oninput="this.value = this.value.toLowerCase();" pattern="\S+@\S+\.com" required>
+						</div>
+						<button type="submit" name="login" class="red full-width">Reset Password</button>
+					</fieldset>
+				</form>
+			</div>
+			<div class="margin-left padded equal-content center">
+				<a class="center" href="/index.php"><object class="unselectable" data="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="200" width="200" loading="lazy"></object></a>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,140 @@
+body {
+	background-color: #181818;
+	color: #e8e8e8;
+}
+
+#header {
+	background-color: #202020;
+}
+#header h1,
+#header h2,
+#header h3,
+#header h4,
+#header h5,
+#header h6 {
+	color: #ffffff;
+}
+
+#menu {
+	background-color: #202020;
+}
+#menu button {
+	color: #e8e8e8;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar-thumb {
+	background: #2d2d2d;
+}
+/* End Scrollbar */
+
+/* Text */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #e8e8e8;
+}
+/* End Text */
+
+/* Dividers */
+.notification-red {
+	background-color: #f732323d;
+	color: #f73232;
+	/* white-space: nowrap; */
+}
+/* End Dividers */
+
+/* Form */
+form a.button-link {
+	color: #e8e8e8;
+}
+
+input {
+	border-bottom: 1px solid #2d2d2d;
+	color: #e8e8e8;
+}
+input[type='checkbox'] + label {
+	color: #e8e8e8;
+}
+
+select {
+	border-bottom: 1px solid #2d2d2d;
+	color: #e8e8e8;
+}
+
+textarea {
+	border-bottom: 1px solid #2d2d2d;
+	color: #e8e8e8;
+}
+
+button {
+	color: #e8e8e8;
+}
+button.red {
+	color: #f73232;
+}
+button.red:hover {
+	background-color: #f732323d;
+}
+button.blue {
+	color: #31abff;
+}
+button.blue:hover {
+	background-color: #31abff3d;
+}
+/* Form */
+
+/* Border */
+.bordered {
+	border: 1px solid #2d2d2d;
+}
+.border-top {
+	border-top: 1px solid #2d2d2d;
+}
+.border-left {
+	border-left: 1px solid #2d2d2d;
+}
+.border-bottom {
+	border-bottom: 1px solid #2d2d2d;
+}
+.border-right {
+	border-right: 1px solid #2d2d2d;
+}
+
+.bordered-blue {
+	border: 1px solid #2d2d2d;
+	/* background-color: #005b9a3d; */
+}
+.border-blue-top {
+	border-top: 1px solid #2d2d2d;
+}
+.border-blue-left {
+	border-left: 1px solid #2d2d2d;
+}
+.border-blue-bottom {
+	border-bottom: 1px solid #2d2d2d;
+}
+.border-blue-right {
+	border-right: 1px solid #2d2d2d;
+}
+
+.bordered-gold {
+	border: 1px solid #2d2d2d;
+	/* background-color: #daa3003d; */
+}
+.border-gold-top {
+	border-top: 1px solid #2d2d2d;
+}
+.border-gold-left {
+	border-left: 1px solid #2d2d2d;
+}
+.border-gold-bottom {
+	border-bottom: 1px solid #2d2d2d;
+}
+.border-gold-right {
+	border-right: 1px solid #2d2d2d;
+}
+/* End Border */

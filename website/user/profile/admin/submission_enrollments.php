@@ -6,6 +6,8 @@ ob_start();
 
 
 if (!empty($_POST) && isset($_POST['filter'])) {
+	$_SESSION['filter'] = 1;
+
 	$_SESSION['filter_filterRange'] = $_POST['filter_range'];
 	$_SESSION['filter_filterGradeLevel'] = $_POST['filter_grade_level'];
 	$_SESSION['filter_filterCourse'] = $_POST['filter_course'];
@@ -18,6 +20,8 @@ if (!empty($_POST) && isset($_POST['filter'])) {
 	exit;
 }
 if (!empty($_POST) && isset($_POST['reset'])) {
+	$_SESSION['filter'] = 0;
+
 	$_SESSION['filter_filterRange'] = '';
 	$_SESSION['filter_filterGradeLevel'] = '';
 	$_SESSION['filter_filterCourse'] = '';
@@ -43,8 +47,10 @@ $filter_order = (!$_SESSION['filter_filterOrder']) ? 'ASC' : $_SESSION['filter_f
 
 <div class="padded-top-bottom border-top unselectable">
 	<div class="padded-left-right">
-		<button class="full-width accordion">Filter Options</button>
-		<div class="panel" style="display: none;">
+		<div class="padded-top-bottom accordion">
+			<button class="full-width">Filter Options</button>
+		</div>
+		<div class="panel" style="display: <?php echo ($_SESSION['filter']) ? 'block' : 'none'; ?>;">
 			<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 				<fieldset>
 					<div class="equal-container margin-top-bottom">
@@ -129,10 +135,10 @@ $filter_order = (!$_SESSION['filter_filterOrder']) ? 'ASC' : $_SESSION['filter_f
 					</div>
 				</fieldset>
 
-				<div class="equal-container-spaced margin-top">
+				<div class="equal-container-spaced padded-top-bottom">
 					<div class="equal-content-spaced half-width padded-right">
 						<div class="center padded-right">
-							<button type="submit" name="filter" class="full-width" tabindex="-1">Filter</button>
+							<button type="submit" name="filter" class="blue full-width" tabindex="-1">Filter</button>
 						</div>
 					</div>
 					<div class="equal-content-spaced">
@@ -145,147 +151,34 @@ $filter_order = (!$_SESSION['filter_filterOrder']) ? 'ASC' : $_SESSION['filter_f
 		</div>
 	</div>
 </div>
-<div class="padded-top-bottom border-top unselectable" id="admissions">
+<div class="padded-top-bottom border-top unselectable" id="enrollments">
 	<div class="padded-left-right">
-		<h4>Waiting Admissions</h4>
-
-		<?php
-		$sql = "SELECT * FROM stds_frm_addm  ORDER BY created_at ASC";
-		$get_submissions_total = mysqli_query($mysqli, $sql);
-		$submissions_total = mysqli_num_rows($get_submissions_total);
-
-		if ($submissions_total) {
-			$sql = "SELECT * FROM stds_frm_addm WHERE stds_status_bool = 'PENDING' ORDER BY created_at ASC";
-			$get_pending_total = mysqli_query($mysqli, $sql);
-			$pending_total = mysqli_num_rows($get_pending_total);
-
-			($pending_total) ? $new_submissions_total = $submissions_total - $pending_total . '/' : '';
-
-			echo "<h6>$new_submissions_total$submissions_total Waiting</h6>";
-		}
-		$get_submissions_total->free();
-		?>
+		<h4>Waiting Enrollments</h4>
 	</div>
 </div>
 <div class="padded-top-bottom border-top">
 	<div class="padded-left-right">
-		<?php
-		$array_filter = array(
-			(!$filter_grade_level) ? NULL : "stds_grade_level = '$filter_grade_level'",
-			(!$filter_course) ? NULL : "stds_admission_strand = '$filter_course'",
-			(!$filter_student_status) ? NULL : "stds_student_status = '$filter_student_status'"
-		);
-
-		$join_filter = "";
-		foreach ($array_filter as $option_filter => $filter) {
-			(empty($join_filter)) ? $join_filter = $filter : ((!is_null($filter)) ? $join_filter = "$join_filter AND $filter" : "");
-		}
-
-		$where_filter = (!$join_filter) ? "" : "WHERE $join_filter";
-
-		$sql = "SELECT * FROM stds_frm_addm $where_filter ORDER BY $filter_type $filter_order";
-		// echo $sql;
-
-		$submissions = mysqli_query($mysqli, $sql);
-
-		$total_submissions = 1;
-		if ($submissions) {
-			if (mysqli_num_rows($submissions) > 0) {
-				while ($admissions = $submissions->fetch_assoc()) {
-					$admissions_id = $admissions['stds_submission_id'];
-					$admissions_status = $admissions['stds_status_bool'];
-					$admissions_student_account_id = $admissions['stds_acc_id'];
-					$admissions_student_picture = $admissions['stds_2x2_pic'];
-					$admissions_student_number = $admissions['stds_std_number'];
-					$admissions_student_lrn = $admissions['stds_std_lrn'];
-
-					// ($admissions_status !== 'PENDING') ? (($total_submissions <= $filter_range) ? include('admn_submissions.user_template.php') : "") : "";
-
-					if ($admissions_status !== 'PENDING') {
-						if ($total_submissions <= $filter_range) {
-							include('admn_submissions.user_template.php');
-
-							$total_submissions++;
-						}
-					}
-				}
-
-				$submissions->free();
-			} else {
-				echo "<div class='center unselectable margin-top-bottom'><h6>There are no waiting admissions at the moment.</h6></div>";
-			}
-		} else {
-			echo "<div class='center unselectable margin-top-bottom'><h6>Failed sorting submissions.</h6></div>";
-		}
-		?>
+		<div class='center unselectable padded-top-bottom'>
+			<h6>There are no waiting enrollments at the moment.</h6>
+		</div>
 	</div>
 </div>
-<div class="padded-top-bottom border-top unselectable">
+<div class="padded-top-bottom border-top unselectable" id="enrollments">
 	<div class="padded-left-right">
-		<h4>Pending Admissions</h4>
-
-		<?php
-		$sql = "SELECT * FROM stds_frm_addm WHERE stds_status_bool = 'PENDING' ORDER BY created_at ASC";
-		$get_pending_total = mysqli_query($mysqli, $sql);
-		$pending_total = mysqli_num_rows($get_pending_total);
-		if ($pending_total) {
-			echo "<h6>$pending_total Pending</h6>";
-		}
-		$get_pending_total->free();
-		?>
+		<h4>Pending Enrollments</h4>
 	</div>
 </div>
 <div class="padded-top-bottom border-top">
 	<div class="padded-left-right">
-		<?php
-		$array_filter = array(
-			(!$filter_grade_level) ? NULL : "stds_grade_level = '$filter_grade_level'",
-			(!$filter_course) ? NULL : "stds_admission_strand = '$filter_course'",
-			(!$filter_student_status) ? NULL : "stds_student_status = '$filter_student_status'"
-		);
-
-		$join_filter = "";
-		foreach ($array_filter as $option_filter => $filter) {
-			(empty($join_filter)) ? $join_filter = $filter : ((!is_null($filter)) ? $join_filter = "$join_filter AND $filter" : "");
-		}
-
-		$where_filter = (!$join_filter) ? "" : "AND $join_filter";
-
-		$sql = "SELECT * FROM stds_frm_addm WHERE stds_status_bool = 'PENDING' $where_filter ORDER BY $filter_type $filter_order";
-		// echo $sql;
-
-		$submissions = mysqli_query($mysqli, $sql);
-
-		$total_submissions = 1;
-		if ($submissions) {
-			if (mysqli_num_rows($submissions) > 0) {
-				while ($admissions = $submissions->fetch_assoc()) {
-					$admissions_id = $admissions['stds_submission_id'];
-					$admissions_status = $admissions['stds_status_bool'];
-					$admissions_student_account_id = $admissions['stds_acc_id'];
-					$admissions_student_picture = $admissions['stds_2x2_pic'];
-					$admissions_student_number = $admissions['stds_std_number'];
-					$admissions_student_lrn = $admissions['stds_std_lrn'];
-
-					($total_submissions <= $filter_range) ? include('admn_submissions.user_template.php') : '';
-
-					$total_submissions++;
-				}
-
-				$submissions->free();
-			} else {
-				echo "<div class='center unselectable margin-top-bottom'><h6>There are no pending admissions at the moment.</h6></div>";
-			}
-		} else {
-			echo "<div class='center unselectable margin-top-bottom'><h6>Failed sorting submissions.</h6></div>";
-		}
-		?>
+		<div class='center unselectable padded-top-bottom'>
+			<h6>There are no pending enrollments at the moment.</h6>
+		</div>
 	</div>
 </div>
 
 <script>
-	const admissions = document.getElementById('admissions');
-	admissions.scrollIntoView(true);
+	const enrollments = document.getElementById('enrollments');
+	enrollments.scrollIntoView(true);
 
 
 	const accordions = document.getElementsByClassName("accordion");

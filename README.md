@@ -9,7 +9,7 @@
   - Cookies enabled
 - MySQL 5.7.19 *(or higher)*
 
-> You can also use LAMP/WAMP/XAMPP
+> If you are using LAMP/WAMP/XAMPP please configure your settings before testing/deployment
 
 ## Testing & Development
 
@@ -29,7 +29,7 @@ Username: root
 Password: newpassword
 ```
 
-#### Database configuration
+#### Database connection configuration
 
 > Check the config file in [`config.php`](website/database/config.php) (Change the credentials as necessary)
 
@@ -39,10 +39,6 @@ DB_USERNAME: root
 DB_PASSWORD: newpassword
 DB_NAME: prototype
 ```
-
-> Then run the database table configuration in [`config_table.sql`](website/database/config_table.sql)\
-> \
-> You can also run both the [`config_account_admin.sql`](website/database/config_account_admin.sql) and [`config_account_student.sql`](website/database/config_account_student.sql) to test as dummy accounts
 
 ## Image Attributions
 

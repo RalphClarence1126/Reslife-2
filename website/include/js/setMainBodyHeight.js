@@ -1,21 +1,21 @@
-function setMainBodyHieight() {
+function setMainBodyHeight() {
 	const body = document.getElementById('body').getBoundingClientRect();
 	const bodyHeight = body.bottom - body.top;
 
-	const navBar = document.getElementById('navBar').getBoundingClientRect();
-	const navHeight = navBar.bottom - navBar.top;
+	const header = document.getElementById('header').getBoundingClientRect();
+	const headerHeight = header.bottom - header.top;
 
-	const mainHeight = bodyHeight - navHeight;
-	document.getElementById('mainBody').style.height = `${mainHeight}px`;
+	const mainHeight = bodyHeight - headerHeight;
+	document.getElementById('main').style.height = `${mainHeight}px`;
 }
 
 // Call function on page load
-setMainBodyHieight();
+setMainBodyHeight();
 
 window.addEventListener("resize", function (event) {
-	// Call function when browser resiZE
-	setMainBodyHieight();
+	// Call function when browser resize
+	setMainBodyHeight();
 });
 
 // Redundancy call function after page resize
-setMainBodyHieight();
+setMainBodyHeight();

@@ -1,0 +1,9 @@
+body {
+	background-color: #ffffff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar-thumb {
+	background: #b9b9b9;
+}
+/* End Scrollbar */

@@ -6,7 +6,7 @@ session_start();
 ?>
 
 
-<div id="student_submission_info" class="margin-top-bottom padded rounded bordered unselectable">
+<div id="student_submission_info" class="padded rounded bordered unselectable">
 	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" autocomplete="off">
 		<fieldset class="padded-none margin-none margin-bottom">
 			<legend class="padded-left-right full-width center">

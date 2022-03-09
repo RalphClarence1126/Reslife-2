@@ -6,11 +6,8 @@ session_start();
 ob_start();
 
 
-if (isset($_COOKIE['valid_student']) && !empty($_COOKIE['valid_student'])) {
+if (isset($_COOKIE['login_student']) && !empty($_COOKIE['login_student'])) {
 	$get_username_profile = $_COOKIE['username'];
-
-	// $email_regex = '/(\S+)@\S+/';
-	// $get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
 } else {
 	header('location: /index.php');
 	exit;
@@ -44,7 +41,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	$_SESSION = array();
 	session_destroy();
 
-	setcookie('valid_student', '', time() - 3600, '/');
+	setcookie('login_student', '', time() - 3600, '/');
 	setcookie('username', '', time() - 3600, '/');
 
 	header('location: /index.php');
@@ -64,216 +61,194 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
-	<link rel="stylesheet" href="<?php
-									$account_theme = $mysqli->query("SELECT stds_account_theme FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_account_theme;
+	<link rel="stylesheet" href="/website/include/css/style.css">
+	<link rel="stylesheet" href="/website/include/css/themes/<?php
+																$account_theme = $mysqli->query("SELECT stds_account_theme FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_account_theme;
 
-									if ($account_theme == 'DARK') {
-										echo '/website/include/css/style-dark.css';
-									} elseif ($account_theme == 'RTU') {
-										echo '/website/include/css/style-rtu.css';
-									} else {
-										echo '/website/include/css/style.css';
-									}
-									?>">
+																echo (!$account_theme) ? 'university' : $account_theme;
+																?>.css">
 </head>
 
 <body id="body">
-	<div class="main-container">
-		<div class="main-container-fixed" id="navBar">
-			<div class="equal-container-spaced border-bottom unselectable">
-				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width full-height center">
-						<div class="equal-content center margin-right">
-							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
-						</div>
-						<div class="equal-content center margin-left">
-							<h4>Dashboard</h4>
-						</div>
-					</div>
-				</div>
-				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width full-height center">
-						<div class="equal-content center margin-right">
-							<div>
-								<h6>
-									<span class="no-wrap">
+	<div class="padded equal-container-spaced border-bottom" id="header">
+		<div class="equal-content-spaced center">
+			<div class="fit-width full-height">
+				<a class="center" href="/index.php">
+					<object class="unselectable" data="/website/include/images/rtu-logo-labelled.png" alt="RTU Logo" height="50" loading="lazy"></object>
+				</a>
+			</div>
+		</div>
+		<div class="equal-content-spaced center" id="user-profile">
+			<form class="center full-height" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+				<button class="center" type="submit" name="profile" tabindex="-1" title="View Profile">
+					<div class="fit-width full-height equal-container">
+						<div class="margin-right equal-content center">
+							<div class="center full-height">
+								<span class="no-wrap center">
+									<h6>
 										<?php
 										$last_name = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
 										$first_name = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
 
 										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
-									</span>
-								</h6>
-								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-									<button type="submit" name="logout" class="red full-width" tabindex="-1">Logout</button>
-								</form>
+									</h6>
+								</span>
+								<!-- <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button class="red full-width" type="submit" name="logout" tabindex="-1">Logout</button>
+						</form> -->
 							</div>
 						</div>
-						<div class="equal-content center margin-left">
-							<a class="center" href="/website/user/profile/student-profile.php">
-								<img class="profile" src="<?php
-															$profile_picture = $mysqli->query("SELECT stds_profile_pic FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_profile_pic;
-															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
+						<div class="equal-content center">
+							<a class="center" href="/website/user/profile/student-profile.php" title="View Profile">
+								<object class="profile" data="<?php
+																$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
+																$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
+																echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+																?>" alt="User Profile Picture" height="35" width="35" loading="lazy"></object>
 							</a>
 						</div>
 					</div>
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="equal-container-spaced">
+		<div class="margin-right equal-content-spaced" id="menu" style="min-width: 200px;">
+			<div class="padded-top-bottom border-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width active" type="submit" name="dashboard" tabindex="-1">Dashboard</button>
+					</form>
+				</div>
+			</div>
+			<div class="padded-top-bottom border-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button type="submit" name="admission" class="full-width" tabindex="-1">Admission</button>
+					</form>
+				</div>
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button type="submit" name="enrollment" class="full-width" tabindex="-1">Enrollment</button>
+					</form>
+				</div>
+			</div>
+			<div class="padded-top-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width" type="submit" name="profile" tabindex="-1">Profile</button>
+					</form>
 				</div>
 			</div>
 		</div>
-		<div class="main-container-remaining">
-			<div class="equal-container-spaced full-height">
-				<div class="equal-content-spaced margin-right border-bottom" id="menuBar" style="min-width: 200px;">
-					<div class="padded-top-bottom border-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="dashboard" class="<?php echo ($_SESSION['has_announcements']) ? 'has-announcement' : 'gray'; ?> full-width active" tabindex="-1">Dashboard</button>
-							</form>
-						</div>
-					</div>
-					<div class="padded-top-bottom border-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="admission" class="gray full-width" tabindex="-1">Admission</button>
-							</form>
-						</div>
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="enrollment" class="gray full-width" tabindex="-1">Enrollment</button>
-							</form>
-						</div>
-					</div>
-					<div class="padded-top-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="profile" class="gray full-width" tabindex="-1">Profile</button>
-							</form>
-						</div>
-					</div>
+		<div class="margin-left equal-content scrollable" id="main">
+			<div class="padded-top-bottom border-bottom unselectable">
+				<div class="padded-left-right">
+					<h2>Status Updates</h2>
 				</div>
-				<div class="equal-content-spaced margin-left full-width scrollable" id="mainBody">
+			</div>
+			<div class="padded-top-bottom">
+				<div class="padded-left-right">
+					<?php
+					$sql = "SELECT * FROM ad_stdUpd WHERE stds_acc_id = '$std_acc_id' ORDER BY ad_stdUpd_id DESC";
+					$student_updates = mysqli_query($mysqli, $sql);
+					if (mysqli_num_rows($student_updates) > 0) {
+						while ($updates = $student_updates->fetch_assoc()) {
+							$update_title = $updates['ad_stdUpd_title'];
+							$update_message = (!$updates['ad_stdUpd_msg']) ? 'No status body' : $updates['ad_stdUpd_msg'];
+							$update_date = $updates['created_at'];
+
+							echo "<div class='rounded bordered margin-top-bottom'>";
+							echo "<div class='padded-left-right border-bottom unselectable'><h4>$update_title</h4></div>";
+							echo "<div class='padded'><p>$update_message</p><small>$update_date</small></div>";
+							echo "</div>";
+						}
+
+						$student_updates->free();
+					} else {
+						echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no status updates at the moment.</h6></div>";
+					}
+					?>
+				</div>
+			</div>
+			<div class="equal-container">
+				<div class="equal-content margin-right">
 					<div class="padded-top-bottom border-bottom unselectable">
 						<div class="padded-left-right">
-							<h2>Status Updates</h2>
+							<h2>Student Announcements</h2>
 						</div>
 					</div>
 					<div class="padded-top-bottom">
 						<div class="padded-left-right">
 							<?php
-							$sql = "SELECT * FROM ad_stdUpd WHERE stds_acc_id = '$std_acc_id' ORDER BY ad_stdUpd_id DESC";
-							$student_updates = mysqli_query($mysqli, $sql);
-							if (mysqli_num_rows($student_updates) > 0) {
-								while ($updates = $student_updates->fetch_assoc()) {
-									$update_title = $updates['ad_stdUpd_title'];
-									$update_message = (!$updates['ad_stdUpd_msg']) ? 'No status body' : $updates['ad_stdUpd_msg'];
-									$update_date = $updates['created_at'];
+							$sql = "SELECT * FROM ad_stdAnn ORDER BY ad_stdAnn_id DESC";
+							$student_announcements = mysqli_query($mysqli, $sql);
+							if (mysqli_num_rows($student_announcements) > 0) {
+								while ($announcements = $student_announcements->fetch_assoc()) {
+									$admin_id = $announcements['ad_acc_id'];
+									$announcement_date = $announcements['created_at'];
+									$announcement_message = (!$announcements['ad_stdAnn_msg']) ? 'No announcement body' : $announcements['ad_stdAnn_msg'];
+									$announcement_title = $announcements['ad_stdAnn_title'];
 
-									if (strpos($update_message, 'accepted') !== false) {
-										echo "<div class='rounded bordered-green margin-top-bottom'>";
-										echo "<div class='padded-left-right border-green-bottom unselectable'><h4>$update_title</h4></div>";
-										echo "<div class='padded'><p>$update_message</p><small>$update_date</small></div>";
-										echo "</div>";
-									} elseif (strpos($update_message, 'rejected') !== false) {
-										echo "<div class='rounded bordered-red margin-top-bottom'>";
-										echo "<div class='padded-left-right border-red-bottom unselectable'><h4>$update_title</h4></div>";
-										echo "<div class='padded'><p>$update_message</p><small>$update_date</small></div>";
+									if (!$admin_id) {
+										echo "<div class='rounded bordered-gold margin-top-bottom'>";
+										echo "<div class='padded-left-right border-gold-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
 										echo "</div>";
 									} else {
 										echo "<div class='rounded bordered margin-top-bottom'>";
-										echo "<div class='padded-left-right border-bottom unselectable'><h4>$update_title</h4></div>";
-										echo "<div class='padded'><p>$update_message</p><small>$update_date</small></div>";
+										echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
 										echo "</div>";
 									}
 								}
 
-								$student_updates->free();
+								$student_announcements->free();
 							} else {
-								echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no status updates at the moment.</h6></div>";
+								echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no student announcements at the moment.</h6></div>";
 							}
 							?>
 						</div>
 					</div>
-					<div class="equal-container">
-						<div class="equal-content margin-right">
-							<div class="padded-top-bottom border-bottom unselectable">
-								<div class="padded-left-right">
-									<h2>Student Announcements</h2>
-								</div>
-							</div>
-							<div class="padded-top-bottom">
-								<div class="padded-left-right">
-									<?php
-									$sql = "SELECT * FROM ad_stdAnn ORDER BY ad_stdAnn_id DESC";
-									$student_announcements = mysqli_query($mysqli, $sql);
-									if (mysqli_num_rows($student_announcements) > 0) {
-										while ($announcements = $student_announcements->fetch_assoc()) {
-											$admin_id = $announcements['ad_acc_id'];
-											$announcement_date = $announcements['created_at'];
-											$announcement_message = (!$announcements['ad_stdAnn_msg']) ? 'No announcement body' : $announcements['ad_stdAnn_msg'];
-											$announcement_title = $announcements['ad_stdAnn_title'];
-
-											if (!$admin_id) {
-												echo "<div class='rounded bordered-gold margin-top-bottom'>";
-												echo "<div class='padded-left-right border-gold-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												echo "</div>";
-											} else {
-												echo "<div class='rounded bordered margin-top-bottom'>";
-												echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												echo "</div>";
-											}
-										}
-
-										$student_announcements->free();
-									} else {
-										echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no student announcements at the moment.</h6></div>";
-									}
-									?>
-								</div>
-							</div>
+				</div>
+				<div class="equal-content margin-left">
+					<div class="padded-top-bottom border-bottom unselectable">
+						<div class="padded-left-right">
+							<h2>University Announcements</h2>
 						</div>
-						<div class="equal-content margin-left">
-							<div class="padded-top-bottom border-bottom unselectable">
-								<div class="padded-left-right">
-									<h2>University Announcements</h2>
-								</div>
-							</div>
-							<div class="padded-top-bottom">
-								<div class="padded-left-right">
-									<?php
-									$sql = "SELECT * FROM ad_uniAnn ORDER BY ad_uniAnn_id DESC";
-									$university_announcements = mysqli_query($mysqli, $sql);
-									if (mysqli_num_rows($university_announcements) > 0) {
-										while ($announcements = $university_announcements->fetch_assoc()) {
-											$admin_id = $announcements['ad_acc_id'];
-											$announcement_date = $announcements['created_at'];
-											$announcement_message = (!$announcements['ad_uniAnn_msg']) ? 'No announcement body' : $announcements['ad_uniAnn_msg'];
-											$announcement_title = $announcements['ad_uniAnn_title'];
+					</div>
+					<div class="padded-top-bottom">
+						<div class="padded-left-right">
+							<?php
+							$sql = "SELECT * FROM ad_uniAnn ORDER BY ad_uniAnn_id DESC";
+							$university_announcements = mysqli_query($mysqli, $sql);
+							if (mysqli_num_rows($university_announcements) > 0) {
+								while ($announcements = $university_announcements->fetch_assoc()) {
+									$admin_id = $announcements['ad_acc_id'];
+									$announcement_date = $announcements['created_at'];
+									$announcement_message = (!$announcements['ad_uniAnn_msg']) ? 'No announcement body' : $announcements['ad_uniAnn_msg'];
+									$announcement_title = $announcements['ad_uniAnn_title'];
 
-											if (!$admin_id) {
-												echo "<div class='rounded bordered-blue margin-top-bottom'>";
-												echo "<div class='padded-left-right border-blue-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												echo "</div>";
-											} else {
-												echo "<div class='rounded bordered margin-top-bottom'>";
-												echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												echo "</div>";
-											}
-										}
-
-										$university_announcements->free();
+									if (!$admin_id) {
+										echo "<div class='rounded bordered-blue margin-top-bottom'>";
+										echo "<div class='padded-left-right border-blue-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
+										echo "</div>";
 									} else {
-										echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no university announcements at the moment.</h6></div>";
+										echo "<div class='rounded bordered margin-top-bottom'>";
+										echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
+										echo "</div>";
 									}
-									?>
-								</div>
-							</div>
+								}
+
+								$university_announcements->free();
+							} else {
+								echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no university announcements at the moment.</h6></div>";
+							}
+							?>
 						</div>
 					</div>
 				</div>

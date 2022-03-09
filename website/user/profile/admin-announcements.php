@@ -6,11 +6,8 @@ session_start();
 ob_start();
 
 
-if (isset($_COOKIE['valid_admin']) && !empty($_COOKIE['valid_admin'])) {
+if (isset($_COOKIE['login_admin']) && !empty($_COOKIE['login_admin'])) {
 	$get_username_profile = $_COOKIE['username'];
-
-	// $email_regex = '/(\S+)@\S+/';
-	// $get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
 } else {
 	header('location: /index.php');
 	exit;
@@ -59,7 +56,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	$_SESSION = array();
 	session_destroy();
 
-	setcookie('valid_admin', '', time() - 3600, '/');
+	setcookie('login_admin', '', time() - 3600, '/');
 	setcookie('username', '', time() - 3600, '/');
 
 	header('location: /index.php');
@@ -79,246 +76,232 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
-	<link rel="stylesheet" href="<?php
-									$account_theme = $mysqli->query("SELECT ad_account_theme FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_account_theme;
+	<link rel="stylesheet" href="/website/include/css/style.css">
+	<link rel="stylesheet" href="/website/include/css/themes/<?php
+																$account_theme = $mysqli->query("SELECT ad_account_theme FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_account_theme;
 
-									if ($account_theme == 'DARK') {
-										echo '/website/include/css/style-dark.css';
-									} elseif ($account_theme == 'RTU') {
-										echo '/website/include/css/style-rtu.css';
-									} else {
-										echo '/website/include/css/style.css';
-									}
-									?>">
+																echo (!$account_theme) ? 'university' : $account_theme;
+																?>.css">
 </head>
 
 <body id="body">
-	<div class="main-container">
-		<div class="main-container-fixed" id="navBar">
-			<div class="equal-container-spaced border-bottom unselectable">
-				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width full-height center">
-						<div class="equal-content center margin-right">
-							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
-						</div>
-						<div class="equal-content center margin-left">
-							<h4>Announcements</h4>
-						</div>
-					</div>
-				</div>
-				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width full-height center">
-						<div class="equal-content center margin-right">
-							<div>
-								<h6>
-									<span class="no-wrap">
+	<div class="padded equal-container-spaced border-bottom" id="header">
+		<div class="equal-content-spaced center">
+			<div class="fit-width full-height">
+				<a class="center" href="/index.php">
+					<object class="unselectable" data="/website/include/images/rtu-logo-labelled.png" alt="RTU Logo" height="50" loading="lazy"></object>
+				</a>
+			</div>
+		</div>
+		<div class="equal-content-spaced center" id="user-profile">
+			<form class="center full-height" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+				<button class="center" type="submit" name="profile" tabindex="-1" title="View Profile">
+					<div class="fit-width full-height equal-container">
+						<div class="margin-right equal-content center">
+							<div class="center full-height">
+								<span class="no-wrap center">
+									<h6>
 										<?php
-										$last_name = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
-										$first_name = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
+										$last_name = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
+										$first_name = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
 
 										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
-									</span>
-								</h6>
-								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-									<button type="submit" name="logout" class="red full-width" tabindex="-1">Logout</button>
-								</form>
+									</h6>
+								</span>
+								<!-- <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button class="red full-width" type="submit" name="logout" tabindex="-1">Logout</button>
+						</form> -->
 							</div>
 						</div>
-						<div class="equal-content center margin-left">
-							<a class="center" href="/website/user/profile/admin-profile.php">
-								<img class="profile" src="<?php
-															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
-															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
+						<div class="equal-content center">
+							<a class="center" href="/website/user/profile/admin-profile.php" title="View Profile">
+								<object class="profile" data="<?php
+																$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
+																$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
-															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
+																echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+																?>" alt="User Profile Picture" height="35" width="35" loading="lazy"></object>
 							</a>
 						</div>
 					</div>
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="equal-container-spaced">
+		<div class="margin-right equal-content-spaced" id="menu" style="min-width: 200px;">
+			<div class="padded-top-bottom border-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width" type="submit" name="dashboard" tabindex="-1">Dashboard</button>
+					</form>
+				</div>
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width active" type="submit" name="announcements" tabindex="-1">Announcements</button>
+					</form>
+				</div>
+			</div>
+			<!-- <div class="padded-top-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width" type="submit" name="form-builder" tabindex="-1">Form Builder</button>
+					</form>
+				</div>
+			</div> -->
+			<div class="padded-top-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width" type="submit" name="profile" tabindex="-1">Profile</button>
+					</form>
 				</div>
 			</div>
 		</div>
-		<div class="main-container-remaining">
-			<div class="equal-container-spaced full-height">
-				<div class="equal-content-spaced margin-right border-bottom" id="menuBar" style="min-width: 200px;">
-					<div class="padded-top-bottom border-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="dashboard" class="gray full-width" tabindex="-1">Dashboard</button>
-							</form>
-						</div>
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="announcements" class="gray full-width active" tabindex="-1">Announcements</button>
-							</form>
-						</div>
+		<div class="margin-left equal-content scrollable" id="main">
+			<div class="padded-top-bottom border-bottom unselectable">
+				<div class="padded-left-right">
+					<h2>Create Announcements</h2>
+				</div>
+			</div>
+			<div class="padded-top-bottom border-bottom">
+				<div class="padded-left-right">
+					<div class="notification-red unselectable margin-top-bottom">
+						An automatic announcement is made for both students and the university when admissions or enrollments are enabled or disabled.
 					</div>
-					<div class="padded-top-bottom border-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="form-builder" class="gray full-width" tabindex="-1">Form Builder</button>
-							</form>
+					<div class="rounded bordered margin-top-bottom">
+						<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
+							<div class="padded border-bottom">
+								<input class="full-width" type="text" name="set_ann_title" placeholder="Announcement title" required><br>
+								<label for="set_ann_title"></label>
+							</div>
+							<div class="padded">
+								<textarea class="full-width" name="set_ann_msg" rows="1" placeholder="Announcement details here..."></textarea>
+								<div class="margin-top-bottom equal-container">
+									<div class="margin-right equal-content center">
+										<span class="no-wrap center">
+											<input type="checkbox" name="set_announcement_type_student" id="set_announcement_type_student" checked>
+											<label for="set_announcement_type_student">Student Announcement</label>
+										</span>
+									</div>
+									<div class="margin-left equal-content center">
+										<span class="no-wrap center">
+											<input type="checkbox" name="set_announcement_type_university" id="set_announcement_type_university" checked>
+											<label for="set_announcement_type_university">University Announcement</label>
+										</span>
+									</div>
+								</div>
+								<div class="equal-container-spaced">
+									<div class="half-width margin-right equal-content-spaced center">
+										<button class="blue full-width" type="submit" name="set_ann">Set announcement</button>
+									</div>
+									<div class="fit-width margin-left equal-content-spaced center">
+										<button class="red full-width" type="reset">Reset</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="equal-container">
+				<div class="equal-content margin-right">
+					<div class="padded-top-bottom border-bottom unselectable">
+						<div class="padded-left-right">
+							<h2>Student Announcements</h2>
 						</div>
 					</div>
 					<div class="padded-top-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="profile" class="gray full-width" tabindex="-1">Profile</button>
-							</form>
+						<div class="padded-left-right">
+							<?php
+							$student_announcements = $mysqli->query("SELECT * FROM ad_stdAnn ORDER BY ad_stdAnn_id DESC");
+
+							if (mysqli_num_rows($student_announcements) > 0) {
+								while ($announcements = $student_announcements->fetch_assoc()) {
+									$admin_id = $announcements['ad_acc_id'];
+									$announcement_date = $announcements['created_at'];
+									$announcement_id = $announcements['ad_stdAnn_id'];
+									$announcement_message = (!$announcements['ad_stdAnn_msg']) ? 'No announcement body' : $announcements['ad_stdAnn_msg'];
+									$announcement_title = $announcements['ad_stdAnn_title'];
+
+									if (!$admin_id) {
+										echo "<div class='rounded bordered-gold margin-top-bottom'>";
+										echo "<div class='padded-left-right border-gold-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right border-gold-bottom'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
+										if (!$admin_id) {
+											echo "<div class='padded'><div class='center notification-red unselectable'>Automated announcements can not be deleted.</div></div>";
+										} else {
+											include('admin/announcements_student_delete.php');
+										}
+										echo "</div>";
+									} else {
+										echo "<div class='rounded bordered margin-top-bottom'>";
+										echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right border-bottom'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
+										if (!$admin_id) {
+											echo "<div class='padded'><div class='center notification-red unselectable'>Automated announcements can not be deleted.</div></div>";
+										} else {
+											include('admin/announcements_student_delete.php');
+										}
+										echo "</div>";
+									}
+								}
+
+								$student_announcements->free();
+							} else {
+								echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no student announcements at the moment.</h6></div>";
+							}
+							?>
 						</div>
 					</div>
 				</div>
-				<div class="equal-content-spaced margin-left full-width scrollable" id="mainBody">
+				<div class="equal-content margin-left">
 					<div class="padded-top-bottom border-bottom unselectable">
 						<div class="padded-left-right">
-							<h2>Create Announcements</h2>
+							<h2>University Announcements</h2>
 						</div>
 					</div>
-					<div class="padded-top-bottom border-bottom">
+					<div class="padded-top-bottom">
 						<div class="padded-left-right">
-							<div class="notification-red unselectable margin-top-bottom">
-								An automatic announcement is made for both students and the university when admissions or enrollments are enabled or disabled.
-							</div>
-							<div class="rounded bordered margin-top-bottom">
-								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
-									<div class="padded border-bottom">
-										<input class="full-width" type="text" name="set_ann_title" placeholder="Announcement title" required><br>
-										<label for="set_ann_title"></label>
-									</div>
-									<div class="padded">
-										<textarea class="full-width" name="set_ann_msg" rows="1" placeholder="Announcement details here..."></textarea>
-										<div class="equal-container margin-top">
-											<div class="equal-content padded-left-right center">
-												<span class="no-wrap center">
-													<input type="checkbox" name="set_announcement_type_student" id="set_announcement_type_student" checked>
-													<label for="set_announcement_type_student">Student Announcement</label>
-												</span>
-											</div>
-											<div class="equal-content padded-left-right center">
-												<span class="no-wrap center">
-													<input type="checkbox" name="set_announcement_type_university" id="set_announcement_type_university" checked>
-													<label for="set_announcement_type_university">University Announcement</label>
-												</span>
-											</div>
-										</div>
-										<div class="equal-container-spaced margin-top">
-											<div class="equal-content-spaced half-width">
-												<div class="center">
-													<button type="submit" name="set_ann" class="full-width">Set announcement</button>
-												</div>
-											</div>
-											<div class="equal-content-spaced">
-												<div class="center">
-													<button type="reset" class="red">Reset</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					<div class="equal-container">
-						<div class="equal-content margin-right">
-							<div class="padded-top-bottom border-bottom unselectable">
-								<div class="padded-left-right">
-									<h2>Student Announcements</h2>
-								</div>
-							</div>
-							<div class="padded-top-bottom">
-								<div class="padded-left-right">
-									<?php
-									$student_announcements = $mysqli->query("SELECT * FROM ad_stdAnn ORDER BY ad_stdAnn_id DESC");
+							<?php
+							$university_announcements = $mysqli->query("SELECT * FROM ad_uniAnn ORDER BY ad_uniAnn_id DESC");
 
-									if (mysqli_num_rows($student_announcements) > 0) {
-										while ($announcements = $student_announcements->fetch_assoc()) {
-											$admin_id = $announcements['ad_acc_id'];
-											$announcement_date = $announcements['created_at'];
-											$announcement_id = $announcements['ad_stdAnn_id'];
-											$announcement_message = (!$announcements['ad_stdAnn_msg']) ? 'No announcement body' : $announcements['ad_stdAnn_msg'];
-											$announcement_title = $announcements['ad_stdAnn_title'];
+							if (mysqli_num_rows($university_announcements) > 0) {
+								while ($announcements = $university_announcements->fetch_assoc()) {
+									$admin_id = $announcements['ad_acc_id'];
+									$announcement_date = $announcements['created_at'];
+									$announcement_id = $announcements['ad_uniAnn_id'];
+									$announcement_message = (!$announcements['ad_uniAnn_msg']) ? 'No announcement body' : $announcements['ad_uniAnn_msg'];
+									$announcement_title = $announcements['ad_uniAnn_title'];
 
-											if (!$admin_id) {
-												echo "<div class='rounded bordered-gold margin-top-bottom'>";
-												echo "<div class='padded-left-right border-gold-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded border-gold-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												if (!$admin_id) {
-													echo "<div class='padded'><div class='notification-red unselectable margin-top-bottom'>Automated announcements can not be deleted.</div></div>";
-												} else {
-													include('admin/admin_del_stdAnn.php');
-												}
-												echo "</div>";
-											} else {
-												echo "<div class='rounded bordered margin-top-bottom'>";
-												echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded border-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												if (!$admin_id) {
-													echo "<div class='padded'><div class='notification-red unselectable margin-top-bottom'>Automated announcements can not be deleted.</div></div>";
-												} else {
-													include('admin/admin_del_stdAnn.php');
-												}
-												echo "</div>";
-											}
+									if (!$admin_id) {
+										echo "<div class='rounded bordered-blue margin-top-bottom'>";
+										echo "<div class='padded-left-right border-blue-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right border-blue-bottom'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
+										if (!$admin_id) {
+											echo "<div class='padded'><div class='center notification-red unselectable'>Automated announcements can not be deleted.</div></div>";
+										} else {
+											include('admin/announcements_university_delete.php');
 										}
-
-										$student_announcements->free();
+										echo "</div>";
 									} else {
-										echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no student announcements at the moment.</h6></div>";
-									}
-									?>
-								</div>
-							</div>
-						</div>
-						<div class="equal-content margin-left">
-							<div class="padded-top-bottom border-bottom unselectable">
-								<div class="padded-left-right">
-									<h2>University Announcements</h2>
-								</div>
-							</div>
-							<div class="padded-top-bottom">
-								<div class="padded-left-right">
-									<?php
-									$university_announcements = $mysqli->query("SELECT * FROM ad_uniAnn ORDER BY ad_uniAnn_id DESC");
-
-									if (mysqli_num_rows($university_announcements) > 0) {
-										while ($announcements = $university_announcements->fetch_assoc()) {
-											$admin_id = $announcements['ad_acc_id'];
-											$announcement_date = $announcements['created_at'];
-											$announcement_id = $announcements['ad_uniAnn_id'];
-											$announcement_message = (!$announcements['ad_uniAnn_msg']) ? 'No announcement body' : $announcements['ad_uniAnn_msg'];
-											$announcement_title = $announcements['ad_uniAnn_title'];
-
-											if (!$admin_id) {
-												echo "<div class='rounded bordered-blue margin-top-bottom'>";
-												echo "<div class='padded-left-right border-blue-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded border-blue-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												if (!$admin_id) {
-													echo "<div class='padded'><div class='notification-red unselectable margin-top-bottom'>Automated announcements can not be deleted.</div></div>";
-												} else {
-													include('admin/admin_del_uniAnn.php');
-												}
-												echo "</div>";
-											} else {
-												echo "<div class='rounded bordered margin-top-bottom'>";
-												echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
-												echo "<div class='padded border-bottom'><p>$announcement_message</p><small>$announcement_date</small></div>";
-												if (!$admin_id) {
-													echo "<div class='padded'><div class='notification-red unselectable margin-top-bottom'>Automated announcements can not be deleted.</div></div>";
-												} else {
-													include('admin/admin_del_uniAnn.php');
-												}
-												echo "</div>";
-											}
+										echo "<div class='rounded bordered margin-top-bottom'>";
+										echo "<div class='padded-left-right border-bottom unselectable'><h4>$announcement_title</h4></div>";
+										echo "<div class='padded-left-right border-bottom'><p>$announcement_message<br><br><small>$announcement_date</small></p></div>";
+										if (!$admin_id) {
+											echo "<div class='padded'><div class='center notification-red unselectable'>Automated announcements can not be deleted.</div></div>";
+										} else {
+											include('admin/announcements_university_delete.php');
 										}
-
-										$university_announcements->free();
-									} else {
-										echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no university announcements at the moment.</h6></div>";
+										echo "</div>";
 									}
-									?>
-								</div>
-							</div>
+								}
+
+								$university_announcements->free();
+							} else {
+								echo "<div class='center unselectable margin-top-bottom'><h6>You currently have no university announcements at the moment.</h6></div>";
+							}
+							?>
 						</div>
 					</div>
 				</div>

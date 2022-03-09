@@ -6,11 +6,8 @@ session_start();
 ob_start();
 
 
-if (isset($_COOKIE['valid_admin']) && !empty($_COOKIE['valid_admin'])) {
+if (isset($_COOKIE['login_admin']) && !empty($_COOKIE['login_admin'])) {
 	$get_username_profile = $_COOKIE['username'];
-
-	// $email_regex = '/(\S+)@\S+/';
-	// $get_username_profile = preg_replace($email_regex, '$1', $get_username_profile);
 } else {
 	header('location: /index.php');
 	exit;
@@ -129,19 +126,19 @@ if (isset($_POST['save'])) {
 
 
 if (!empty($_POST) && isset($_POST['light_theme'])) {
-	$mysqli->query("UPDATE ad SET ad_account_theme = NULL WHERE ad_acc_id = '$ad_acc_id'");
+	$mysqli->query("UPDATE ad SET ad_account_theme = 'light' WHERE ad_acc_id = '$ad_acc_id'");
 
 	header('location: /website/user/profile/admin-profile.php');
 	exit;
 }
 if (!empty($_POST) && isset($_POST['dark_theme'])) {
-	$mysqli->query("UPDATE ad SET ad_account_theme = 'DARK' WHERE ad_acc_id = '$ad_acc_id'");
+	$mysqli->query("UPDATE ad SET ad_account_theme = 'dark' WHERE ad_acc_id = '$ad_acc_id'");
 
 	header('location: /website/user/profile/admin-profile.php');
 	exit;
 }
-if (!empty($_POST) && isset($_POST['rtu_theme'])) {
-	$mysqli->query("UPDATE ad SET ad_account_theme = 'RTU' WHERE ad_acc_id = '$ad_acc_id'");
+if (!empty($_POST) && isset($_POST['university_theme'])) {
+	$mysqli->query("UPDATE ad SET ad_account_theme = 'university' WHERE ad_acc_id = '$ad_acc_id'");
 
 	header('location: /website/user/profile/admin-profile.php');
 	exit;
@@ -152,7 +149,7 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 	$_SESSION = array();
 	session_destroy();
 
-	setcookie('valid_admin', '', time() - 3600, '/');
+	setcookie('login_admin', '', time() - 3600, '/');
 	setcookie('username', '', time() - 3600, '/');
 
 	header('location: /index.php');
@@ -172,179 +169,184 @@ if (!empty($_POST) && isset($_POST['logout'])) {
 
 	<link rel="shortcut icon" href="/website/include/images/rtu-seal.png" type="image/x-icon">
 
-	<link rel="stylesheet" href="<?php
-									$account_theme = $mysqli->query("SELECT ad_account_theme FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_account_theme;
+	<link rel="stylesheet" href="/website/include/css/style.css">
+	<link rel="stylesheet" href="/website/include/css/themes/<?php
+																$account_theme = $mysqli->query("SELECT ad_account_theme FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_account_theme;
 
-									if ($account_theme == 'DARK') {
-										echo '/website/include/css/style-dark.css';
-									} elseif ($account_theme == 'RTU') {
-										echo '/website/include/css/style-rtu.css';
-									} else {
-										echo '/website/include/css/style.css';
-									}
-									?>">
+																echo (!$account_theme) ? 'university' : $account_theme;
+																?>.css">
 </head>
 
 <body id="body">
-	<div class="main-container">
-		<div class="main-container-fixed" id="navBar">
-			<div class="equal-container-spaced border-bottom unselectable">
-				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width full-height center">
-						<div class="equal-content center margin-right">
-							<a class="center" href="/index.php"><img src="/website/include/images/rtu-seal.png" alt="RTU Seal Logo" height="50" width="50" loading="lazy"></a>
-						</div>
-						<div class="equal-content center margin-left">
-							<h4>Profile</h4>
-						</div>
-					</div>
-				</div>
-				<div class="equal-content-spaced padded fit-width">
-					<div class="equal-container fit-width full-height center">
-						<div class="equal-content center margin-right">
-							<div>
-								<h6>
-									<span class="no-wrap">
+	<div class="padded equal-container-spaced border-bottom" id="header">
+		<div class="equal-content-spaced center">
+			<div class="fit-width full-height">
+				<a class="center" href="/index.php">
+					<object class="unselectable" data="/website/include/images/rtu-logo-labelled.png" alt="RTU Logo" height="50" loading="lazy"></object>
+				</a>
+			</div>
+		</div>
+		<div class="equal-content-spaced center" id="user-profile">
+			<form class="center full-height" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+				<button class="center" type="submit" name="profile" tabindex="-1" title="View Profile">
+					<div class="fit-width full-height equal-container">
+						<div class="margin-right equal-content center">
+							<div class="center full-height center">
+								<span class="no-wrap">
+									<h6>
 										<?php
-										$last_name = $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname;
-										$first_name = $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname;
+										$last_name = $mysqli->query("SELECT stds_lname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_lname;
+										$first_name = $mysqli->query("SELECT stds_fname FROM stds WHERE stds_acc_id = '$std_acc_id'")->fetch_object()->stds_fname;
 
 										echo ($last_name && $first_name) ? $last_name . ', ' . $first_name : strtoupper($get_username_profile);
 										?>
-									</span>
-								</h6>
-								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-									<button type="submit" name="logout" class="red full-width" tabindex="-1">Logout</button>
-								</form>
+									</h6>
+								</span>
+								<!-- <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button class="red full-width" type="submit" name="logout" tabindex="-1">Logout</button>
+						</form> -->
 							</div>
 						</div>
-						<div class="equal-content center margin-left">
-							<a class="center" href="/website/user/profile/admin-profile.php">
-								<img class="profile" src="<?php
-															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
-															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
-
-															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-															?>" alt="User Profile Picture" height="50" width="50" loading="lazy">
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="main-container-remaining">
-			<div class="equal-container-spaced full-height">
-				<div class="equal-content-spaced margin-right border-bottom" id="menuBar" style="min-width: 200px;">
-					<div class="padded-top-bottom border-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="dashboard" class="gray full-width" tabindex="-1">Dashboard</button>
-							</form>
-						</div>
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="announcements" class="gray full-width" tabindex="-1">Announcements</button>
-							</form>
-						</div>
-					</div>
-					<div class="padded-top-bottom border-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="form-builder" class="gray full-width" tabindex="-1">Form Builder</button>
-							</form>
-						</div>
-					</div>
-					<div class="padded-top-bottom">
-						<div class="padded-left-right margin-top-bottom">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-								<button type="submit" name="profile" class="gray full-width active" tabindex="-1">Profile</button>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="equal-content-spaced margin-left full-width scrollable" id="mainBody">
-					<div class="padded-top-bottom border-bottom unselectable">
-						<div class="padded-left-right">
-							<h2>Admin Information</h2>
-						</div>
-					</div>
-					<div class="padded-top-bottom">
-						<div class="padded-left-right">
-							<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
-								<div class="margin-top-bottom">
-									<fieldset>
-										<legend>Personal Information</legend>
-										<div class="equal-container">
-											<div class="equal-content padded-right">
-												<input class="full-width" type="text" name="ad_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname; ?>"><br>
-												<label for="ad_lname">Last Name</label>
-											</div>
-											<div class="equal-content padded-left-right">
-												<input class="full-width" type="text" name="ad_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname; ?>"><br>
-												<label for="ad_fname">First Name</label>
-											</div>
-											<div class="equal-content padded-left-right">
-												<input class="full-width" type="text" name="ad_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_mname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_mname; ?>"><br>
-												<label for="ad_mname">Middle Name</label>
-											</div>
-											<div class="equal-content padded-left">
-												<input class="full-width" type="text" name="ad_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_suffix FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_suffix; ?>"><br>
-												<label for="ad_sname">Suffix (If any)</label>
-											</div>
-										</div>
-									</fieldset>
-								</div>
-								<br>
-								<div class="margin-top-bottom">
-									<fieldset>
-										<legend>Account Information</legend>
-										<div class="equal-container">
-											<div class="equal-content padded-right">
-												<input class="full-width" type="email" name="ad_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php echo $mysqli->query("SELECT ad_email FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_email; ?>"><br>
-												<label for="ad_email">Email Address</label>
-											</div>
-											<div class="equal-content padded-left">
-												<input class="full-width" type="password" name="ad_new_pass" placeholder="New Password"><br>
-												<label for="ad_new_pass">New Password</label>
-											</div>
-										</div>
-										<div class="equal-container-spaced margin-top">
-											<div class="equal-content-spaced fit-width padded-right">
-												<div class="full-width center">
-													<img src="<?php
+						<div class="equal-content center">
+							<a class="center" href="/website/user/profile/admin-profile.php" title="View Profile">
+								<object class="profile" data="<?php
 																$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
 																$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
 
 																echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
-																?>" alt="User Profile Picture" height="250" width="250" loading="lazy">
-												</div>
-											</div>
-											<div class="equal-content-spaced full-width padded-left">
-												<div class="margin-bottom">
-													<input class="full-width" type="file" name="ad_profile_picture" placeholder="Select New Profile Picture" accept="image/*"><br>
-													<label for="ad_profile_picture">Upload New Profile Picture</label>
-												</div>
-												<div class="margin-top full-width">
-													<div class="equal-container full-width">
-														<div class="equal-content padded-right">
-															<button type="submit" name="light_theme" class="full-width margin-top-bottom">Light Theme</button>
-														</div>
-														<div class="equal-content padded-left-right">
-															<button type="submit" name="dark_theme" class="full-width margin-top-bottom">Dark Theme</button>
-														</div>
-														<div class="equal-content padded-left">
-															<button type="submit" name="rtu_theme" class="full-width margin-top-bottom">University Theme</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</fieldset>
-								</div>
-								<button type="submit" name="save" class="full-width margin-top-bottom">Save Changes</button>
+																?>" alt="User Profile Picture" height="35" width="35" loading="lazy"></object>
+							</a>
+						</div>
+					</div>
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="equal-container-spaced">
+		<div class="margin-right equal-content-spaced" id="menu" style="min-width: 200px;">
+			<div class="padded-top-bottom border-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width" type="submit" name="dashboard" tabindex="-1">Dashboard</button>
+					</form>
+				</div>
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width" type="submit" name="announcements" tabindex="-1">Announcements</button>
+					</form>
+				</div>
+			</div>
+			<!-- <div class="padded-top-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width" type="submit" name="form-builder" tabindex="-1">Form Builder</button>
+					</form>
+				</div>
+			</div> -->
+			<div class="padded-top-bottom">
+				<div class="margin-top-bottom padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+						<button class="full-width active" type="submit" name="profile" tabindex="-1">Profile</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="margin-left equal-content scrollable" id="main">
+			<div class="padded-top-bottom border-bottom unselectable">
+				<div class="padded-left-right">
+					<div class="equal-container-spaced">
+						<div class="equal-content-spaced">
+							<h2>Admin Information</h2>
+						</div>
+						<div class="equal-content-spaced">
+							<form class="center full-height" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+								<button class="red full-width" type="submit" name="logout" tabindex="-1">Logout</button>
 							</form>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="padded-top-bottom">
+				<div class="padded-left-right">
+					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
+						<div class="margin-top-bottom">
+							<fieldset>
+								<legend>Personal Information</legend>
+								<div class="equal-container">
+									<div class="equal-content padded-right">
+										<input class="full-width" type="text" name="ad_lname" placeholder="Last Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_lname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_lname; ?>"><br>
+										<label for="ad_lname">Last Name</label>
+									</div>
+									<div class="equal-content padded-left-right">
+										<input class="full-width" type="text" name="ad_fname" placeholder="First Name" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_fname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_fname; ?>"><br>
+										<label for="ad_fname">First Name</label>
+									</div>
+									<div class="equal-content padded-left-right">
+										<input class="full-width" type="text" name="ad_mname" placeholder="Middle Mame" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_mname FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_mname; ?>"><br>
+										<label for="ad_mname">Middle Name</label>
+									</div>
+									<div class="equal-content padded-left">
+										<input class="full-width" type="text" name="ad_sname" placeholder="Suffix" oninput="this.value = this.value.toUpperCase();" value="<?php echo $mysqli->query("SELECT ad_suffix FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_suffix; ?>"><br>
+										<label for="ad_sname">Suffix (If any)</label>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<br>
+						<div class="margin-top-bottom">
+							<fieldset>
+								<legend>Account Information</legend>
+								<div class="equal-container">
+									<div class="equal-content padded-right">
+										<input class="full-width" type="email" name="ad_email" placeholder="Email" oninput="this.value = this.value.toLowerCase();" value="<?php echo $mysqli->query("SELECT ad_email FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_email; ?>"><br>
+										<label for="ad_email">Email Address</label>
+									</div>
+									<div class="equal-content padded-left">
+										<input class="full-width" type="password" name="ad_new_pass" placeholder="New Password"><br>
+										<label for="ad_new_pass">New Password</label>
+									</div>
+								</div>
+								<div class="equal-container-spaced margin-top">
+									<div class="equal-content-spaced fit-width padded-right">
+										<div class="full-width center">
+											<!-- <img src="<?php
+															$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
+															$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
+
+															echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+															?>" alt="User Profile Picture" height="140" width="140" loading="lazy"> -->
+											<object draggable="false" data="<?php
+																			$profile_picture = $mysqli->query("SELECT ad_profile_pic FROM ad WHERE ad_acc_id = '$ad_acc_id'")->fetch_object()->ad_profile_pic;
+																			$get_profile_picture = (file_exists($profile_picture)) ? $profile_picture : $profile_picture = false;
+
+																			echo ($profile_picture) ? $profile_picture : "/website/include/images/user.png";
+																			?>" alt="User Profile Picture" height="140" width="140" loading="lazy"></object>
+										</div>
+										<div class="margin-top">
+											<input class="full-width" type="file" name="ad_profile_picture" placeholder="Select New Profile Picture" accept="image/*"><br>
+											<label for="ad_profile_picture"><span class="no-wrap">Upload New Profile Picture</span></label>
+										</div>
+									</div>
+									<div class="equal-content-spaced full-width padded-left">
+										<div class="margin-top full-width">
+											<div class="equal-container full-width">
+												<div class="equal-content padded-right">
+													<button type="submit" name="light_theme" class="full-width margin-top-bottom <?php echo ($account_theme == 'light') ? 'active' : ''; ?>">Light Theme</button>
+												</div>
+												<div class="equal-content padded-left-right">
+													<button type="submit" name="dark_theme" class="full-width margin-top-bottom <?php echo ($account_theme == 'dark') ? 'active' : ''; ?>">Dark Theme</button>
+												</div>
+												<div class="equal-content padded-left">
+													<button type="submit" name="university_theme" class="full-width margin-top-bottom <?php echo ($account_theme == 'university') ? 'active' : ''; ?>">University Theme</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<button type="submit" name="save" class="blue full-width margin-top-bottom">Save Changes</button>
+					</form>
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,28 @@
+body {
+	background-color: #ffffff;
+}
+
+#header {
+	background-color: #ffc001;
+}
+#header h1,
+#header h2,
+#header h3,
+#header h4,
+#header h5,
+#header h6 {
+	color: #393939;
+}
+
+#menu {
+	background-color: #0096ff;
+}
+#menu button {
+	color: #ffffff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar-thumb {
+	background: #b9b9b9;
+}
+/* End Scrollbar */
